@@ -2,7 +2,7 @@
 name: performance-analyzer
 description: "Analyzes code for performance issues in React, Next.js, and general web patterns."
 tools: Bash(gh:*)
-model: claude-3-5-sonnet-20240620
+model: claude-sonnet-4-5-20250929
 ---
 
 # Performance Analyzer Agent

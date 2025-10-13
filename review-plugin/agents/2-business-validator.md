@@ -6,7 +6,7 @@ tools:
   - mcp_microsoft_azu_wit_get_work_item
   - mcp_microsoft_azu_wit_get_work_items_batch_by_ids
   - mcp_microsoft_azu_wit_list_work_item_comments
-model: claude-3-5-sonnet-20240620
+model: claude-sonnet-4-5-20250929
 ---
 
 # Business Validator Agent

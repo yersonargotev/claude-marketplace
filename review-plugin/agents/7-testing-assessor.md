@@ -2,7 +2,7 @@
 name: testing-assessor
 description: "Assesses test coverage, quality, and strategy, and identifies missing tests for critical logic."
 tools: Bash(gh:*)
-model: claude-3-5-sonnet-20240620
+model: claude-sonnet-4-5-20250929
 ---
 
 # Testing Assessor Agent

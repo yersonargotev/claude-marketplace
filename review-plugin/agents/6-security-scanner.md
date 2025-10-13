@@ -2,7 +2,7 @@
 name: security-scanner
 description: "Performs a quick scan for common security vulnerabilities like XSS, sensitive data exposure, and insecure dependencies."
 tools: Bash(gh:*)
-model: claude-3-5-sonnet-20240620
+model: claude-sonnet-4-5-20250929
 ---
 
 # Security Scanner Agent

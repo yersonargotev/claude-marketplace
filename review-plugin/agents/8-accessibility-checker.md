@@ -2,7 +2,7 @@
 name: accessibility-checker
 description: "Performs a quick check for common accessibility (a11y) issues."
 tools: Bash(gh:*)
-model: claude-3-5-sonnet-20240620
+model: claude-sonnet-4-5-20250929
 ---
 
 # Accessibility Checker Agent

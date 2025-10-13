@@ -2,7 +2,7 @@
 name: clean-code-auditor
 description: "Audits code for readability, simplicity (KISS), and dryness (DRY), and identifies common code smells."
 tools: Bash(gh:*)
-model: claude-3-5-sonnet-20240620
+model: claude-sonnet-4-5-20250929
 ---
 
 # Clean Code Auditor Agent
