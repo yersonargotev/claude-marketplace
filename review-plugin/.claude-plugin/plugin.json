@@ -1,0 +1,10 @@
+{
+  "name": "review",
+  "description": "A plugin providing a suite of commands and specialized sub-agents for comprehensive and modular PR reviews.",
+  "version": "1.1.0",
+  "author": {
+    "name": "yargotev"
+  },
+  "commands": "./commands",
+  "agents": "./agents"
+}
