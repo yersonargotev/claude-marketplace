@@ -1,0 +1,32 @@
+{
+	"name": "pr-review-ext",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"format": "npx @biomejs/biome format --write",
+		"lint": "npx @biomejs/biome lint --write",
+		"check": "npx @biomejs/biome check --write",
+		"prepare": "husky install"
+	},
+	"lint-staged": {
+		"*.{js,ts,tsx,jsx,json,css,md,mdx}": [
+			"npx @biomejs/biome format --write",
+			"npx @biomejs/biome lint --write",
+			"git add"
+		]
+	},
+	"config": {
+		"commitizen": {
+			"path": "cz-conventional-changelog"
+		}
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.2.6",
+		"@commitlint/cli": "^20.1.0",
+		"@commitlint/config-conventional": "^20.0.0",
+		"commitizen": "^4.3.1",
+		"cz-conventional-changelog": "^3.3.0",
+		"husky": "^9.1.7",
+		"lint-staged": "^16.2.4"
+	}
+}

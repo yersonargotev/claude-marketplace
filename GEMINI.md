@@ -3,6 +3,7 @@
 This is a **Claude Code plugin** that provides comprehensive PR review commands for FastStore/VTEX e-commerce development at Exito. The plugin is distributed via marketplace and uses an advanced multi-agent orchestration pattern with persistent context management.
 
 The primary goal is to provide a powerful, modular, and efficient automated PR review process that:
+
 - Adapts intelligently to PR size and complexity
 - Integrates business context from Azure DevOps
 - Enforces development best practices across multiple dimensions
@@ -10,12 +11,12 @@ The primary goal is to provide a powerful, modular, and efficient automated PR r
 
 **Main Technologies:**
 
-*   **Claude:** Powers specialized sub-agents for multi-dimensional code analysis
-*   **GitHub CLI (`gh`):** Extracts PR data, diffs, and metadata
-*   **Azure DevOps MCP Tools:** Integrates business context from User Stories
-*   **Context7 MCP Server:** Provides up-to-date documentation for any library/framework
-*   **Markdown:** Defines commands and agent logic
-*   **Claude Agent SDK:** Manages agent orchestration and parallel execution
+- **Claude:** Powers specialized sub-agents for multi-dimensional code analysis
+- **GitHub CLI (`gh`):** Extracts PR data, diffs, and metadata
+- **Azure DevOps MCP Tools:** Integrates business context from User Stories
+- **Context7 MCP Server:** Provides up-to-date documentation for any library/framework
+- **Markdown:** Defines commands and agent logic
+- **Claude Agent SDK:** Manages agent orchestration and parallel execution
 
 **Architecture:**
 
@@ -28,6 +29,7 @@ The plugin implements an **advanced multi-agent orchestration pattern** with per
 5.  **Persistent Storage:** All context and reports saved to `.claude/sessions/pr_reviews/` for reusability and audit trail
 
 Key components:
+
 - **Commands:** `/review`, `/review-perf`, `/review-sec` for different review scopes
 - **Agents:** 8 specialized sub-agents for focused analysis
 - **MCP Servers:** Context7 for documentation, Azure DevOps for business alignment
@@ -39,9 +41,9 @@ This is a Claude Code plugin distributed via marketplace. Installation and usage
 
 **Prerequisites:**
 
-*   **Claude Desktop:** Installed from `https://claude.ai/download`
-*   **GitHub CLI:** Automatically installed via `/setup` command
-*   **Azure CLI:** Automatically installed via `/setup` command
+- **Claude Desktop:** Installed from `https://claude.ai/download`
+- **GitHub CLI:** Automatically installed via `/setup` command
+- **Azure CLI:** Automatically installed via `/setup` command
 
 **Installation:**
 
@@ -83,9 +85,9 @@ export CONTEXT7_API_KEY="your-api-key"
 
 # Development Conventions
 
-*   **Plugin Structure:** Commands in `commands/`, agents in `agents/`, MCP config in `.mcp.json`
-*   **Agent Pattern:** Each agent has YAML frontmatter with tools, model, and clear role definitions
-*   **Context Persistence:** Agents share context via files (`.claude/sessions/pr_reviews/`), not messages
-*   **Parallel Execution:** Independent agents run concurrently for maximum efficiency
-*   **Tool Selectivity:** Each agent only has access to tools it needs (principle of least privilege)
-*   **Versioning:** See `CLAUDE.md` and `README.md` for detailed versioning and architecture notes
+- **Plugin Structure:** Commands in `commands/`, agents in `agents/`, MCP config in `.mcp.json`
+- **Agent Pattern:** Each agent has YAML frontmatter with tools, model, and clear role definitions
+- **Context Persistence:** Agents share context via files (`.claude/sessions/pr_reviews/`), not messages
+- **Parallel Execution:** Independent agents run concurrently for maximum efficiency
+- **Tool Selectivity:** Each agent only has access to tools it needs (principle of least privilege)
+- **Versioning:** See `CLAUDE.md` and `README.md` for detailed versioning and architecture notes
