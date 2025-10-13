@@ -5,6 +5,5 @@
   "author": {
     "name": "yargotev"
   },
-  "commands": "./commands",
-  "agents": "./agents"
+  "commands": "./commands"
 }
