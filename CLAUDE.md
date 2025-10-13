@@ -11,6 +11,7 @@ This is a Claude Code plugin that provides comprehensive PR review commands for 
 The plugin uses clear, action-oriented names for all commands and agents:
 
 ### Commands (User-facing)
+
 - **/build** - Full-cycle feature development (formerly `/inge`)
 - **/think** - Deep architectural analysis with ULTRATHINK mode (formerly `/senior`)
 - **/ui** - Frontend/UI specialist workflow (formerly `/frontend`)
@@ -20,6 +21,7 @@ The plugin uses clear, action-oriented names for all commands and agents:
 - **/review-sec** - Security-focused PR review
 
 ### Agents (Internal)
+
 - **investigator** - Codebase research & context gathering (formerly `research-engineer`)
 - **architect** - Solution design & planning (formerly `planner-engineer`)
 - **builder** - Code implementation & execution (formerly `implementer-engineer`)
@@ -33,6 +35,7 @@ The plugin uses clear, action-oriented names for all commands and agents:
 To test the plugin after making changes:
 
 1. **Install the plugin** (if not already installed):
+
    ```bash
    /plugin marketplace add yargotev/claude-exito-plugin
    /plugin install exito@yargotev-marketplace
@@ -84,6 +87,7 @@ exito-plugin/
 The plugin now implements **Claude Code Best Practices** with **optimized token efficiency**:
 
 **Token Optimization Results**:
+
 - **Total Agent System Prompts**: ~3,331 words (~4,500 tokens)
 - **Review Command**: ~544 words (~750 tokens)
 - **Total System Prompt Budget**: ~5,250 tokens per review
@@ -92,19 +96,24 @@ The plugin now implements **Claude Code Best Practices** with **optimized token 
 This optimization achieves **dramatic cost reduction** without sacrificing analysis quality.
 
 #### 1. **Context Persistence Pattern**
+
 All context and reports are persisted to `.claude/sessions/pr_reviews/`:
+
 - **Context Session**: `pr_{number}_context.md` - Single source of truth
 - **Agent Reports**: `pr_{number}_{agent-name}_report.md` - Individual analysis reports
 - **Final Review**: `pr_{number}_final_review.md` - Synthesized comprehensive review
 
 **Benefits**:
+
 - Dramatic reduction in token usage
 - Eliminates context loss between agents
 - Enables resumable reviews for large PRs
 - Provides audit trail of analysis
 
 #### 2. **Agent Specialization & Role Definition**
+
 Each agent now has:
+
 - **`<role>`**: Clear identity and responsibility
 - **`<specialization>`**: Specific expertise areas
 - **`<workflow>`**: Structured, step-by-step analysis process
@@ -112,6 +121,7 @@ Each agent now has:
 - **`<best_practices>`**: Domain-specific guidelines
 
 #### 3. **Efficiency-First Design**
+
 - **File-based communication**: Agents share context via file paths, not message passing
 - **Selective tool access**: Each agent restricted to only necessary tools (Write, Read added where needed)
 - **Adaptive depth**: Analysis detail scales inversely with PR size
@@ -122,16 +132,19 @@ Each agent now has:
 1. **User invokes**: `/review <PR_NUMBER> [AZURE_DEVOPS_URL]`
 
 2. **Phase 1 - Context Establishment**:
+
    - Orchestrator invokes `context-gatherer` agent
    - Context gatherer creates `.claude/sessions/pr_reviews/pr_{number}_context.md`
    - This file becomes the **single source of truth**
 
 3. **Phase 2 - Business Validation** (conditional):
+
    - If Azure DevOps URLs provided, invoke `business-validator`
    - Validator reads context file, fetches User Stories, validates alignment
    - Appends findings to context session file
 
 4. **Phase 3 - Parallel Analysis**:
+
    - **All analysis agents run in parallel** (one message, multiple Task tool calls)
    - Each agent:
      1. Reads context session file via `$1` argument
@@ -238,22 +251,26 @@ Get your API key from [https://context7.com](https://context7.com).
 ## Agent-Specific Notes
 
 ### Context Gatherer
+
 - Always runs first; provides structured context to all other agents
 - Uses `gh pr view --json` to fetch metadata
 - Classifies PR size to determine review strategy
 - For large PRs, uses targeted `gh pr diff` with grep patterns instead of full diff
 
 ### Business Validator
+
 - Only invoked when Azure DevOps URLs are provided as arguments
 - Requires Azure CLI authentication (`az login --allow-no-subscriptions`)
 - Uses MCP tools to fetch Work Items and validate against acceptance criteria
 
 ### Performance Analyzer
+
 - Focuses on React hooks (useEffect, useMemo, useCallback)
 - Checks Next.js patterns (getStaticProps, next/dynamic, next/image)
 - Identifies bundle size issues and runtime bottlenecks
 
 ### Security Scanner
+
 - Looks for XSS risks (dangerouslySetInnerHTML, innerHTML)
 - Scans for hardcoded secrets and sensitive data
 - Reviews dependency changes in package.json
@@ -327,36 +344,43 @@ This plugin implements industry-leading best practices for Claude Code agent des
 ---
 name: agent-name
 description: "Clear description of when this agent should be invoked"
-tools: Bash(gh:*), Read, Write  # Only tools necessary for the task
+tools: Bash(gh:*), Read, Write # Only tools necessary for the task
 model: claude-sonnet-4-5-20250929
 ---
 
 ## <role>
+
 Clear identity statement. Who is this agent?
 </role>
 
 ## <specialization>
+
 - Specific expertise areas
 - Key focus domains
-</specialization>
+  </specialization>
 
 ## <input>
+
 Expected arguments and their format
 </input>
 
 ## <workflow>
+
 Step-by-step process with sub-sections
 </workflow>
 
 ## <output_format>
+
 Exact structure of the expected output
 </output_format>
 
 ## <error_handling>
+
 How to handle edge cases and failures
 </error_handling>
 
 ## <best_practices>
+
 Domain-specific guidelines
 </best_practices>
 ```
@@ -364,6 +388,7 @@ Domain-specific guidelines
 ### 2. Context Management Principles
 
 **Token Efficiency is Critical**:
+
 - ✅ **DO**: Pass file paths between agents
 - ❌ **DON'T**: Pass full diffs or large data in messages
 - ✅ **DO**: Persist findings to disk immediately
@@ -372,6 +397,7 @@ Domain-specific guidelines
 - ❌ **DON'T**: Duplicate information across context
 
 **Example - Efficient Communication**:
+
 ```bash
 # ❌ BAD: Passing context in message
 "Analyze this code: [10,000 lines of diff]"
@@ -383,21 +409,28 @@ Domain-specific guidelines
 ### 3. System Prompt Engineering
 
 **Clarity and Structure**:
+
 - Use **XML tags** (`<role>`, `<workflow>`) or **Markdown headers** for clear sections
 - Keep prompts at the "right altitude": specific enough to guide, flexible enough for judgment
 - Include **concrete examples** of good vs bad patterns
 - Provide **scoring rubrics** with clear criteria
 
 **High-Signal Instructions**:
+
 ```markdown
 ## <workflow>
+
 ### Step 1: Read Context
+
 Read the file at path `$1` and extract:
+
 - Changed files (focus on .tsx, .jsx)
 - Code diffs
 
 ### Step 2: Performance Analysis
+
 Scan for anti-patterns:
+
 - useEffect infinite loops
 - Missing dependency arrays
 - Expensive operations in render
@@ -408,11 +441,13 @@ Scan for anti-patterns:
 ### 4. Tool Design Principles
 
 **Selectivity**:
+
 - Only grant tools **essential** for the agent's task
 - Restrict Bash to specific patterns: `Bash(gh:*)` not `Bash(*)`
 - Add `Read, Write` only for agents that need file I/O
 
 **Examples**:
+
 ```yaml
 # Context Gatherer (needs to create context file)
 tools: Bash(gh:*), Write
@@ -427,16 +462,19 @@ tools: Bash(gh:*), Bash(npm:audit), Read, Write
 ### 5. Error Handling & Resilience
 
 **Graceful Degradation**:
+
 ```markdown
 ## <error_handling>
+
 - If context file doesn't exist: Report error, suggest running context-gatherer first
 - If GitHub CLI fails: Provide clear gh auth login instructions
 - If PR is too large: Focus on critical files, document limitation
 - If no relevant changes: Report "No {X} changes detected" not an error
-</error_handling>
+  </error_handling>
 ```
 
 **Defensive Checks**:
+
 - Validate inputs before processing
 - Check file existence before reading
 - Provide fallback strategies for timeouts
@@ -444,6 +482,7 @@ tools: Bash(gh:*), Bash(npm:audit), Read, Write
 ### 6. Output Quality Standards
 
 **Every Finding MUST Include**:
+
 1. **File path and line number**: `src/components/Hero.tsx:42-48`
 2. **Clear description**: What is the issue?
 3. **Impact**: Why does this matter? (performance cost, security risk, etc.)
@@ -451,13 +490,15 @@ tools: Bash(gh:*), Bash(npm:audit), Read, Write
 5. **Priority**: Critical / High / Medium / Low
 
 **Example - High-Quality Finding**:
-```markdown
+
+````markdown
 ### Issue: Infinite useEffect Loop
 
 - **File**: `src/hooks/useCart.ts:23-27`
 - **Severity**: Critical (P0)
 - **Impact**: Component re-renders infinitely, causing browser freeze
 - **Fix**:
+
   ```typescript
   // Before (infinite loop)
   useEffect(() => {
@@ -466,10 +507,12 @@ tools: Bash(gh:*), Bash(npm:audit), Read, Write
 
   // After (correct)
   useEffect(() => {
-    setCount(prevCount => prevCount + 1);
+    setCount((prevCount) => prevCount + 1);
   }, []);
   ```
-```
+````
+
+````
 
 ### 7. Scoring & Metrics
 
@@ -501,16 +544,18 @@ Invoke the following agents **in parallel** using a single message with multiple
 - accessibility-checker
 
 **Important**: Do NOT wait for one agent to finish before invoking the next.
-```
+````
 
 ### 9. Agent Specialization Guidelines
 
 **Single Responsibility**:
+
 - Each agent should have **one clear focus**
 - Don't create "swiss army knife" agents that do everything
 - Prefer multiple specialized agents over one general agent
 
 **Domain Expertise**:
+
 - Agents should embody a **specific role** (Security Engineer, Performance Expert, etc.)
 - Include domain-specific knowledge (WCAG for accessibility, OWASP for security)
 - Reference industry standards and best practices
@@ -518,6 +563,7 @@ Invoke the following agents **in parallel** using a single message with multiple
 ### 10. Testing & Validation
 
 **Before Deploying an Agent**:
+
 1. Test with **small PR** (< 100 lines)
 2. Test with **medium PR** (200-500 lines)
 3. Test with **large PR** (> 1000 lines)
@@ -525,6 +571,7 @@ Invoke the following agents **in parallel** using a single message with multiple
 5. Test with **malformed inputs** (invalid PR number, missing args)
 
 **Verify**:
+
 - Context file is created correctly
 - Report is persisted to correct location
 - Summary returned to orchestrator is concise
@@ -534,6 +581,7 @@ Invoke the following agents **in parallel** using a single message with multiple
 ### 11. Documentation Requirements
 
 **Agent Documentation MUST Include**:
+
 - **Role statement**: Who is this agent?
 - **When to use**: What triggers this agent?
 - **Input format**: What arguments does it expect?
@@ -544,6 +592,7 @@ Invoke the following agents **in parallel** using a single message with multiple
 ### 12. Anti-Patterns to Avoid
 
 **❌ DON'T**:
+
 - Pass large diffs between agents (use files)
 - Return full analysis in agent response (persist to disk, return summary)
 - Create agents with vague, overlapping responsibilities
@@ -553,6 +602,7 @@ Invoke the following agents **in parallel** using a single message with multiple
 - Write prompts at wrong altitude (too specific or too vague)
 
 **✅ DO**:
+
 - Use file-based communication for context
 - Return concise summaries (< 200 words)
 - Create focused, specialized agents
@@ -573,12 +623,14 @@ This plugin follows an **iterative improvement** philosophy:
 4. **Validate**: Test improvements with real PRs
 
 **Key Metrics to Monitor**:
+
 - Token consumption per review
 - Time to complete review
 - Accuracy of findings (false positives vs true issues)
 - User satisfaction
 
 **When to Refactor an Agent**:
+
 - Token usage consistently exceeds budget
 - Users report irrelevant findings
 - Agent frequently times out
