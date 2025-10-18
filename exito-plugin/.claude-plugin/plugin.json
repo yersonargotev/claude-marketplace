@@ -1,9 +1,24 @@
 {
-  "name": "exito",
-  "description": "A plugin providing a suite of commands and specialized sub-agents for comprehensive and modular PR reviews.",
-  "version": "1.1.0",
+  "name": "exito-plugin",
+  "version": "1.0.0",
+  "description": "Complete senior engineer workflow system with research, planning, implementation, testing, and review phases. Includes session management and automated hooks.",
   "author": {
-    "name": "yargotev"
+    "name": "Yerson",
+    "email": "yargote355@grupo-exito.com"
   },
-  "commands": "./commands"
+  "homepage": "https://github.com/yargotev/claude-marketplace",
+  "repository": "https://github.com/yargotev/claude-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "senior-engineer",
+    "workflow",
+    "automation",
+    "testing",
+    "code-review",
+    "session-management"
+  ],
+  "commands": "./commands",
+  "agents": "./agents",
+  "hooks": "./hooks/hooks.json",
+  "mcpServers": "./.mcp.json"
 }
