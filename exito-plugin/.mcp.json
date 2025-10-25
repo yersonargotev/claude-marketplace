@@ -1,5 +1,15 @@
 {
   "mcpServers": {
+    "azure-devops": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@azure-devops/mcp",
+        "grupo-exito"
+      ],
+      "env": {}
+    },
     "context7": {
       "type": "http",
       "url": "https://mcp.context7.com/mcp",
@@ -7,21 +17,25 @@
         "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
       },
       "description": "Access up-to-date documentation and code examples for any library/framework"
+    },
+    "serena": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/oraios/serena",
+        "serena",
+        "start-mcp-server",
+        "--context",
+        "ide-assistant",
+        "--project",
+        "${SERENA_PROJECT_DIR:-$HOME}"
+      ],
+      "env": {}
     }
   },
-  "serena": {
-    "type": "stdio",
-    "command": "uvx",
-    "args": [
-      "--from",
-      "git+https://github.com/oraios/serena",
-      "serena",
-      "start-mcp-server",
-      "--context",
-      "ide-assistant",
-      "--project",
-      "{{projectDir}}"
-    ],
-    "env": {}
+  "github": {
+    "type": "http",
+    "url": "https://api.githubcopilot.com/mcp/"
   }
 }
