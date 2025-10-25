@@ -8,5 +8,20 @@
       },
       "description": "Access up-to-date documentation and code examples for any library/framework"
     }
+  },
+  "serena": {
+    "type": "stdio",
+    "command": "uvx",
+    "args": [
+      "--from",
+      "git+https://github.com/oraios/serena",
+      "serena",
+      "start-mcp-server",
+      "--context",
+      "ide-assistant",
+      "--project",
+      "{{projectDir}}"
+    ],
+    "env": {}
   }
 }
