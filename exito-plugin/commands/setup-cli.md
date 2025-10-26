@@ -1,10 +1,10 @@
 ---
-description: "Install dependencies and configure exito-plugin for PR reviews (macOS, Linux, Windows)"
+description: "Install and configure GitHub CLI and Azure CLI (macOS, Linux, Windows)"
 ---
 
-# Exito Plugin Setup
+# CLI Setup - GitHub CLI & Azure CLI
 
-This command will automatically install required dependencies and guide you through the configuration process.
+This command installs and configures the required command-line tools for PR reviews.
 
 **Supported Platforms**: macOS, Linux (Ubuntu/Debian), Windows
 
@@ -19,10 +19,6 @@ This command will automatically install required dependencies and guide you thro
    - GitHub CLI login
    - Azure CLI login for Azure DevOps
 
-3. **Sets Up Environment Variables**:
-   - Context7 API key (optional)
-   - Serena project directory (optional)
-
 ## Prerequisites
 
 - **macOS**: Admin access for installing dependencies
@@ -30,8 +26,6 @@ This command will automatically install required dependencies and guide you thro
 - **Windows**: PowerShell 5.1+ or PowerShell 7+ with admin privileges
 
 ---
-
-Let me detect your operating system and install the required dependencies:
 
 ## Step 1: Detect Operating System
 
@@ -334,75 +328,7 @@ try {
 
 ---
 
-## Step 7: Configure Context7 API Key (Optional)
-
-Context7 provides up-to-date documentation for libraries and frameworks.
-
-**Get your API key**: https://context7.com
-
-**macOS/Linux (bash)**:
-```bash
-# For bash users
-echo 'export CONTEXT7_API_KEY="your-api-key-here"' >> ~/.bashrc
-source ~/.bashrc
-```
-
-**macOS/Linux (zsh)**:
-```bash
-# For zsh users (default on macOS)
-echo 'export CONTEXT7_API_KEY="your-api-key-here"' >> ~/.zshrc
-source ~/.zshrc
-```
-
-**Windows (PowerShell)**:
-```powershell
-# Set environment variable permanently
-[System.Environment]::SetEnvironmentVariable('CONTEXT7_API_KEY', 'your-api-key-here', [System.EnvironmentVariableTarget]::User)
-
-# Set for current session
-$env:CONTEXT7_API_KEY = "your-api-key-here"
-
-Write-Host "✓ CONTEXT7_API_KEY set successfully" -ForegroundColor Green
-```
-
-**Replace `your-api-key-here`** with your actual API key.
-
----
-
-## Step 8: Configure Serena Project Directory (Optional)
-
-Serena provides IDE assistance and requires the project directory path.
-
-**macOS/Linux (bash)**:
-```bash
-# For bash users
-echo 'export SERENA_PROJECT_DIR="$PWD"' >> ~/.bashrc
-source ~/.bashrc
-```
-
-**macOS/Linux (zsh)**:
-```bash
-# For zsh users (default on macOS)
-echo 'export SERENA_PROJECT_DIR="$PWD"' >> ~/.zshrc
-source ~/.zshrc
-```
-
-**Windows (PowerShell)**:
-```powershell
-# Set environment variable permanently (use current directory)
-[System.Environment]::SetEnvironmentVariable('SERENA_PROJECT_DIR', $PWD.Path, [System.EnvironmentVariableTarget]::User)
-
-# Set for current session
-$env:SERENA_PROJECT_DIR = $PWD.Path
-
-Write-Host "✓ SERENA_PROJECT_DIR set to: $($PWD.Path)" -ForegroundColor Green
-```
-
-**Note**: Adjust the path as needed for your project structure.
-
----
-
-## Step 9: Verify Installation (All Platforms)
+## Step 7: Verify Installation (All Platforms)
 
 Let's verify everything is configured correctly:
 
@@ -418,10 +344,6 @@ gh auth status
 echo ""
 echo "Azure:"
 az account show --query "{Name:name, TenantId:tenantId}" -o table 2>/dev/null || echo "Not authenticated"
-echo ""
-echo "=== Environment Variables ==="
-echo "CONTEXT7_API_KEY: ${CONTEXT7_API_KEY:+[SET]}"
-echo "SERENA_PROJECT_DIR: ${SERENA_PROJECT_DIR:-[NOT SET]}"
 ```
 
 **Windows (PowerShell)**:
@@ -442,42 +364,7 @@ try {
 } catch {
   Write-Host "Not authenticated" -ForegroundColor Red
 }
-
-Write-Host ""
-Write-Host "=== Environment Variables ===" -ForegroundColor Cyan
-if ($env:CONTEXT7_API_KEY) {
-  Write-Host "CONTEXT7_API_KEY: [SET]" -ForegroundColor Green
-} else {
-  Write-Host "CONTEXT7_API_KEY: [NOT SET]" -ForegroundColor Yellow
-}
-
-if ($env:SERENA_PROJECT_DIR) {
-  Write-Host "SERENA_PROJECT_DIR: $env:SERENA_PROJECT_DIR" -ForegroundColor Green
-} else {
-  Write-Host "SERENA_PROJECT_DIR: [NOT SET]" -ForegroundColor Yellow
-}
 ```
-
----
-
-## Step 10: Restart Claude Code
-
-**IMPORTANT**: You must restart Claude Code for the MCP server changes to take effect.
-
-**All Platforms**:
-1. Close Claude Code completely
-2. Restart Claude Code
-3. The plugin will now have access to all configured MCP servers
-
----
-
-## Setup Complete!
-
-After restarting Claude Code, you can use all plugin features:
-
-- `/review <PR_NUMBER> [HU_URL_1] [HU_URL_2]...` - Comprehensive PR review
-- `/review-perf <PR_NUMBER>` - Performance-focused review
-- `/review-sec <PR_NUMBER>` - Security-focused review
 
 ---
 
@@ -533,32 +420,6 @@ After restarting Claude Code, you can use all plugin features:
   - Check Azure DevOps organization access
   - Ensure you have permissions to view Work Items
   - Verify User Story URLs are correct format
-
-### Environment Variable Issues
-
-#### macOS/Linux
-- **Variables not persisting**:
-  - Check shell type: `echo $SHELL`
-  - Use correct config file (~/.zshrc for zsh, ~/.bashrc for bash)
-  - Manually source config: `source ~/.zshrc` or `source ~/.bashrc`
-  - Restart terminal completely
-
-#### Windows
-- **Environment variables not set**:
-  - Close and reopen PowerShell after setting
-  - Check variable: `$env:CONTEXT7_API_KEY`
-  - Use System Properties > Environment Variables GUI as fallback
-  - Ensure using User scope, not System scope
-
-### MCP Server Issues
-
-- **MCP servers not loading**:
-  - Restart Claude Code completely
-  - Check environment variables are set:
-    - macOS/Linux: `echo $CONTEXT7_API_KEY`
-    - Windows: `Write-Host $env:CONTEXT7_API_KEY`
-  - Verify `.mcp.json` configuration
-  - Check Claude Code logs for errors
 
 ### Platform-Specific Issues
 
@@ -626,57 +487,6 @@ gh auth login
 az login --allow-no-subscriptions
 ```
 
-### Configure MCP Servers
-
-The plugin includes MCP server configuration in `exito-plugin/.mcp.json`:
-
-```json
-{
-  "mcpServers": {
-    "context7": {
-      "type": "http",
-      "url": "https://mcp.context7.com/mcp",
-      "headers": {
-        "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
-      }
-    },
-    "serena": {
-      "type": "stdio",
-      "command": "uvx",
-      "args": [
-        "--from",
-        "git+https://github.com/oraios/serena",
-        "serena",
-        "start-mcp-server",
-        "--context",
-        "ide-assistant",
-        "--project",
-        "${SERENA_PROJECT_DIR}"
-      ]
-    }
-  }
-}
-```
-
----
-
-## Need Help?
-
-If you encounter issues not covered here:
-
-1. **Check the plugin documentation**: [GitHub Repository](https://github.com/yargotev/claude-exito-plugin)
-2. **Verify all commands run successfully** in your terminal/PowerShell
-3. **Check Claude Code logs** for MCP server errors
-4. **Ensure all environment variables are set correctly**
-5. **Try manual installation** if automatic setup fails
-
-### Useful Resources
-
-- **GitHub CLI Docs**: https://cli.github.com/manual/
-- **Azure CLI Docs**: https://learn.microsoft.com/en-us/cli/azure/
-- **Context7 API**: https://context7.com/docs
-- **Claude Code**: https://docs.claude.com/claude-code
-
 ---
 
 ## Quick Reference
@@ -689,6 +499,21 @@ If you encounter issues not covered here:
 | Install az | `brew install azure-cli` | `sudo apt install azure-cli` | `winget install Microsoft.AzureCLI` |
 | Login gh | `gh auth login` | `gh auth login` | `gh auth login` |
 | Login az | `az login --allow-no-subscriptions` | `az login --allow-no-subscriptions` | `az login --allow-no-subscriptions` |
-| Set env var | `export VAR="value"` | `export VAR="value"` | `$env:VAR="value"` |
 | Check gh | `gh auth status` | `gh auth status` | `gh auth status` |
 | Check az | `az account show` | `az account show` | `az account show` |
+
+---
+
+## Next Steps
+
+After setting up CLIs, configure MCP servers:
+
+```bash
+/setup-mcp
+```
+
+## Need Help?
+
+- **GitHub CLI Docs**: https://cli.github.com/manual/
+- **Azure CLI Docs**: https://learn.microsoft.com/en-us/cli/azure/
+- **Plugin Docs**: https://github.com/yargotev/claude-exito-plugin
