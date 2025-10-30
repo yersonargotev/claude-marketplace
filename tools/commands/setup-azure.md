@@ -1,10 +1,10 @@
 ---
-description: "Install and configure GitHub CLI and Azure CLI (macOS, Linux, Windows)"
+description: "Install and configure Azure CLI for Azure DevOps integration (macOS, Linux, Windows)"
 ---
 
-# CLI Setup - GitHub CLI & Azure CLI
+# Azure CLI Setup
 
-This command installs and configures the required command-line tools for PR reviews.
+This command installs and configures Azure CLI for Azure DevOps integration, enabling the business-validator agent to fetch User Story details.
 
 **Supported Platforms**: macOS, Linux (Ubuntu/Debian), Windows
 
@@ -12,18 +12,18 @@ This command installs and configures the required command-line tools for PR revi
 
 1. **Installs Dependencies** (if missing):
    - Package manager (Homebrew/apt/winget)
-   - GitHub CLI (`gh`)
    - Azure CLI (`az`)
 
 2. **Configures Authentication**:
-   - GitHub CLI login
    - Azure CLI login for Azure DevOps
+   - No subscription required (uses `--allow-no-subscriptions`)
 
 ## Prerequisites
 
 - **macOS**: Admin access for installing dependencies
 - **Linux**: sudo access (Ubuntu/Debian-based distributions)
 - **Windows**: PowerShell 5.1+ or PowerShell 7+ with admin privileges
+- **Azure Account**: Access to Azure DevOps organization
 
 ---
 
@@ -71,20 +71,7 @@ else
 fi
 ```
 
-### Step 3a: Install GitHub CLI (macOS)
-
-```bash
-if command -v gh >/dev/null 2>&1; then
-  echo "✓ GitHub CLI is already installed ($(gh --version | head -1))"
-else
-  echo "✗ GitHub CLI is not installed"
-  echo "Installing GitHub CLI via Homebrew..."
-  brew install gh
-  echo "✓ GitHub CLI installed successfully"
-fi
-```
-
-### Step 4a: Install Azure CLI (macOS)
+### Step 3a: Install Azure CLI (macOS)
 
 ```bash
 if command -v az >/dev/null 2>&1; then
@@ -109,34 +96,7 @@ sudo apt-get update
 echo "✓ Package manager updated"
 ```
 
-### Step 3b: Install GitHub CLI (Linux)
-
-```bash
-if command -v gh >/dev/null 2>&1; then
-  echo "✓ GitHub CLI is already installed ($(gh --version | head -1))"
-else
-  echo "✗ GitHub CLI is not installed"
-  echo "Installing GitHub CLI..."
-
-  # Install prerequisites
-  sudo apt-get install -y curl gnupg
-
-  # Add GitHub CLI repository
-  sudo mkdir -p /etc/apt/keyrings
-  curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null
-  sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
-
-  echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-
-  # Install GitHub CLI
-  sudo apt-get update
-  sudo apt-get install -y gh
-
-  echo "✓ GitHub CLI installed successfully"
-fi
-```
-
-### Step 4b: Install Azure CLI (Linux)
+### Step 3b: Install Azure CLI (Linux)
 
 ```bash
 if command -v az >/dev/null 2>&1; then
@@ -191,25 +151,7 @@ if (Get-Command winget -ErrorAction SilentlyContinue) {
 }
 ```
 
-### Step 3c: Install GitHub CLI (Windows)
-
-```powershell
-# Check if gh is installed
-if (Get-Command gh -ErrorAction SilentlyContinue) {
-  $ghVersion = gh --version | Select-String -Pattern "gh version" | Out-String
-  Write-Host "✓ GitHub CLI is already installed ($($ghVersion.Trim()))" -ForegroundColor Green
-} else {
-  Write-Host "✗ GitHub CLI is not installed" -ForegroundColor Red
-  Write-Host "Installing GitHub CLI via winget..." -ForegroundColor Yellow
-
-  winget install -e --id GitHub.cli
-
-  Write-Host "✓ GitHub CLI installed successfully" -ForegroundColor Green
-  Write-Host "Please close and reopen PowerShell for changes to take effect."
-}
-```
-
-### Step 4c: Install Azure CLI (Windows)
+### Step 3c: Install Azure CLI (Windows)
 
 ```powershell
 # Check if az is installed
@@ -232,14 +174,6 @@ if (Get-Command az -ErrorAction SilentlyContinue) {
 If winget is not available, you can install manually:
 
 ```powershell
-# GitHub CLI MSI
-Write-Host "Downloading GitHub CLI installer..."
-$ghUrl = "https://github.com/cli/cli/releases/latest/download/gh_windows_amd64.msi"
-$ghInstaller = "$env:TEMP\gh_installer.msi"
-Invoke-WebRequest -Uri $ghUrl -OutFile $ghInstaller
-Start-Process msiexec.exe -ArgumentList "/i", $ghInstaller, "/quiet" -Wait
-Remove-Item $ghInstaller
-
 # Azure CLI MSI
 Write-Host "Downloading Azure CLI installer..."
 $azUrl = "https://aka.ms/installazurecliwindows"
@@ -253,44 +187,7 @@ Write-Host "✓ Installation complete. Please restart PowerShell."
 
 ---
 
-## Step 5: GitHub Authentication (All Platforms)
-
-Now let's authenticate with GitHub:
-
-**macOS/Linux**:
-```bash
-# Check if already authenticated
-if gh auth status >/dev/null 2>&1; then
-  echo "✓ Already authenticated with GitHub"
-  gh auth status
-else
-  echo "Setting up GitHub authentication..."
-  gh auth login
-fi
-```
-
-**Windows (PowerShell)**:
-```powershell
-# Check if already authenticated
-try {
-  gh auth status 2>$null
-  Write-Host "✓ Already authenticated with GitHub" -ForegroundColor Green
-  gh auth status
-} catch {
-  Write-Host "Setting up GitHub authentication..." -ForegroundColor Yellow
-  gh auth login
-}
-```
-
-**This will**:
-- Open an interactive authentication flow
-- Ask you to choose GitHub.com or GitHub Enterprise
-- Provide a one-time code for browser authentication
-- Create a credential for the GitHub CLI
-
----
-
-## Step 6: Azure CLI Authentication (All Platforms)
+## Step 4: Azure CLI Authentication (All Platforms)
 
 Now let's authenticate with Azure for Azure DevOps integration:
 
@@ -324,24 +221,20 @@ try {
 - Allow access without requiring Azure subscriptions
 - Enable the business-validator agent to fetch User Story details from Azure DevOps
 
-**Note**: Both authentications persist across sessions, so you only need to do this once.
+**Note**: Authentication persists across sessions, so you only need to do this once.
 
 ---
 
-## Step 7: Verify Installation (All Platforms)
+## Step 5: Verify Installation (All Platforms)
 
 Let's verify everything is configured correctly:
 
 **macOS/Linux**:
 ```bash
 echo "=== Dependency Versions ==="
-echo "GitHub CLI: $(gh --version | head -1)"
 echo "Azure CLI: $(az --version | head -1)"
 echo ""
 echo "=== Authentication Status ==="
-echo "GitHub:"
-gh auth status
-echo ""
 echo "Azure:"
 az account show --query "{Name:name, TenantId:tenantId}" -o table 2>/dev/null || echo "Not authenticated"
 ```
@@ -349,21 +242,40 @@ az account show --query "{Name:name, TenantId:tenantId}" -o table 2>/dev/null ||
 **Windows (PowerShell)**:
 ```powershell
 Write-Host "=== Dependency Versions ===" -ForegroundColor Cyan
-Write-Host "GitHub CLI: $(gh --version | Select-String 'gh version')"
 Write-Host "Azure CLI: $(az --version | Select-String 'azure-cli' | Select-Object -First 1)"
 Write-Host ""
 
 Write-Host "=== Authentication Status ===" -ForegroundColor Cyan
-Write-Host "GitHub:" -ForegroundColor Yellow
-gh auth status
-
-Write-Host ""
 Write-Host "Azure:" -ForegroundColor Yellow
 try {
   az account show --query "{Name:name, TenantId:tenantId}" -o table
 } catch {
   Write-Host "Not authenticated" -ForegroundColor Red
 }
+```
+
+---
+
+## Step 6: Configure Azure DevOps Extension (Optional)
+
+For enhanced Azure DevOps integration, install the Azure DevOps extension:
+
+**All Platforms**:
+```bash
+# Install Azure DevOps extension
+az extension add --name azure-devops
+
+# Verify installation
+az extension list --output table | grep azure-devops
+```
+
+**Configure default organization** (optional):
+```bash
+# Set default organization
+az devops configure --defaults organization=https://dev.azure.com/your-organization
+
+# Verify configuration
+az devops configure --list
 ```
 
 ---
@@ -385,7 +297,7 @@ try {
   - Check `/etc/apt/sources.list` for errors
 
 - **GPG key errors**:
-  - Clear old keys: `sudo rm -rf /etc/apt/keyrings/microsoft.gpg /etc/apt/keyrings/githubcli-archive-keyring.gpg`
+  - Clear old keys: `sudo rm -rf /etc/apt/keyrings/microsoft.gpg`
   - Re-run the installation steps
 
 #### Windows
@@ -400,13 +312,6 @@ try {
   - Check Windows Installer service is running
 
 ### Authentication Issues
-
-#### GitHub Authentication
-- **gh auth login fails**:
-  - Run `gh auth logout` then `gh auth login` again
-  - Choose HTTPS protocol (not SSH) if having issues
-  - Make sure browser opens correctly
-  - Check firewall settings
 
 #### Azure CLI Authentication
 - **az login fails**:
@@ -439,6 +344,17 @@ try {
   - Run: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
   - Or use `-ExecutionPolicy Bypass` when running scripts
 
+### Azure DevOps Specific Issues
+
+- **Cannot access Work Items**:
+  - Ensure you're a member of the Azure DevOps organization
+  - Check project permissions (Basic access minimum)
+  - Verify the organization URL is correct
+
+- **Extension installation fails**:
+  - Update Azure CLI: `az upgrade`
+  - Remove and reinstall extension: `az extension remove --name azure-devops && az extension add --name azure-devops`
+
 ---
 
 ## Manual Configuration (Advanced)
@@ -452,17 +368,12 @@ If you prefer to configure manually or the automatic setup doesn't work:
 # Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# GitHub CLI & Azure CLI
-brew install gh azure-cli
+# Azure CLI
+brew install azure-cli
 ```
 
 **Linux (Ubuntu/Debian)**:
 ```bash
-# GitHub CLI
-curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list
-sudo apt-get update && sudo apt-get install gh
-
 # Azure CLI
 curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/microsoft.gpg > /dev/null
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
@@ -472,7 +383,6 @@ sudo apt-get update && sudo apt-get install azure-cli
 **Windows (PowerShell)**:
 ```powershell
 # Using winget
-winget install -e --id GitHub.cli
 winget install -e --id Microsoft.AzureCLI
 ```
 
@@ -480,11 +390,11 @@ winget install -e --id Microsoft.AzureCLI
 
 **All Platforms**:
 ```bash
-# GitHub
-gh auth login
-
 # Azure
 az login --allow-no-subscriptions
+
+# Install Azure DevOps extension (optional)
+az extension add --name azure-devops
 ```
 
 ---
@@ -495,25 +405,44 @@ az login --allow-no-subscriptions
 
 | Task | macOS | Linux | Windows |
 |------|-------|-------|---------|
-| Install gh | `brew install gh` | `sudo apt install gh` | `winget install GitHub.cli` |
 | Install az | `brew install azure-cli` | `sudo apt install azure-cli` | `winget install Microsoft.AzureCLI` |
-| Login gh | `gh auth login` | `gh auth login` | `gh auth login` |
 | Login az | `az login --allow-no-subscriptions` | `az login --allow-no-subscriptions` | `az login --allow-no-subscriptions` |
-| Check gh | `gh auth status` | `gh auth status` | `gh auth status` |
 | Check az | `az account show` | `az account show` | `az account show` |
+| Install extension | `az extension add --name azure-devops` | `az extension add --name azure-devops` | `az extension add --name azure-devops` |
+
+---
+
+## Environment Variables (Optional)
+
+For enhanced Azure DevOps integration, you can set these environment variables:
+
+**macOS/Linux** (add to ~/.zshrc or ~/.bashrc):
+```bash
+export AZURE_DEVOPS_ORG_URL="https://dev.azure.com/your-organization"
+export AZURE_DEVOPS_PAT="your-personal-access-token"  # If using PAT authentication
+```
+
+**Windows** (PowerShell profile):
+```powershell
+$env:AZURE_DEVOPS_ORG_URL = "https://dev.azure.com/your-organization"
+$env:AZURE_DEVOPS_PAT = "your-personal-access-token"  # If using PAT authentication
+```
+
+**Note**: PAT authentication is optional. The `az login` method is recommended for interactive use.
 
 ---
 
 ## Next Steps
 
-After setting up CLIs, configure MCP servers:
+After setting up Azure CLI, you can:
 
-```bash
-/setup-mcp
-```
+1. Test business-validator agent with PR reviews
+2. Configure Azure DevOps organization defaults
+3. Install GitHub CLI if not already installed (use `setup-github.md`)
+4. Set up MCP servers for enhanced capabilities
 
 ## Need Help?
 
-- **GitHub CLI Docs**: https://cli.github.com/manual/
 - **Azure CLI Docs**: https://learn.microsoft.com/en-us/cli/azure/
-- **Plugin Docs**: https://github.com/yargotev/claude-exito-plugin
+- **Azure DevOps CLI**: https://learn.microsoft.com/en-us/azure/devops/cli/
+- **Authentication Guide**: https://learn.microsoft.com/en-us/cli/azure/authenticate-azure-cli

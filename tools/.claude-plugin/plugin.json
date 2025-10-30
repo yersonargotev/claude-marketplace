@@ -1,0 +1,13 @@
+{
+  "name": "tools",
+  "version": "1.0.0",
+  "description": "",
+  "author": {
+    "name": "Yerson",
+    "email": "yargote355@grupo-exito.com"
+  },
+  "homepage": "https://github.com/yargotev/claude-marketplace",
+  "repository": "https://github.com/yargotev/claude-marketplace",
+  "license": "MIT",
+  "keywords": []
+}
