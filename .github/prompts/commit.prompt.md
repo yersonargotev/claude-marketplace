@@ -30,11 +30,13 @@ Create well-formatted commit: $ARGUMENTS
 ## Intelligent Commit Workflow
 
 ### Phase 1: Analyze Current State
+
 1. Check if files are already staged: `git diff --cached --stat`
 2. If staged files exist: Commit only those (respect manual staging)
 3. If no staged files: Proceed to intelligent grouping
 
 ### Phase 2: Understand All Changes
+
 ```bash
 # Get detailed status with change types
 git status --porcelain
@@ -48,7 +50,9 @@ git status --porcelain
 ```
 
 ### Phase 3: Identify Logical Groups
+
 Analyze the changes and identify distinct groups:
+
 - New plugins/features (by directory)
 - Refactoring/moves (renamed/moved files)
 - Deletions (obsolete code removal)
@@ -56,13 +60,16 @@ Analyze the changes and identify distinct groups:
 - Documentation (README, guides)
 
 ### Phase 4: Create Atomic Commits
+
 For each group (in order of priority):
+
 1. Stage the group: `git add path/to/group/`
 2. Review staged changes: `git diff --cached --stat`
 3. Create descriptive commit with appropriate emoji
 4. Move to next group
 
 ### Phase 5: Verify
+
 - Check all changes are committed: `git status`
 - Review commit history: `git log --oneline -5`
 
@@ -175,7 +182,9 @@ When analyzing the diff, consider splitting commits based on these criteria:
 When no files are staged, analyze all changes and group them intelligently:
 
 ### Step 1: Analyze Changes
+
 Run `git status --porcelain` to see all changes:
+
 - `A` = New files (added)
 - `M` = Modified files
 - `D` = Deleted files
@@ -189,6 +198,7 @@ Group changes by **purpose and context**, not just by file type:
 **Example grouping patterns:**
 
 1. **New Features/Plugins** (separate commit per feature):
+
    - All new files in a plugin directory (`plugin-name/`)
    - Include related config files (`plugin.json`, etc.)
    - Commit type: `🎉 feat:` or `✨ feat:`
@@ -196,12 +206,13 @@ Group changes by **purpose and context**, not just by file type:
 2. **Refactoring/Reorganization** (separate commits):
    - Moving/renaming directories
    - Commit type: `🚚 refactor:` or `🏗️ refactor:`
-   
 3. **Deletions/Cleanup** (separate commit):
+
    - Removing obsolete code, old plugins
    - Commit type: `🗑️ refactor:` or `🔥 fix:`
 
 4. **Metadata/Config Updates** (separate commit):
+
    - Version bumps, URL fixes, metadata corrections
    - Commit type: `✏️ fix:` or `🔧 chore:`
 
@@ -212,6 +223,7 @@ Group changes by **purpose and context**, not just by file type:
 ### Step 3: Create Commits in Logical Order
 
 **Recommended order:**
+
 1. New features/additions first (they add value)
 2. Refactoring/reorganization (they improve structure)
 3. Deletions/cleanup (they remove obsolete code)
@@ -239,6 +251,7 @@ git add '*.json'
 ### Example: Real-World Grouping
 
 Given these changes:
+
 ```
 A  cc/.claude-plugin/plugin.json
 A  cc/claude-code-plugin-builder/README.md
@@ -254,6 +267,7 @@ D  tools/commands/...  (3 files)
 **Intelligent grouping:**
 
 **Commit 1** - New feature (cc/ plugin):
+
 ```bash
 git add cc/
 git commit -m "🎉 feat: add claude-code-plugin-builder to marketplace
@@ -265,6 +279,7 @@ git commit -m "🎉 feat: add claude-code-plugin-builder to marketplace
 ```
 
 **Commit 2** - New feature (setup/ plugin):
+
 ```bash
 git add setup/
 git commit -m "🔧 feat: add setup plugin for development environment
@@ -275,6 +290,7 @@ git commit -m "🔧 feat: add setup plugin for development environment
 ```
 
 **Commit 3** - Cleanup (remove obsolete):
+
 ```bash
 git add tools/
 git commit -m "🗑️ refactor: remove obsolete tools plugin
@@ -284,6 +300,7 @@ git commit -m "🗑️ refactor: remove obsolete tools plugin
 ```
 
 **Commit 4** - Fix (metadata correction):
+
 ```bash
 git add exito/.claude-plugin/plugin.json
 git commit -m "✏️ fix: correct repository URLs in exito plugin
@@ -295,12 +312,14 @@ git commit -m "✏️ fix: correct repository URLs in exito plugin
 ### Anti-Patterns to Avoid
 
 ❌ **Don't do this:**
+
 - `git add -A` followed by one massive commit
 - Mixing new features with deletions in same commit
 - Combining unrelated changes (e.g., plugin A + plugin B)
 - Generic messages like "Update files" or "Various changes"
 
 ✅ **Do this instead:**
+
 - Analyze changes first (`git status --porcelain`)
 - Group by logical concern
 - Stage one group at a time
@@ -331,6 +350,7 @@ Good commit messages:
 Real-world example of intelligent grouping (Claude Code Marketplace):
 
 **Scenario:** Multiple changes across different plugins
+
 ```
 Status:
 A  cc/claude-code-plugin-builder/...  (16 files)
@@ -340,18 +360,16 @@ D  tools/...  (4 files)
 ```
 
 **Intelligent commits created:**
+
 1. ✨ `🎉 feat: add claude-code-plugin-builder to marketplace`
    - Groups: All new files in cc/ directory
    - 6,320 lines of new plugin code
-   
 2. ✨ `🔧 feat: add setup plugin for development environment`
    - Groups: All new files in setup/ directory
    - 925 lines of setup commands
-   
 3. ♻️ `🗑️ refactor: remove obsolete tools plugin`
    - Groups: All deleted files in tools/ directory
    - Replaced by better organized plugin
-   
 4. 🐛 `✏️ fix: correct repository URLs in exito plugin`
    - Groups: Single metadata file modification
    - URL typo correction
