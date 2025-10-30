@@ -1,0 +1,32 @@
+{
+  "hooks": [
+    {
+      "event": "PreToolUse",
+      "matcher": "Bash(git:commit)",
+      "command": "npm run format && npm run lint",
+      "exitCodes": {
+        "continue": [0],
+        "block": [1, 2]
+      },
+      "description": "Format and lint code before git commit"
+    },
+    {
+      "event": "PostToolUse",
+      "matcher": "Write",
+      "command": "npm test -- --related --passWithNoTests",
+      "description": "Run related tests after file changes"
+    },
+    {
+      "event": "FileChange",
+      "matcher": "**/*.ts",
+      "command": "npm run build:types",
+      "description": "Regenerate TypeScript types on changes"
+    },
+    {
+      "event": "Error",
+      "matcher": "*",
+      "script": "./scripts/on-error.sh",
+      "description": "Log errors and send notifications"
+    }
+  ]
+}

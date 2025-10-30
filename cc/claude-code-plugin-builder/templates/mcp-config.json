@@ -1,0 +1,29 @@
+{
+  "mcpServers": {
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
+      },
+      "description": "Up-to-date documentation for any library/framework"
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.github.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_TOKEN}",
+        "Accept": "application/vnd.github.v3+json"
+      },
+      "description": "GitHub repository and PR management"
+    },
+    "example-service": {
+      "type": "http",
+      "url": "https://api.example.com/mcp",
+      "headers": {
+        "API-Key": "${EXAMPLE_API_KEY}"
+      },
+      "description": "Example service integration - replace with your service"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "plugins": {
+    "my-plugin": {
+      "path": "/absolute/path/to/my-plugin",
+      "description": "Local development version of my-plugin"
+    },
+    "another-plugin": {
+      "path": "/absolute/path/to/another-plugin",
+      "description": "Another plugin in development"
+    }
+  }
+}
