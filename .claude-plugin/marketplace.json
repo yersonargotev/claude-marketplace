@@ -50,6 +50,28 @@
         "configuration",
         "cross-platform"
       ]
+    },
+    {
+      "name": "plugin-builder",
+      "source": "./cc",
+      "description": "Comprehensive Claude Code plugin development toolkit with templates, guides, and interactive commands for building custom plugins, commands, agents, workflows, hooks, and MCP integrations",
+      "version": "1.0.0",
+      "author": {
+        "name": "Yerson",
+        "email": "yersonargotev@gmail.com"
+      },
+      "category": "development-tools",
+      "keywords": [
+        "plugin-development",
+        "claude-code",
+        "commands",
+        "subagents",
+        "workflows",
+        "mcp",
+        "hooks",
+        "templates",
+        "skill"
+      ]
     }
   ]
 }
