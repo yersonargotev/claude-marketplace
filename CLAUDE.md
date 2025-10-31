@@ -16,6 +16,7 @@ The plugin uses clear, action-oriented names for all commands and agents:
 - **/think** - Deep architectural analysis with ULTRATHINK mode (formerly `/senior`)
 - **/ui** - Frontend/UI specialist workflow (formerly `/frontend`)
 - **/patch** - Quick fixes and simple changes (formerly `/quick-fix`)
+- **/implement** - Fast implementation without formal testing/review (research → plan → implement)
 - **/workflow** - Systematic problem-solving with multi-solution exploration and surgical implementation
 - **/review** - Comprehensive PR review orchestrator
 - **/review-perf** - Performance-focused PR review
