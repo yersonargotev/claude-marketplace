@@ -1,7 +1,7 @@
 {
-  "name": "cc",
+  "name": "plugin-builder",
   "version": "1.0.0",
-  "description": "",
+  "description": "Comprehensive Claude Code plugin development skill with templates, guides, and best practices for building custom commands, agents, workflows, hooks, and MCP integrations",
   "author": {
     "name": "Yerson",
     "email": "yersonargotev@gmail.com"
@@ -9,5 +9,15 @@
   "homepage": "https://github.com/yersonargotev/claude-marketplace",
   "repository": "https://github.com/yersonargotev/claude-marketplace",
   "license": "MIT",
-  "keywords": []
+  "keywords": [
+    "plugin-development",
+    "claude-code",
+    "commands",
+    "subagents",
+    "workflows",
+    "mcp",
+    "hooks",
+    "templates",
+    "skill"
+  ]
 }
