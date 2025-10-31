@@ -119,6 +119,23 @@ All context and reports are persisted to `.claude/sessions/pr_reviews/`:
 - Enables resumable reviews for large PRs
 - Provides audit trail of analysis
 
+**Task Workflow Sessions** use semantic naming for improved readability:
+
+Task sessions are stored in `.claude/sessions/tasks/` with human-readable names:
+
+- **Format**: `{agent}_{description}_{timestamp}`
+- **Examples**:
+  - `investigator_add-user-auth_20251031_180000`
+  - `architect_refactor-hooks_20251031_183042`
+  - `builder_implement-dark-mode_20251031_190521`
+- **Artifacts**: `context.md`, `plan.md`, `progress.md`, `test_report.md`, `review.md`, `session_metadata.json`
+
+**Benefits**:
+- Immediately identifies task purpose without opening files
+- Easy to find sessions by description or agent type
+- Self-documenting error messages and logs
+- Maintains chronological sorting via timestamp
+
 #### 2. **Agent Specialization & Role Definition**
 
 Each agent now has:
