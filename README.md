@@ -16,10 +16,10 @@ This project is distributed as a Claude Code plugin. Follow these steps to insta
     ```
 
 2.  **Install the Plugin**:
-    Install the `review` plugin from the marketplace you just added.
+    Install the `exito` plugin from the marketplace you just added.
 
     ```shell
-    /plugin install exito@yargotev-marketplace
+    /plugin install exito@exito-marketplace
     ```
 
 After installation, restart Claude Code to enable the new commands.

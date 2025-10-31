@@ -37,8 +37,8 @@ To test the plugin after making changes:
 1. **Install the plugin** (if not already installed):
 
    ```bash
-   /plugin marketplace add yargotev/claude-exito-plugin
-   /plugin install exito@yargotev-marketplace
+   /plugin marketplace add yargotev/claude-marketplace
+   /plugin install exito@exito-marketplace
    ```
 
 2. **Setup required dependencies**:
@@ -284,10 +284,10 @@ Get your API key from [https://context7.com](https://context7.com).
 
 ## Plugin Distribution
 
-The plugin is distributed via the marketplace `yargotev/claude-exito-plugin` and installed as `exito@yargotev-marketplace`. Changes to the plugin require:
+The plugin is distributed via the marketplace `yargotev/claude-marketplace` and installed as `exito@exito-marketplace`. Changes to the plugin require:
 
 1. Committing changes to the repository
-2. Users pulling the latest version via `/plugin update exito@yargotev-marketplace`
+2. Users pulling the latest version via `/plugin update exito@exito-marketplace`
 
 ## MCP Server Integration
 
