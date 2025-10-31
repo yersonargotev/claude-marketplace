@@ -11,6 +11,7 @@ This command installs and configures GitHub CLI for PR reviews and repository op
 ## What This Command Does
 
 1. **Installs Dependencies** (if missing):
+
    - Package manager (Homebrew/apt/winget)
    - GitHub CLI (`gh`)
 
@@ -188,6 +189,7 @@ Write-Host "✓ Installation complete. Please restart PowerShell."
 Now let's authenticate with GitHub:
 
 **macOS/Linux**:
+
 ```bash
 # Check if already authenticated
 if gh auth status >/dev/null 2>&1; then
@@ -200,6 +202,7 @@ fi
 ```
 
 **Windows (PowerShell)**:
+
 ```powershell
 # Check if already authenticated
 try {
@@ -213,6 +216,7 @@ try {
 ```
 
 **This will**:
+
 - Open an interactive authentication flow
 - Ask you to choose GitHub.com or GitHub Enterprise
 - Provide a one-time code for browser authentication
@@ -225,6 +229,7 @@ try {
 Let's verify everything is configured correctly:
 
 **macOS/Linux**:
+
 ```bash
 echo "=== Dependency Versions ==="
 echo "GitHub CLI: $(gh --version | head -1)"
@@ -235,6 +240,7 @@ gh auth status
 ```
 
 **Windows (PowerShell)**:
+
 ```powershell
 Write-Host "=== Dependency Versions ===" -ForegroundColor Cyan
 Write-Host "GitHub CLI: $(gh --version | Select-String 'gh version')"
@@ -252,13 +258,16 @@ gh auth status
 ### Installation Issues
 
 #### macOS
+
 - **Homebrew installation fails**:
   - Make sure you have admin access
   - Install Xcode Command Line Tools: `xcode-select --install`
   - Check internet connection
 
 #### Linux
+
 - **apt-get fails**:
+
   - Make sure you have sudo privileges
   - Run `sudo apt-get update` first
   - Check `/etc/apt/sources.list` for errors
@@ -268,7 +277,9 @@ gh auth status
   - Re-run the installation steps
 
 #### Windows
+
 - **winget not found**:
+
   - Update Windows to latest version (Windows 10 1809+, Windows 11)
   - Install App Installer from Microsoft Store
   - Use alternative MSI installer method
@@ -281,6 +292,7 @@ gh auth status
 ### Authentication Issues
 
 #### GitHub Authentication
+
 - **gh auth login fails**:
   - Run `gh auth logout` then `gh auth login` again
   - Choose HTTPS protocol (not SSH) if having issues
@@ -290,17 +302,20 @@ gh auth status
 ### Platform-Specific Issues
 
 #### macOS (Apple Silicon)
+
 - **Homebrew PATH not found**:
   - Run: `eval "$(/opt/homebrew/bin/brew shellenv)"`
   - Add to ~/.zshrc permanently
 
 #### Linux (WSL)
+
 - **Running on WSL**:
   - Follow Linux instructions
   - Ensure WSL2 is installed
   - Use Windows browser for authentication (will open automatically)
 
 #### Windows
+
 - **PowerShell execution policy error**:
   - Run: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
   - Or use `-ExecutionPolicy Bypass` when running scripts
@@ -314,6 +329,7 @@ If you prefer to configure manually or the automatic setup doesn't work:
 ### Install Dependencies Manually
 
 **macOS**:
+
 ```bash
 # Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -323,6 +339,7 @@ brew install gh
 ```
 
 **Linux (Ubuntu/Debian)**:
+
 ```bash
 # GitHub CLI
 curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null
@@ -331,6 +348,7 @@ sudo apt-get update && sudo apt-get install gh
 ```
 
 **Windows (PowerShell)**:
+
 ```powershell
 # Using winget
 winget install -e --id GitHub.cli
@@ -339,6 +357,7 @@ winget install -e --id GitHub.cli
 ### Authenticate Manually
 
 **All Platforms**:
+
 ```bash
 # GitHub
 gh auth login
@@ -350,11 +369,11 @@ gh auth login
 
 ### Command Summary by Platform
 
-| Task | macOS | Linux | Windows |
-|------|-------|-------|---------|
+| Task       | macOS             | Linux                 | Windows                     |
+| ---------- | ----------------- | --------------------- | --------------------------- |
 | Install gh | `brew install gh` | `sudo apt install gh` | `winget install GitHub.cli` |
-| Login gh | `gh auth login` | `gh auth login` | `gh auth login` |
-| Check gh | `gh auth status` | `gh auth status` | `gh auth status` |
+| Login gh   | `gh auth login`   | `gh auth login`       | `gh auth login`             |
+| Check gh   | `gh auth status`  | `gh auth status`      | `gh auth status`            |
 
 ---
 
@@ -362,7 +381,7 @@ gh auth login
 
 After setting up GitHub CLI, you may want to:
 
-1. Configure Azure DevOps integration: Create `setup-azure.md` command
+1. Configure Azure DevOps integration: Create `azure.md` command
 2. Set up MCP servers for enhanced capabilities
 3. Test PR review commands
 

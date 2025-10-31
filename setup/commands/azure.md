@@ -11,6 +11,7 @@ This command installs and configures Azure CLI for Azure DevOps integration, ena
 ## What This Command Does
 
 1. **Installs Dependencies** (if missing):
+
    - Package manager (Homebrew/apt/winget)
    - Azure CLI (`az`)
 
@@ -192,6 +193,7 @@ Write-Host "✓ Installation complete. Please restart PowerShell."
 Now let's authenticate with Azure for Azure DevOps integration:
 
 **macOS/Linux**:
+
 ```bash
 # Check if already authenticated
 if az account show >/dev/null 2>&1; then
@@ -204,6 +206,7 @@ fi
 ```
 
 **Windows (PowerShell)**:
+
 ```powershell
 # Check if already authenticated
 try {
@@ -217,6 +220,7 @@ try {
 ```
 
 **This will**:
+
 - Open your browser for authentication
 - Allow access without requiring Azure subscriptions
 - Enable the business-validator agent to fetch User Story details from Azure DevOps
@@ -230,6 +234,7 @@ try {
 Let's verify everything is configured correctly:
 
 **macOS/Linux**:
+
 ```bash
 echo "=== Dependency Versions ==="
 echo "Azure CLI: $(az --version | head -1)"
@@ -240,6 +245,7 @@ az account show --query "{Name:name, TenantId:tenantId}" -o table 2>/dev/null ||
 ```
 
 **Windows (PowerShell)**:
+
 ```powershell
 Write-Host "=== Dependency Versions ===" -ForegroundColor Cyan
 Write-Host "Azure CLI: $(az --version | Select-String 'azure-cli' | Select-Object -First 1)"
@@ -261,6 +267,7 @@ try {
 For enhanced Azure DevOps integration, install the Azure DevOps extension:
 
 **All Platforms**:
+
 ```bash
 # Install Azure DevOps extension
 az extension add --name azure-devops
@@ -270,6 +277,7 @@ az extension list --output table | grep azure-devops
 ```
 
 **Configure default organization** (optional):
+
 ```bash
 # Set default organization
 az devops configure --defaults organization=https://dev.azure.com/your-organization
@@ -285,13 +293,16 @@ az devops configure --list
 ### Installation Issues
 
 #### macOS
+
 - **Homebrew installation fails**:
   - Make sure you have admin access
   - Install Xcode Command Line Tools: `xcode-select --install`
   - Check internet connection
 
 #### Linux
+
 - **apt-get fails**:
+
   - Make sure you have sudo privileges
   - Run `sudo apt-get update` first
   - Check `/etc/apt/sources.list` for errors
@@ -301,7 +312,9 @@ az devops configure --list
   - Re-run the installation steps
 
 #### Windows
+
 - **winget not found**:
+
   - Update Windows to latest version (Windows 10 1809+, Windows 11)
   - Install App Installer from Microsoft Store
   - Use alternative MSI installer method
@@ -314,7 +327,9 @@ az devops configure --list
 ### Authentication Issues
 
 #### Azure CLI Authentication
+
 - **az login fails**:
+
   - Run `az logout` then `az login --allow-no-subscriptions` again
   - Clear browser cache and cookies
   - Try different browser
@@ -329,17 +344,20 @@ az devops configure --list
 ### Platform-Specific Issues
 
 #### macOS (Apple Silicon)
+
 - **Homebrew PATH not found**:
   - Run: `eval "$(/opt/homebrew/bin/brew shellenv)"`
   - Add to ~/.zshrc permanently
 
 #### Linux (WSL)
+
 - **Running on WSL**:
   - Follow Linux instructions
   - Ensure WSL2 is installed
   - Use Windows browser for authentication (will open automatically)
 
 #### Windows
+
 - **PowerShell execution policy error**:
   - Run: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
   - Or use `-ExecutionPolicy Bypass` when running scripts
@@ -347,6 +365,7 @@ az devops configure --list
 ### Azure DevOps Specific Issues
 
 - **Cannot access Work Items**:
+
   - Ensure you're a member of the Azure DevOps organization
   - Check project permissions (Basic access minimum)
   - Verify the organization URL is correct
@@ -364,6 +383,7 @@ If you prefer to configure manually or the automatic setup doesn't work:
 ### Install Dependencies Manually
 
 **macOS**:
+
 ```bash
 # Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -373,6 +393,7 @@ brew install azure-cli
 ```
 
 **Linux (Ubuntu/Debian)**:
+
 ```bash
 # Azure CLI
 curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/microsoft.gpg > /dev/null
@@ -381,6 +402,7 @@ sudo apt-get update && sudo apt-get install azure-cli
 ```
 
 **Windows (PowerShell)**:
+
 ```powershell
 # Using winget
 winget install -e --id Microsoft.AzureCLI
@@ -389,6 +411,7 @@ winget install -e --id Microsoft.AzureCLI
 ### Authenticate Manually
 
 **All Platforms**:
+
 ```bash
 # Azure
 az login --allow-no-subscriptions
@@ -403,11 +426,11 @@ az extension add --name azure-devops
 
 ### Command Summary by Platform
 
-| Task | macOS | Linux | Windows |
-|------|-------|-------|---------|
-| Install az | `brew install azure-cli` | `sudo apt install azure-cli` | `winget install Microsoft.AzureCLI` |
-| Login az | `az login --allow-no-subscriptions` | `az login --allow-no-subscriptions` | `az login --allow-no-subscriptions` |
-| Check az | `az account show` | `az account show` | `az account show` |
+| Task              | macOS                                  | Linux                                  | Windows                                |
+| ----------------- | -------------------------------------- | -------------------------------------- | -------------------------------------- |
+| Install az        | `brew install azure-cli`               | `sudo apt install azure-cli`           | `winget install Microsoft.AzureCLI`    |
+| Login az          | `az login --allow-no-subscriptions`    | `az login --allow-no-subscriptions`    | `az login --allow-no-subscriptions`    |
+| Check az          | `az account show`                      | `az account show`                      | `az account show`                      |
 | Install extension | `az extension add --name azure-devops` | `az extension add --name azure-devops` | `az extension add --name azure-devops` |
 
 ---
@@ -417,12 +440,14 @@ az extension add --name azure-devops
 For enhanced Azure DevOps integration, you can set these environment variables:
 
 **macOS/Linux** (add to ~/.zshrc or ~/.bashrc):
+
 ```bash
 export AZURE_DEVOPS_ORG_URL="https://dev.azure.com/your-organization"
 export AZURE_DEVOPS_PAT="your-personal-access-token"  # If using PAT authentication
 ```
 
 **Windows** (PowerShell profile):
+
 ```powershell
 $env:AZURE_DEVOPS_ORG_URL = "https://dev.azure.com/your-organization"
 $env:AZURE_DEVOPS_PAT = "your-personal-access-token"  # If using PAT authentication
@@ -438,7 +463,7 @@ After setting up Azure CLI, you can:
 
 1. Test business-validator agent with PR reviews
 2. Configure Azure DevOps organization defaults
-3. Install GitHub CLI if not already installed (use `setup-github.md`)
+3. Install GitHub CLI if not already installed (use `github.md`)
 4. Set up MCP servers for enhanced capabilities
 
 ## Need Help?
