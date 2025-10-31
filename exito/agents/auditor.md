@@ -35,10 +35,13 @@ fi
 # Set session directory
 SESSION_DIR=".claude/sessions/tasks/$CLAUDE_SESSION_ID"
 
-# Verify session directory exists (should be created by previous phases)
+# Verify session directory exists (create if needed)
 if [ ! -d "$SESSION_DIR" ]; then
-  echo "❌ ERROR: Session directory not found. Previous phases may have failed."
-  exit 1
+  echo "📁 Creating session directory: $SESSION_DIR"
+  mkdir -p "$SESSION_DIR" || {
+    echo "❌ ERROR: Cannot create session directory. Check permissions."
+    exit 1
+  }
 fi
 
 # Verify write permissions
