@@ -16,17 +16,25 @@ The plugin uses clear, action-oriented names for all commands and agents:
 - **/think** - Deep architectural analysis with ULTRATHINK mode (formerly `/senior`)
 - **/ui** - Frontend/UI specialist workflow (formerly `/frontend`)
 - **/patch** - Quick fixes and simple changes (formerly `/quick-fix`)
+- **/workflow** - Systematic problem-solving with multi-solution exploration and surgical implementation
 - **/review** - Comprehensive PR review orchestrator
 - **/review-perf** - Performance-focused PR review
 - **/review-sec** - Security-focused PR review
 
 ### Agents (Internal)
 
+**Core Workflow Agents**:
 - **investigator** - Codebase research & context gathering (formerly `research-engineer`)
 - **architect** - Solution design & planning (formerly `planner-engineer`)
 - **builder** - Code implementation & execution (formerly `implementer-engineer`)
 - **validator** - Testing & quality assurance (formerly `tester-engineer`)
 - **auditor** - Final code review & approval (formerly `reviewer-engineer`)
+
+**Workflow-Specific Agents** (used by `/workflow` command):
+- **requirements-validator** - Validates context completeness before proceeding
+- **solution-explorer** - Generates 2-4 alternative solutions with trade-off analysis
+- **surgical-builder** - Implements with strict constraints (no comments, minimal edits)
+- **documentation-writer** - Creates permanent knowledge base docs in `documentacion/`
 
 **Rationale**: The new names eliminate redundancy ("-engineer" suffix), improve clarity (action verbs for commands), and make the system more intuitive for new users.
 
@@ -274,6 +282,46 @@ Get your API key from [https://context7.com](https://context7.com).
 - Looks for XSS risks (dangerouslySetInnerHTML, innerHTML)
 - Scans for hardcoded secrets and sensitive data
 - Reviews dependency changes in package.json
+
+### Requirements Validator
+
+- Runs after investigator to check context completeness
+- Returns COMPLETE or NEEDS_INFO status
+- If NEEDS_INFO, workflow pauses for user clarification
+- Validates against checklist: scope, files, dependencies, edge cases, risks, architecture
+
+### Solution Explorer
+
+- Generates 2-4 distinct approaches with pros/cons
+- Provides complexity and risk assessments for each option
+- Estimates implementation time (Small/Medium/Large)
+- Recommends preferred option but user makes final decision
+- User selection required before proceeding to planning
+
+### Surgical Builder
+
+- **Strict constraints**: NO code comments, minimal edits only
+- Prefers Edit tool over Write tool (targeted changes)
+- Avoids refactoring scope creep
+- Creates atomic commits with descriptive messages
+- Focuses on self-documenting code patterns
+- Uses descriptive names, extracted constants, and TypeScript types
+
+### Documentation Writer
+
+- Runs after auditor approval (Phase 10 of workflow)
+- Creates markdown docs in `documentacion/` directory
+- Naming convention: `{YYYYMMDD}-{brief-solution-name}.md`
+- Includes: executive summary, alternatives considered, implementation details, test results, code review findings, lessons learned
+- Synthesizes all session artifacts into permanent knowledge base article
+
+### Architect (Enhanced)
+
+- Now supports two modes: **Direct Mode** and **Selection Mode**
+- **Direct Mode**: Original behavior - generates alternatives during thinking phase
+- **Selection Mode**: Used by `/workflow` - receives pre-selected alternative from solution-explorer
+- In Selection Mode, reads `alternatives.md` and focuses plan on chosen option
+- Modified to accept `$3` argument for selected alternative (e.g., "Option B")
 
 ## Important Constraints
 

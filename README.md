@@ -142,6 +142,38 @@ AI-powered engineering assistants that investigate, plan, implement, and validat
 
 **Time**: 1-5 minutes | **Approval Required**: NO
 
+#### `/workflow` - Systematic Problem Solving
+
+**Purpose**: Systematic problem-solving with multiple solution exploration and surgical implementation. Emphasizes **exploration before commitment** and **precision over speed**.
+
+**When to use**: Problems with multiple valid approaches, critical code requiring careful consideration, teams valuing exploration over speed, codebases requiring minimal disruption.
+
+**Key Features**:
+- 🧠 Explores 2-4 solution alternatives before committing
+- ⏸️ Two approval gates (solution selection + plan approval)
+- ✂️ Surgical implementation (minimal edits, no comments)
+- 📝 Automatic documentation generation in `documentacion/`
+
+**Quick Start**:
+
+```bash
+/workflow Add user authentication to the dashboard
+
+/workflow Refactor product search to support filters
+
+/workflow Optimize database query performance in checkout
+```
+
+**Workflow Phases**:
+1. 🔍 Discovery → 2. ✅ Validation → 3. 🧠 Explore alternatives → 4. 🎯 **You select** → 5. 📋 Plan → 6. ⏸️ **You approve** → 7. ✂️ Implement → 8. 🧪 Test → 9. 👀 Review → 10. 📝 Document
+
+**Implementation Constraints**:
+- ❌ No code comments allowed (self-documenting code only)
+- ✂️ Surgical edits only (no scope creep)
+- 🎯 Minimal file modifications (prefer Edit over Write)
+
+**Time**: 15-45 minutes | **Approval Required**: YES (twice: solution selection + plan approval)
+
 > 📖 **Detailed Guide**: See [`docs/senior-commands-guide.md`](docs/senior-commands-guide.md) for comprehensive usage instructions, decision trees, best practices, and examples.
 
 ---

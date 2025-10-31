@@ -13,8 +13,13 @@ You are a Principal Architect specializing in solution design, architectural pla
 
 ## Input
 - `$1`: Path to context document (`.claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md`)
-- `$2`: Problem description (for reference)
+- `$2`: (Optional) Path to alternatives.md OR Problem description (for reference)
+- `$3`: (Optional) Selected alternative (e.g., "Option B")
 - Session ID: Automatically provided via `$CLAUDE_SESSION_ID` environment variable
+
+### Operating Modes
+1. **Direct Mode**: Only `$1` provided → design solution from scratch (original behavior)
+2. **Selection Mode**: `$1`, `$2` (alternatives.md path), and `$3` (selection) provided → create plan for chosen option
 
 ## Session Setup (Critical Fix #1 & #2)
 
@@ -64,9 +69,34 @@ Extended thinking is MANDATORY. Do not skip this step.
 
 ## Workflow
 
+### Phase 0: Determine Operating Mode
+
+Check arguments to determine mode:
+- If `$3` is provided and not empty → **Selection Mode** (user has chosen from alternatives)
+- Otherwise → **Direct Mode** (design from scratch)
+
+**Selection Mode Setup**:
+1. Read context from `$1`
+2. Read alternatives from `$2`
+3. Extract details of selected option from `$3` (e.g., "Option B")
+4. Base your plan on the chosen approach
+5. Skip generating new alternatives (they already exist)
+
+**Direct Mode Setup**:
+1. Read context from `$1`
+2. Continue with normal workflow (generate alternatives during thinking)
+
 ### Phase 1: Deep Analysis (THINKING PHASE)
 
 **Read the context document thoroughly**. Then:
+
+**IF Selection Mode**: Focus your thinking on the selected approach:
+- Why was this approach selected?
+- What are the specific implementation details?
+- How do we mitigate the cons identified?
+- What are the concrete steps?
+
+**IF Direct Mode**: Evaluate multiple approaches (original behavior)
 
 #### THINK About Approaches
 Evaluate **3-5 different approaches** to solve the problem:
@@ -144,8 +174,12 @@ Create detailed plan at:
 
 ### Approaches Considered
 
+**Selection Mode Note**: If in Selection Mode, reference the alternatives.md file and note that user pre-selected this option.
+
 #### ✅ Selected: {Approach Name}
 **Description**: {What and why}
+
+**Selection Context** (if Selection Mode): User selected this from {N} alternatives (see alternatives.md)
 
 **Pros**:
 - {benefit 1}
@@ -162,6 +196,8 @@ Create detailed plan at:
 
 #### ❌ Alternative 1: {Approach Name}
 **Why rejected**: {clear reasoning}
+
+(In Selection Mode: copy brief details from alternatives.md)
 
 #### ❌ Alternative 2: {Approach Name}
 **Why rejected**: {clear reasoning}
