@@ -29,6 +29,27 @@
         "hooks",
         "quality-assurance"
       ]
+    },
+    {
+      "name": "setup",
+      "source": "./setup",
+      "description": "Development environment setup commands for installing and configuring essential tools (GitHub CLI, Azure CLI, uv) across macOS, Linux, and Windows platforms.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Yerson",
+        "email": "yersonargotev@gmail.com"
+      },
+      "category": "development-tools",
+      "keywords": [
+        "setup",
+        "installation",
+        "github-cli",
+        "azure-cli",
+        "uv",
+        "development-tools",
+        "configuration",
+        "cross-platform"
+      ]
     }
   ]
 }
