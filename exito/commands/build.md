@@ -24,7 +24,7 @@ Let me start by understanding what we're working with...
 <Task agent="investigator">
   Analyze the codebase and gather context for: $ARGUMENTS
 
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
 
   Your goals:
   1. Map the relevant codebase areas
@@ -33,7 +33,7 @@ Let me start by understanding what we're working with...
   4. Find similar implementations for reference
   5. Flag potential risks or constraints
 
-  Output your findings to: .claude/sessions/tasks/{{timestamp}}/context.md
+  Output your findings to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
 </Task>
 
 ---
@@ -45,9 +45,9 @@ Now let me think deeply about the best approach...
 <Task agent="architect">
   Design a solution plan for: $ARGUMENTS
 
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
 
-  Input: .claude/sessions/tasks/{{timestamp}}/context.md
+  Input: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
 
   Your goals:
   1. Evaluate multiple approaches (at least 3)
@@ -62,7 +62,7 @@ Now let me think deeply about the best approach...
   - Complex tasks: Think harder - explore deeply
   - Critical/high-impact: ULTRATHINK - maximum analysis
 
-  Output your plan to: .claude/sessions/tasks/{{timestamp}}/plan.md
+  Output your plan to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
 
   Return with: ⏸️ AWAITING USER APPROVAL BEFORE IMPLEMENTATION
 </Task>
@@ -71,7 +71,7 @@ Now let me think deeply about the best approach...
 
 ## Plan Ready - Awaiting Your Approval ⏸️
 
-**Please review the plan**: `.claude/sessions/tasks/{{timestamp}}/plan.md`
+**Please review the plan**: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md`
 
 **Review checklist**:
 - [ ] Does the approach make sense?
@@ -95,11 +95,11 @@ Now let me think deeply about the best approach...
 <Task agent="builder">
   Execute the implementation plan for: $ARGUMENTS
 
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
 
   Inputs:
-  - Context: .claude/sessions/tasks/{{timestamp}}/context.md
-  - Plan: .claude/sessions/tasks/{{timestamp}}/plan.md
+  - Context: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+  - Plan: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
 
   Your goals:
   1. Follow the plan step-by-step
@@ -108,7 +108,7 @@ Now let me think deeply about the best approach...
   4. Track progress in real-time
   5. Handle errors gracefully
 
-  Output progress to: .claude/sessions/tasks/{{timestamp}}/progress.md
+  Output progress to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md
 
   Return when: All steps completed successfully
 </Task>
@@ -122,12 +122,12 @@ Now validating the work...
 <Task agent="validator">
   Validate the implementation for: $ARGUMENTS
 
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
 
   Inputs:
-  - Context: .claude/sessions/tasks/{{timestamp}}/context.md
-  - Plan: .claude/sessions/tasks/{{timestamp}}/plan.md
-  - Progress: .claude/sessions/tasks/{{timestamp}}/progress.md
+  - Context: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+  - Plan: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
+  - Progress: .claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md
 
   Your goals:
   1. Run all automated tests (unit, integration, e2e)
@@ -136,7 +136,7 @@ Now validating the work...
   4. Test edge cases and error scenarios
   5. Check performance if applicable
 
-  Output test results to: .claude/sessions/tasks/{{timestamp}}/test_report.md
+  Output test results to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/test_report.md
 
   Return when: All tests pass and coverage is adequate
 </Task>
@@ -150,13 +150,13 @@ Final code review...
 <Task agent="auditor">
   Perform final code review for: $ARGUMENTS
 
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
 
   Inputs:
-  - Context: .claude/sessions/tasks/{{timestamp}}/context.md
-  - Plan: .claude/sessions/tasks/{{timestamp}}/plan.md
-  - Progress: .claude/sessions/tasks/{{timestamp}}/progress.md
-  - Test Report: .claude/sessions/tasks/{{timestamp}}/test_report.md
+  - Context: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+  - Plan: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
+  - Progress: .claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md
+  - Test Report: .claude/sessions/tasks/$CLAUDE_SESSION_ID/test_report.md
 
   Your goals:
   1. Review code quality and maintainability
@@ -165,7 +165,7 @@ Final code review...
   4. Assess performance implications
   5. Verify test coverage and quality
 
-  Output review to: .claude/sessions/tasks/{{timestamp}}/review.md
+  Output review to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/review.md
 
   Return verdict: APPROVE / APPROVE WITH NOTES / REQUEST CHANGES
 </Task>
@@ -176,7 +176,7 @@ Final code review...
 
 **Summary**: $ARGUMENTS
 
-**Session artifacts** saved in: `.claude/sessions/tasks/{{timestamp}}/`
+**Session artifacts** saved in: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/`
 - `context.md` - Research findings
 - `plan.md` - Solution design
 - `progress.md` - Implementation log

@@ -26,7 +26,7 @@ Starting with comprehensive research...
 <Task agent="investigator">
   DEEP RESEARCH MODE - Analyze everything relevant for: $ARGUMENTS
   
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
   
   Your goals:
   1. Map ALL relevant codebase areas (not just obvious ones)
@@ -38,7 +38,7 @@ Starting with comprehensive research...
   
   Be thorough - this is a critical task.
   
-  Output comprehensive findings to: .claude/sessions/tasks/{{timestamp}}/context.md
+  Output comprehensive findings to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
 </Task>
 
 ---
@@ -52,9 +52,9 @@ Now entering ULTRATHINK mode for solution design...
   
   Design the optimal solution plan for: $ARGUMENTS
   
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
   
-  Input: .claude/sessions/tasks/{{timestamp}}/context.md
+  Input: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
   
   Your goals:
   1. **ULTRATHINK** - Use maximum extended thinking budget
@@ -71,7 +71,7 @@ Now entering ULTRATHINK mode for solution design...
   CRITICAL: This is a high-impact task. Think as hard as you can.
   Use "ultrathink" to engage maximum cognitive resources.
   
-  Output detailed plan to: .claude/sessions/tasks/{{timestamp}}/plan.md
+  Output detailed plan to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
   
   Return with: ⏸️ AWAITING USER APPROVAL BEFORE IMPLEMENTATION
 </Task>
@@ -80,7 +80,7 @@ Now entering ULTRATHINK mode for solution design...
 
 ## Comprehensive Plan Ready - Your Review Required ⏸️
 
-**Deep plan available**: `.claude/sessions/tasks/{{timestamp}}/plan.md`
+**Deep plan available**: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md`
 
 This plan has been created with maximum analysis. Please review carefully:
 
@@ -113,11 +113,11 @@ Take your time to review - this is important work.
 <Task agent="builder">
   Execute the implementation plan with MAXIMUM CARE for: $ARGUMENTS
   
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
   
   Inputs:
-  - Context: .claude/sessions/tasks/{{timestamp}}/context.md
-  - Plan: .claude/sessions/tasks/{{timestamp}}/plan.md
+  - Context: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+  - Plan: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
   
   Your goals:
   1. Follow the plan EXACTLY - this is critical code
@@ -131,7 +131,7 @@ Take your time to review - this is important work.
   
   This is high-impact work. Be methodical and precise.
   
-  Output detailed progress to: .claude/sessions/tasks/{{timestamp}}/progress.md
+  Output detailed progress to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md
   
   Return when: All steps completed and validated
 </Task>
@@ -145,12 +145,12 @@ Running comprehensive validation...
 <Task agent="validator">
   THOROUGH VALIDATION MODE for: $ARGUMENTS
   
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
   
   Inputs:
-  - Context: .claude/sessions/tasks/{{timestamp}}/context.md
-  - Plan: .claude/sessions/tasks/{{timestamp}}/plan.md
-  - Progress: .claude/sessions/tasks/{{timestamp}}/progress.md
+  - Context: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+  - Plan: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
+  - Progress: .claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md
   
   Your goals:
   1. Run ALL automated tests (unit, integration, e2e)
@@ -164,7 +164,7 @@ Running comprehensive validation...
   
   Be thorough - this is critical functionality.
   
-  Output comprehensive test results to: .claude/sessions/tasks/{{timestamp}}/test_report.md
+  Output comprehensive test results to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/test_report.md
   
   Return when: All tests pass, coverage is excellent, no concerns
 </Task>
@@ -178,13 +178,13 @@ Final comprehensive code review...
 <Task agent="auditor">
   STAFF-LEVEL CODE REVIEW for: $ARGUMENTS
   
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
   
   Inputs:
-  - Context: .claude/sessions/tasks/{{timestamp}}/context.md
-  - Plan: .claude/sessions/tasks/{{timestamp}}/plan.md
-  - Progress: .claude/sessions/tasks/{{timestamp}}/progress.md
-  - Test Report: .claude/sessions/tasks/{{timestamp}}/test_report.md
+  - Context: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+  - Plan: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
+  - Progress: .claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md
+  - Test Report: .claude/sessions/tasks/$CLAUDE_SESSION_ID/test_report.md
   
   Your goals:
   1. Thorough code quality review (readability, maintainability)
@@ -198,7 +198,7 @@ Final comprehensive code review...
   
   This is critical code. Apply staff-level scrutiny.
   
-  Output detailed review to: .claude/sessions/tasks/{{timestamp}}/review.md
+  Output detailed review to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/review.md
   
   Return verdict with full justification: APPROVE / APPROVE WITH NOTES / REQUEST CHANGES
 </Task>
@@ -211,7 +211,7 @@ Final comprehensive code review...
 
 **Quality assurance**: Maximum thinking and validation applied
 
-**Complete session artifacts** in: `.claude/sessions/tasks/{{timestamp}}/`
+**Complete session artifacts** in: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/`
 - `context.md` - Comprehensive research
 - `plan.md` - Deep solution design (ULTRATHINK)
 - `progress.md` - Detailed implementation log

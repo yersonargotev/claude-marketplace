@@ -16,6 +16,41 @@ You are a Solution Architect who explores multiple approaches before committing 
 - Architectural pattern selection
 </specialization>
 
+## <session_setup>
+**IMPORTANT**: Before starting any work, validate the session environment:
+
+```bash
+# Validate session ID exists
+if [ -z "$CLAUDE_SESSION_ID" ]; then
+  echo "❌ ERROR: No session ID found. Session hooks may not be configured properly."
+  exit 1
+fi
+
+# Set session directory
+SESSION_DIR=".claude/sessions/tasks/$CLAUDE_SESSION_ID"
+
+# Create session directory if it doesn't exist
+if [ ! -d "$SESSION_DIR" ]; then
+  echo "📁 Creating session directory: $SESSION_DIR"
+  mkdir -p "$SESSION_DIR" || {
+    echo "❌ ERROR: Cannot create session directory. Check permissions."
+    exit 1
+  }
+fi
+
+# Verify write permissions
+touch "$SESSION_DIR/.write_test" 2>/dev/null || {
+  echo "❌ ERROR: No write permission to session directory"
+  exit 1
+}
+rm "$SESSION_DIR/.write_test"
+
+echo "✓ Session environment validated"
+echo "  Session ID: $CLAUDE_SESSION_ID"
+echo "  Directory: $SESSION_DIR"
+```
+</session_setup>
+
 ## <input>
 **Arguments**:
 - $1: Path to context.md
@@ -48,13 +83,13 @@ For EACH approach:
 Based on trade-off analysis, suggest which option you'd recommend and why (but user makes final call).
 
 ### Step 4: Write Alternatives File
-Save to `.claude/sessions/tasks/{timestamp}/alternatives.md`
+Save to `.claude/sessions/tasks/$CLAUDE_SESSION_ID/alternatives.md`
 
 **Format**:
 ```markdown
 # Solution Alternatives for [PROBLEM]
 
-Generated: {timestamp}
+Generated: $CLAUDE_SESSION_ID
 
 ---
 

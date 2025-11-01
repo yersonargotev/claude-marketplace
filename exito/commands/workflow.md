@@ -34,7 +34,7 @@ Gathering comprehensive context...
 <Task agent="investigator">
   Analyze the codebase and gather deep context for: $ARGUMENTS
 
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
 
   Your goals:
   1. Map all relevant codebase areas
@@ -44,7 +44,7 @@ Gathering comprehensive context...
   5. Flag potential risks and constraints
   6. Document edge cases
 
-  Output comprehensive findings to: .claude/sessions/tasks/{{timestamp}}/context.md
+  Output comprehensive findings to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
 </Task>
 
 ---
@@ -56,8 +56,8 @@ Validating information completeness...
 <Task agent="requirements-validator">
   Validate that sufficient context has been gathered for: $ARGUMENTS
 
-  Session directory: .claude/sessions/tasks/{{timestamp}}
-  Context file: .claude/sessions/tasks/{{timestamp}}/context.md
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
+  Context file: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
 
   Your goals:
   1. Check context against completeness checklist
@@ -65,7 +65,7 @@ Validating information completeness...
   3. Generate validation report
   4. Recommend PROCEED or REQUEST_CLARIFICATION
 
-  Output validation report to: .claude/sessions/tasks/{{timestamp}}/validation-report.md
+  Output validation report to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/validation-report.md
 
   Return status and any missing information needed.
 </Task>
@@ -83,11 +83,11 @@ Generating multiple solution alternatives...
 <Task agent="solution-explorer">
   Generate 2-4 alternative solutions for: $ARGUMENTS
 
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
 
   Inputs:
-  - Context: .claude/sessions/tasks/{{timestamp}}/context.md
-  - Validation: .claude/sessions/tasks/{{timestamp}}/validation-report.md
+  - Context: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+  - Validation: .claude/sessions/tasks/$CLAUDE_SESSION_ID/validation-report.md
 
   Your goals:
   1. Generate 2-4 distinct approaches
@@ -96,7 +96,7 @@ Generating multiple solution alternatives...
   4. Estimate implementation time
   5. Recommend a preferred option (but user decides)
 
-  Output alternatives to: .claude/sessions/tasks/{{timestamp}}/alternatives.md
+  Output alternatives to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/alternatives.md
 
   Return summary of alternatives for user review.
 </Task>
@@ -105,7 +105,7 @@ Generating multiple solution alternatives...
 
 ## Phase 4: Solution Selection 🎯
 
-**Review alternatives**: `.claude/sessions/tasks/{{timestamp}}/alternatives.md`
+**Review alternatives**: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/alternatives.md`
 
 **Please select your preferred approach**:
 - Type your selection (e.g., "Option B" or "B")
@@ -125,11 +125,11 @@ Creating implementation plan for: **{USER_SELECTION}**
 <Task agent="architect">
   Design detailed implementation plan for selected option: {USER_SELECTION}
 
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
 
   Inputs:
-  - Context: .claude/sessions/tasks/{{timestamp}}/context.md
-  - Alternatives: .claude/sessions/tasks/{{timestamp}}/alternatives.md
+  - Context: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+  - Alternatives: .claude/sessions/tasks/$CLAUDE_SESSION_ID/alternatives.md
   - Selected: {USER_SELECTION}
 
   Your goals:
@@ -139,7 +139,7 @@ Creating implementation plan for: **{USER_SELECTION}**
   4. Define success criteria for each step
   5. Document risks and mitigation strategies
 
-  Output plan to: .claude/sessions/tasks/{{timestamp}}/plan.md
+  Output plan to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
 
   Return with: ⏸️ AWAITING USER APPROVAL BEFORE IMPLEMENTATION
 </Task>
@@ -148,7 +148,7 @@ Creating implementation plan for: **{USER_SELECTION}**
 
 ## Phase 6: Plan Approval ⏸️
 
-**Plan ready for review**: `.claude/sessions/tasks/{{timestamp}}/plan.md`
+**Plan ready for review**: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md`
 
 **Review Checklist**:
 - [ ] Does the approach align with selected option?
@@ -181,11 +181,11 @@ Executing with precision...
 <Task agent="surgical-builder">
   Execute the implementation plan for: $ARGUMENTS
 
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
 
   Inputs:
-  - Context: .claude/sessions/tasks/{{timestamp}}/context.md
-  - Plan: .claude/sessions/tasks/{{timestamp}}/plan.md
+  - Context: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+  - Plan: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
   - Selected Option: {USER_SELECTION}
 
   Your goals:
@@ -202,7 +202,7 @@ Executing with precision...
   - ✂️ SURGICAL edits only (no refactoring scope creep)
   - 🎯 Prefer modifying existing files over creating new ones
 
-  Output progress to: .claude/sessions/tasks/{{timestamp}}/progress.md
+  Output progress to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md
 
   Return when: All steps completed successfully
 </Task>
@@ -216,12 +216,12 @@ Running comprehensive tests...
 <Task agent="validator">
   Validate the implementation for: $ARGUMENTS
 
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
 
   Inputs:
-  - Context: .claude/sessions/tasks/{{timestamp}}/context.md
-  - Plan: .claude/sessions/tasks/{{timestamp}}/plan.md
-  - Progress: .claude/sessions/tasks/{{timestamp}}/progress.md
+  - Context: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+  - Plan: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
+  - Progress: .claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md
 
   Your goals:
   1. Run all automated tests (unit, integration, e2e)
@@ -230,7 +230,7 @@ Running comprehensive tests...
   4. Test edge cases and error scenarios
   5. Check performance if applicable
 
-  Output test results to: .claude/sessions/tasks/{{timestamp}}/test_report.md
+  Output test results to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/test_report.md
 
   Return when: All tests pass and coverage is adequate
 </Task>
@@ -244,13 +244,13 @@ Final quality assurance...
 <Task agent="auditor">
   Perform final code review for: $ARGUMENTS
 
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
 
   Inputs:
-  - Context: .claude/sessions/tasks/{{timestamp}}/context.md
-  - Plan: .claude/sessions/tasks/{{timestamp}}/plan.md
-  - Progress: .claude/sessions/tasks/{{timestamp}}/progress.md
-  - Test Report: .claude/sessions/tasks/{{timestamp}}/test_report.md
+  - Context: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+  - Plan: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
+  - Progress: .claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md
+  - Test Report: .claude/sessions/tasks/$CLAUDE_SESSION_ID/test_report.md
 
   Your goals:
   1. Review code quality and maintainability
@@ -265,7 +265,7 @@ Final quality assurance...
   - ✅ Verify minimal file modifications
   - ✅ Check Edit tool usage over Write tool
 
-  Output review to: .claude/sessions/tasks/{{timestamp}}/review.md
+  Output review to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/review.md
 
   Return verdict: APPROVE / APPROVE WITH NOTES / REQUEST CHANGES
 </Task>
@@ -279,7 +279,7 @@ Creating permanent knowledge base documentation...
 <Task agent="documentation-writer">
   Create comprehensive documentation for: $ARGUMENTS
 
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
 
   Your goals:
   1. Read all session artifacts (context, alternatives, plan, progress, tests, review)
@@ -308,7 +308,7 @@ Creating permanent knowledge base documentation...
 - ✅ Code review approved
 - ✅ Documentation created
 
-**Session Artifacts**: `.claude/sessions/tasks/{{timestamp}}/`
+**Session Artifacts**: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/`
 - `context.md` - Problem analysis
 - `validation-report.md` - Requirements validation
 - `alternatives.md` - Solution options explored

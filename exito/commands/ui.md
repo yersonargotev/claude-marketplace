@@ -23,7 +23,7 @@ Let me research the frontend landscape...
 <Task agent="investigator">
   Analyze the frontend codebase for: $ARGUMENTS
   
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
   
   **Frontend-specific focus**:
   1. Map component hierarchy and structure
@@ -37,7 +37,7 @@ Let me research the frontend landscape...
   9. Look for performance optimization patterns
   10. Note any UI/UX conventions
   
-  Output findings to: .claude/sessions/tasks/{{timestamp}}/context.md
+  Output findings to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
 </Task>
 
 ---
@@ -49,9 +49,9 @@ Designing the UI/UX solution...
 <Task agent="architect">
   Design a frontend solution for: $ARGUMENTS
   
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
   
-  Input: .claude/sessions/tasks/{{timestamp}}/context.md
+  Input: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
   
   **Frontend planning focus**:
   1. Think through the user experience flow
@@ -71,7 +71,7 @@ Designing the UI/UX solution...
   - New pattern/architecture: Think harder
   - Critical user flow: ULTRATHINK
   
-  Output plan to: .claude/sessions/tasks/{{timestamp}}/plan.md
+  Output plan to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
   
   Return with: ⏸️ AWAITING USER APPROVAL BEFORE IMPLEMENTATION
 </Task>
@@ -80,7 +80,7 @@ Designing the UI/UX solution...
 
 ## Frontend Plan Ready - Your Review ⏸️
 
-**Review the plan**: `.claude/sessions/tasks/{{timestamp}}/plan.md`
+**Review the plan**: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md`
 
 **Frontend review checklist**:
 - [ ] Does the UX flow make sense?
@@ -106,11 +106,11 @@ Designing the UI/UX solution...
 <Task agent="builder">
   Implement the frontend solution for: $ARGUMENTS
   
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
   
   Inputs:
-  - Context: .claude/sessions/tasks/{{timestamp}}/context.md
-  - Plan: .claude/sessions/tasks/{{timestamp}}/plan.md
+  - Context: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+  - Plan: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
   
   **Frontend implementation priorities**:
   1. Write component tests FIRST (React Testing Library)
@@ -124,7 +124,7 @@ Designing the UI/UX solution...
   9. Keep bundle size minimal
   10. Make atomic commits for each piece
   
-  Output progress to: .claude/sessions/tasks/{{timestamp}}/progress.md
+  Output progress to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md
   
   Return when: Component fully implemented and working
 </Task>
@@ -138,12 +138,12 @@ Testing the UI/UX...
 <Task agent="validator">
   Validate the frontend implementation for: $ARGUMENTS
   
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
   
   Inputs:
-  - Context: .claude/sessions/tasks/{{timestamp}}/context.md
-  - Plan: .claude/sessions/tasks/{{timestamp}}/plan.md
-  - Progress: .claude/sessions/tasks/{{timestamp}}/progress.md
+  - Context: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+  - Plan: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
+  - Progress: .claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md
   
   **Frontend testing focus**:
   
@@ -177,7 +177,7 @@ Testing the UI/UX...
   - [ ] Images optimized and lazy-loaded
   - [ ] Lighthouse score: Performance >90, Accessibility 100
   
-  Output test results to: .claude/sessions/tasks/{{timestamp}}/test_report.md
+  Output test results to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/test_report.md
   
   Return when: All tests pass and UX is validated
 </Task>
@@ -191,13 +191,13 @@ Final frontend code review...
 <Task agent="auditor">
   Frontend code review for: $ARGUMENTS
   
-  Session directory: .claude/sessions/tasks/{{timestamp}}
+  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
   
   Inputs:
-  - Context: .claude/sessions/tasks/{{timestamp}}/context.md
-  - Plan: .claude/sessions/tasks/{{timestamp}}/plan.md
-  - Progress: .claude/sessions/tasks/{{timestamp}}/progress.md
-  - Test Report: .claude/sessions/tasks/{{timestamp}}/test_report.md
+  - Context: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+  - Plan: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
+  - Progress: .claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md
+  - Test Report: .claude/sessions/tasks/$CLAUDE_SESSION_ID/test_report.md
   
   **Frontend review focus**:
   
@@ -233,7 +233,7 @@ Final frontend code review...
   - No horizontal scroll
   - Readable text sizes
   
-  Output review to: .claude/sessions/tasks/{{timestamp}}/review.md
+  Output review to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/review.md
   
   Return verdict: APPROVE / APPROVE WITH NOTES / REQUEST CHANGES
 </Task>
@@ -250,7 +250,7 @@ Final frontend code review...
 - ✅ Performant (optimized)
 - ✅ User-friendly (tested)
 
-**Session artifacts** in: `.claude/sessions/tasks/{{timestamp}}/`
+**Session artifacts** in: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/`
 - `context.md` - Frontend research
 - `plan.md` - UI/UX design plan
 - `progress.md` - Implementation log

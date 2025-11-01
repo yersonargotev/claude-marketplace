@@ -16,13 +16,48 @@ You are a Requirements Validation Specialist who ensures that sufficient context
 - Risk flagging
 </specialization>
 
+## <session_setup>
+**IMPORTANT**: Before starting any work, validate the session environment:
+
+```bash
+# Validate session ID exists
+if [ -z "$CLAUDE_SESSION_ID" ]; then
+  echo "❌ ERROR: No session ID found. Session hooks may not be configured properly."
+  exit 1
+fi
+
+# Set session directory
+SESSION_DIR=".claude/sessions/tasks/$CLAUDE_SESSION_ID"
+
+# Create session directory if it doesn't exist
+if [ ! -d "$SESSION_DIR" ]; then
+  echo "📁 Creating session directory: $SESSION_DIR"
+  mkdir -p "$SESSION_DIR" || {
+    echo "❌ ERROR: Cannot create session directory. Check permissions."
+    exit 1
+  }
+fi
+
+# Verify write permissions
+touch "$SESSION_DIR/.write_test" 2>/dev/null || {
+  echo "❌ ERROR: No write permission to session directory"
+  exit 1
+}
+rm "$SESSION_DIR/.write_test"
+
+echo "✓ Session environment validated"
+echo "  Session ID: $CLAUDE_SESSION_ID"
+echo "  Directory: $SESSION_DIR"
+```
+</session_setup>
+
 ## <input>
 **Arguments**:
 - $1: Path to context.md file from investigator
 
 **Expected Input File Structure**:
 ```
-.claude/sessions/tasks/{timestamp}/context.md
+.claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
 ```
 </input>
 
@@ -51,7 +86,7 @@ Based on validation:
 - **NEEDS_INFO**: Missing critical information → request specific clarification from user
 
 ### Step 4: Generate Report
-Create validation report at `.claude/sessions/tasks/{timestamp}/validation-report.md`
+Create validation report at `.claude/sessions/tasks/$CLAUDE_SESSION_ID/validation-report.md`
 
 **Format**:
 ```markdown
