@@ -7,11 +7,13 @@ This repository hosts **Claude Code plugins** for both general plugin developmen
 ### Three Main Components
 
 1. **`cc/plugin-builder`** - Meta-plugin for building Claude Code plugins
+
    - Interactive commands: `/new-plugin`, `/new-command`, `/new-agent`
    - Comprehensive guides in `cc/skills/claude-code-plugin-builder/`
    - Production templates in `cc/skills/claude-code-plugin-builder/templates/`
 
 2. **`exito/`** - Senior engineer workflow plugin
+
    - Multi-agent PR review system (`/review`, `/review-perf`, `/review-sec`)
    - Systematic development workflow (`/workflow`) with 7-phase process
    - 8 specialized subagents in `exito/agents/`
@@ -24,6 +26,7 @@ This repository hosts **Claude Code plugins** for both general plugin developmen
 ### Plugin Structure (Critical Pattern)
 
 All plugins follow this structure:
+
 ```
 plugin-name/
 ├── .claude-plugin/
@@ -41,14 +44,14 @@ plugin-name/
 
 ## Key Conventions
 
-### Command File Format (commands/*.md)
+### Command File Format (commands/\*.md)
 
 ```markdown
 ---
 description: "What this command does (user sees in /help)"
-argument-hint: "<REQUIRED> [OPTIONAL]"  # Optional
-allowed-tools: Read, Write, Bash(gh:*)  # Optional: restricts tools
-model: claude-sonnet-4-5-20250929       # Optional: overrides default
+argument-hint: "<REQUIRED> [OPTIONAL]" # Optional
+allowed-tools: Read, Write, Bash(gh:*) # Optional: restricts tools
+model: claude-sonnet-4-5-20250929 # Optional: overrides default
 ---
 
 # Command Instructions
@@ -56,19 +59,20 @@ model: claude-sonnet-4-5-20250929       # Optional: overrides default
 Use $1 for first arg, $2 for second, $ARGUMENTS for all args.
 
 ## Example with bash execution in context
+
 Current PR: !`gh pr view $1 --json title,body`
 ```
 
 **Critical**: Use `!` backticks for bash execution that gets embedded in context. Use Task tool or regular bash for side effects.
 
-### Agent File Format (agents/*.md)
+### Agent File Format (agents/\*.md)
 
 ```markdown
 ---
 name: agent-identifier
 description: "When to invoke this agent"
-tools: Read, Write                      # Restricted tool access
-model: claude-sonnet-4-5-20250929       # Explicit model required
+tools: Read, Write # Restricted tool access
+model: claude-sonnet-4-5-20250929 # Explicit model required
 ---
 
 <role>
@@ -89,6 +93,7 @@ Expected structure...
 ```
 
 **Critical Differences**:
+
 - Agents run in **isolated contexts** (no conversation history)
 - Agents have **clean state** (cwd resets to project root)
 - Agents **must explicitly request tools** in frontmatter
@@ -99,6 +104,7 @@ Expected structure...
 ### File-Based Context Sharing (Primary Pattern)
 
 **❌ NEVER DO**: Pass large content between agents
+
 ```markdown
 <Task agent="analyzer">
 [10,000 lines of code here]
@@ -106,13 +112,16 @@ Expected structure...
 ```
 
 **✅ ALWAYS DO**: Use files as single source of truth
+
 ```markdown
 # Phase 1: Create context
+
 <Task agent="context-gatherer">
   Analyze PR $1. Save to: .claude/sessions/pr_reviews/pr_123_context.md
 </Task>
 
 # Phase 2: Parallel analysis (in SINGLE message)
+
 <Task agent="performance-analyzer">
   Read context from: .claude/sessions/pr_reviews/pr_123_context.md
   Write report to: .claude/sessions/pr_reviews/pr_123_performance.md
@@ -123,7 +132,8 @@ Expected structure...
 </Task>
 
 # Phase 3: Synthesize
-Read all reports from .claude/sessions/pr_reviews/pr_123_*.md
+
+Read all reports from .claude/sessions/pr*reviews/pr_123*\*.md
 ```
 
 **Benefits**: 60-70% token reduction, enables parallelism, audit trail
@@ -131,6 +141,7 @@ Read all reports from .claude/sessions/pr_reviews/pr_123_*.md
 ### Session Management Pattern
 
 See `exito/hooks/hooks.json` and `exito/scripts/session-manager.sh`:
+
 - `PreToolUse` hook with `Task` matcher initializes session directory
 - `SessionEnd` hook performs cleanup
 - Session ID available via `$CLAUDE_SESSION_ID` environment variable
@@ -141,6 +152,7 @@ See `exito/hooks/hooks.json` and `exito/scripts/session-manager.sh`:
 ### `/workflow` Command (exito)
 
 7-phase systematic development:
+
 1. **Discover** - Deep context gathering (investigator agent)
 2. **Validate** - Check information completeness (requirements-validator)
 3. **Explore** - Generate 2-4 alternatives (solution-explorer)
@@ -157,6 +169,7 @@ See `exito/hooks/hooks.json` and `exito/scripts/session-manager.sh`:
 ### `/review` Command (exito)
 
 Multi-agent PR review orchestration:
+
 1. **Context Establishment** - Platform-agnostic PR data normalization
 2. **Business Validation** - Optional Azure DevOps User Story alignment
 3. **Parallel Analysis** - 6 specialized agents run simultaneously:
