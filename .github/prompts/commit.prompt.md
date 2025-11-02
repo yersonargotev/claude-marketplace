@@ -73,19 +73,6 @@ For each group (in order of priority):
 - Check all changes are committed: `git status`
 - Review commit history: `git log --oneline -5`
 
-## What This Command Does
-
-1. Unless specified with `--no-verify`, automatically runs pre-commit checks:
-   - `pnpm lint` to ensure code quality
-   - `pnpm build` to verify the build succeeds
-   - `pnpm generate:docs` to update documentation
-2. Checks which files are staged with `git status`
-3. If 0 files are staged, **intelligently analyzes and groups** all changes before staging
-4. Groups changes by logical concern (new features, deletions, modifications, fixes)
-5. Creates **multiple atomic commits** - one per logical group
-6. For each commit, creates a commit message using emoji conventional commit format
-7. Each commit is self-contained and tells a clear story
-
 ## Best Practices for Commits
 
 - **Verify before committing**: Ensure code is linted, builds correctly, and documentation is updated
