@@ -56,24 +56,24 @@ Gathering necessary context...
 
 Quick solution analysis...
 
-<Task agent="architect">
+<Task agent="quick-planner">
   Quick fix plan for: $ARGUMENTS
-  
+
   Session directory: .claude/sessions/patch/$CLAUDE_SESSION_ID
-  
+
   Input: .claude/sessions/patch/$CLAUDE_SESSION_ID/context.md
-  
+
   **Fast planning**:
   1. Identify the root cause
   2. Propose a straightforward fix
   3. List the files to change
   4. Note any risks (even for simple fixes)
   5. Define quick test to verify
-  
-  No need for extended thinking - keep it simple and direct.
-  
+
+  Keep it simple and direct - no extended thinking needed.
+
   Output to: .claude/sessions/patch/$CLAUDE_SESSION_ID/plan.md
-  
+
   ⚠️ **Auto-approve**: This is a quick fix, proceeding to implementation.
 </Task>
 

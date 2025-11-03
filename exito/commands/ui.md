@@ -66,15 +66,31 @@ Designing the UI/UX solution...
   8. Consider animations and transitions
   9. Plan for different user scenarios
   10. Define visual and interaction patterns
-  
+
+  **Frontend-specific Mermaid diagrams to include**:
+  - **Component Hierarchy**: Use `graph TD` to show parent/child component relationships
+  - **User Interaction Flow**: Use `sequenceDiagram` to show user actions → component reactions
+  - **State Management Flow**: Use `graph LR` to show data flow through components
+  - **Responsive Layout**: Use ASCII or diagram to show breakpoint strategy
+
+  Example component hierarchy:
+  ```mermaid
+  graph TD
+    App[App Component] --> Layout[Layout Component]
+    Layout --> Header[Header]
+    Layout --> Main[Main Content]
+    Main --> FeatureList[Feature List]
+    FeatureList --> FeatureItem[Feature Item]
+  ```
+
   Use extended thinking based on complexity:
   - Simple component: Think it through
   - Complex component/feature: Think hard
   - New pattern/architecture: Think harder
   - Critical user flow: ULTRATHINK
-  
+
   Output plan to: .claude/sessions/ui/$CLAUDE_SESSION_ID/plan.md
-  
+
   Return with: ⏸️ AWAITING USER APPROVAL BEFORE IMPLEMENTATION
 </Task>
 

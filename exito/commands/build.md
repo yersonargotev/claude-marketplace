@@ -52,17 +52,23 @@ Now let me think deeply about the best approach...
   Input: .claude/sessions/build/$CLAUDE_SESSION_ID/context.md
 
   Your goals:
-  1. Evaluate multiple approaches (at least 3)
+  1. Evaluate multiple approaches (2-3 distinct options)
   2. Choose the best solution with clear reasoning
-  3. Create a step-by-step implementation plan
-  4. Identify risks and mitigation strategies
-  5. Define success criteria
+  3. Create visual architecture using Mermaid diagrams when helpful
+  4. Create a step-by-step implementation plan
+  5. Identify risks and mitigation strategies
+  6. Define success criteria
 
   IMPORTANT: Use extended thinking for complex solutions:
   - Simple tasks: Think through it
   - Medium complexity: Think hard about it
   - Complex tasks: Think harder - explore deeply
   - Critical/high-impact: ULTRATHINK - maximum analysis
+
+  Include Mermaid diagrams for:
+  - System architecture (if 3+ components involved)
+  - Data flow (if complex interactions)
+  - Component structure (if new patterns introduced)
 
   Output your plan to: .claude/sessions/build/$CLAUDE_SESSION_ID/plan.md
 

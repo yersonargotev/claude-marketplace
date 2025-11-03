@@ -51,14 +51,17 @@ Now designing the solution...
 
   Input: .claude/sessions/implement/$CLAUDE_SESSION_ID/context.md
 
-  Your goals:
-  1. Evaluate multiple approaches (at least 2-3)
-  2. Choose the best solution with clear reasoning
-  3. Create a step-by-step implementation plan
-  4. Identify key risks
-  5. Define success criteria
+  **FAST MODE** - We're prioritizing speed:
+  1. Use "think" (not "think harder" or "ULTRATHINK") - quick analysis only
+  2. Skip Mermaid diagrams unless complexity is HIGH
+  3. Evaluate 2-3 approaches (not exhaustive)
+  4. Keep plan concise and actionable (target < 100 lines)
+  5. Choose the best solution with clear reasoning
+  6. Create step-by-step implementation plan
+  7. Identify key risks
+  8. Define success criteria
 
-  Keep the plan concise and actionable - we're moving fast.
+  We're moving fast - focus on clarity and speed over depth.
 
   Output your plan to: .claude/sessions/implement/$CLAUDE_SESSION_ID/plan.md
 
