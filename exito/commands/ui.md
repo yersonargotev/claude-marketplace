@@ -1,7 +1,7 @@
 ---
 description: "Frontend specialist for React/UI/UX work. Investigates, plans, and implements with focus on user experience, accessibility, and performance."
 argument-hint: "Describe the frontend feature, component, or UI change"
-allowed-tools: Task
+allowed-tools: Task, Bash(*)
 ---
 
 # Frontend Senior Engineer
@@ -67,31 +67,34 @@ Designing the UI/UX solution...
   9. Plan for different user scenarios
   10. Define visual and interaction patterns
 
-  **Frontend-specific Mermaid diagrams to include**:
-  - **Component Hierarchy**: Use `graph TD` to show parent/child component relationships
-  - **User Interaction Flow**: Use `sequenceDiagram` to show user actions → component reactions
-  - **State Management Flow**: Use `graph LR` to show data flow through components
-  - **Responsive Layout**: Use ASCII or diagram to show breakpoint strategy
+**Frontend-specific Mermaid diagrams to include**:
 
-  Example component hierarchy:
-  ```mermaid
-  graph TD
-    App[App Component] --> Layout[Layout Component]
-    Layout --> Header[Header]
-    Layout --> Main[Main Content]
-    Main --> FeatureList[Feature List]
-    FeatureList --> FeatureItem[Feature Item]
-  ```
+- **Component Hierarchy**: Use `graph TD` to show parent/child component relationships
+- **User Interaction Flow**: Use `sequenceDiagram` to show user actions → component reactions
+- **State Management Flow**: Use `graph LR` to show data flow through components
+- **Responsive Layout**: Use ASCII or diagram to show breakpoint strategy
 
-  Use extended thinking based on complexity:
-  - Simple component: Think it through
-  - Complex component/feature: Think hard
-  - New pattern/architecture: Think harder
-  - Critical user flow: ULTRATHINK
+Example component hierarchy:
 
-  Output plan to: .claude/sessions/ui/$CLAUDE_SESSION_ID/plan.md
+```mermaid
+graph TD
+  App[App Component] --> Layout[Layout Component]
+  Layout --> Header[Header]
+  Layout --> Main[Main Content]
+  Main --> FeatureList[Feature List]
+  FeatureList --> FeatureItem[Feature Item]
+```
 
-  Return with: ⏸️ AWAITING USER APPROVAL BEFORE IMPLEMENTATION
+Use extended thinking based on complexity:
+
+- Simple component: Think it through
+- Complex component/feature: Think hard
+- New pattern/architecture: Think harder
+- Critical user flow: ULTRATHINK
+
+Output plan to: .claude/sessions/ui/$CLAUDE_SESSION_ID/plan.md
+
+Return with: ⏸️ AWAITING USER APPROVAL BEFORE IMPLEMENTATION
 </Task>
 
 ---
@@ -101,6 +104,7 @@ Designing the UI/UX solution...
 **Review the plan**: `.claude/sessions/ui/$CLAUDE_SESSION_ID/plan.md`
 
 **Frontend review checklist**:
+
 - [ ] Does the UX flow make sense?
 - [ ] Are components appropriately sized and reusable?
 - [ ] Is accessibility properly addressed?
@@ -109,6 +113,7 @@ Designing the UI/UX solution...
 - [ ] Does it fit the existing design system?
 
 **Your decision**:
+
 - ✅ **Approve**: Type "proceed" or "approved"
 - 🔄 **Modify**: Describe changes needed
 - ❌ **Stop**: Type "stop"
@@ -263,12 +268,14 @@ Final frontend code review...
 **UI/UX Implementation**: $ARGUMENTS
 
 **Quality Assurance**:
+
 - ✅ Accessible (WCAG compliant)
 - ✅ Responsive (mobile to desktop)
 - ✅ Performant (optimized)
 - ✅ User-friendly (tested)
 
 **Session artifacts** in: `.claude/sessions/ui/$CLAUDE_SESSION_ID/`
+
 - `context.md` - Frontend research
 - `plan.md` - UI/UX design plan
 - `progress.md` - Implementation log
@@ -278,6 +285,7 @@ Final frontend code review...
 **Commits**: Check git log
 
 **Testing recommendations**:
+
 1. Test on real devices (not just browser DevTools)
 2. Try with screen reader (VoiceOver on Mac, NVDA on Windows)
 3. Test keyboard navigation thoroughly
@@ -285,6 +293,7 @@ Final frontend code review...
 5. Verify mobile touch interactions
 
 **Next steps**:
+
 - Review the changes in your browser
 - Test accessibility with actual tools
 - Check on real mobile devices

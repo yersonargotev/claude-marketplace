@@ -1,7 +1,7 @@
 ---
 description: "Ultra-thinking variant of /inge for maximum deep analysis on critical tasks. Uses ULTRATHINK mode for thorough exploration."
 argument-hint: "Describe the critical/complex feature or architectural decision"
-allowed-tools: Task
+allowed-tools: Task, Bash(*)
 ---
 
 # Senior Engineer - Maximum Thinking Mode

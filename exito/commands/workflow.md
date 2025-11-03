@@ -1,7 +1,7 @@
 ---
 description: "Systematic problem-solving workflow with multiple solution exploration and surgical implementation"
 argument-hint: "Describe the problem to solve"
-allowed-tools: Task
+allowed-tools: Task, Bash(*)
 ---
 
 # Systematic Workflow Engineer
@@ -36,17 +36,18 @@ Gathering comprehensive context...
 <Task agent="investigator">
   Analyze the codebase and gather deep context for: $ARGUMENTS
 
-  Session directory: .claude/sessions/workflow/$CLAUDE_SESSION_ID
+Session directory: .claude/sessions/workflow/$CLAUDE_SESSION_ID
 
-  Your goals:
-  1. Map all relevant codebase areas
-  2. Identify existing patterns and conventions
-  3. Assess complexity and dependencies
-  4. Find similar implementations for reference
-  5. Flag potential risks and constraints
-  6. Document edge cases
+Your goals:
 
-  Output comprehensive findings to: .claude/sessions/workflow/$CLAUDE_SESSION_ID/context.md
+1. Map all relevant codebase areas
+2. Identify existing patterns and conventions
+3. Assess complexity and dependencies
+4. Find similar implementations for reference
+5. Flag potential risks and constraints
+6. Document edge cases
+
+Output comprehensive findings to: .claude/sessions/workflow/$CLAUDE_SESSION_ID/context.md
 </Task>
 
 ---
@@ -58,18 +59,19 @@ Validating information completeness...
 <Task agent="requirements-validator">
   Validate that sufficient context has been gathered for: $ARGUMENTS
 
-  Session directory: .claude/sessions/workflow/$CLAUDE_SESSION_ID
+Session directory: .claude/sessions/workflow/$CLAUDE_SESSION_ID
   Context file: .claude/sessions/workflow/$CLAUDE_SESSION_ID/context.md
 
-  Your goals:
-  1. Check context against completeness checklist
-  2. Identify any missing critical information
-  3. Generate validation report
-  4. Recommend PROCEED or REQUEST_CLARIFICATION
+Your goals:
 
-  Output validation report to: .claude/sessions/workflow/$CLAUDE_SESSION_ID/validation-report.md
+1. Check context against completeness checklist
+2. Identify any missing critical information
+3. Generate validation report
+4. Recommend PROCEED or REQUEST_CLARIFICATION
 
-  Return status and any missing information needed.
+Output validation report to: .claude/sessions/workflow/$CLAUDE_SESSION_ID/validation-report.md
+
+Return status and any missing information needed.
 </Task>
 
 ---
@@ -85,22 +87,24 @@ Generating multiple solution alternatives...
 <Task agent="solution-explorer">
   Generate 2-4 alternative solutions for: $ARGUMENTS
 
-  Session directory: .claude/sessions/workflow/$CLAUDE_SESSION_ID
+Session directory: .claude/sessions/workflow/$CLAUDE_SESSION_ID
 
-  Inputs:
-  - Context: .claude/sessions/workflow/$CLAUDE_SESSION_ID/context.md
-  - Validation: .claude/sessions/workflow/$CLAUDE_SESSION_ID/validation-report.md
+Inputs:
 
-  Your goals:
-  1. Generate 2-4 distinct approaches
-  2. Analyze pros/cons for each
-  3. Assess complexity and risk levels
-  4. Estimate implementation time
-  5. Recommend a preferred option (but user decides)
+- Context: .claude/sessions/workflow/$CLAUDE_SESSION_ID/context.md
+- Validation: .claude/sessions/workflow/$CLAUDE_SESSION_ID/validation-report.md
 
-  Output alternatives to: .claude/sessions/workflow/$CLAUDE_SESSION_ID/alternatives.md
+Your goals:
 
-  Return summary of alternatives for user review.
+1. Generate 2-4 distinct approaches
+2. Analyze pros/cons for each
+3. Assess complexity and risk levels
+4. Estimate implementation time
+5. Recommend a preferred option (but user decides)
+
+Output alternatives to: .claude/sessions/workflow/$CLAUDE_SESSION_ID/alternatives.md
+
+Return summary of alternatives for user review.
 </Task>
 
 ---
@@ -110,6 +114,7 @@ Generating multiple solution alternatives...
 **Review alternatives**: `.claude/sessions/workflow/$CLAUDE_SESSION_ID/alternatives.md`
 
 **Please select your preferred approach**:
+
 - Type your selection (e.g., "Option B" or "B")
 - Or request modifications/clarifications
 - Or ask questions about trade-offs
@@ -127,23 +132,25 @@ Creating implementation plan for: **{USER_SELECTION}**
 <Task agent="architect">
   Design detailed implementation plan for selected option: {USER_SELECTION}
 
-  Session directory: .claude/sessions/workflow/$CLAUDE_SESSION_ID
+Session directory: .claude/sessions/workflow/$CLAUDE_SESSION_ID
 
-  Inputs:
-  - Context: .claude/sessions/workflow/$CLAUDE_SESSION_ID/context.md
-  - Alternatives: .claude/sessions/workflow/$CLAUDE_SESSION_ID/alternatives.md
-  - Selected: {USER_SELECTION}
+Inputs:
 
-  Your goals:
-  1. Create step-by-step implementation plan for chosen approach
-  2. Break down into atomic, testable steps
-  3. Identify dependencies and execution order
-  4. Define success criteria for each step
-  5. Document risks and mitigation strategies
+- Context: .claude/sessions/workflow/$CLAUDE_SESSION_ID/context.md
+- Alternatives: .claude/sessions/workflow/$CLAUDE_SESSION_ID/alternatives.md
+- Selected: {USER_SELECTION}
 
-  Output plan to: .claude/sessions/workflow/$CLAUDE_SESSION_ID/plan.md
+Your goals:
 
-  Return with: ⏸️ AWAITING USER APPROVAL BEFORE IMPLEMENTATION
+1. Create step-by-step implementation plan for chosen approach
+2. Break down into atomic, testable steps
+3. Identify dependencies and execution order
+4. Define success criteria for each step
+5. Document risks and mitigation strategies
+
+Output plan to: .claude/sessions/workflow/$CLAUDE_SESSION_ID/plan.md
+
+Return with: ⏸️ AWAITING USER APPROVAL BEFORE IMPLEMENTATION
 </Task>
 
 ---
@@ -153,6 +160,7 @@ Creating implementation plan for: **{USER_SELECTION}**
 **Plan ready for review**: `.claude/sessions/workflow/$CLAUDE_SESSION_ID/plan.md`
 
 **Review Checklist**:
+
 - [ ] Does the approach align with selected option?
 - [ ] Are steps clear and logical?
 - [ ] Any concerns about risks?
@@ -160,6 +168,7 @@ Creating implementation plan for: **{USER_SELECTION}**
 - [ ] Do you want any modifications?
 
 **What to do next**:
+
 - ✅ **Approve**: Type "proceed", "approved", "go ahead", or "looks good"
 - 🔄 **Request changes**: Describe what to modify
 - 💬 **Ask questions**: Request clarification
@@ -174,6 +183,7 @@ Creating implementation plan for: **{USER_SELECTION}**
 ## Phase 7: Surgical Implementation ✂️
 
 **IMPLEMENTATION CONSTRAINTS ACTIVE**:
+
 - ✂️ Minimal edits only (surgical precision)
 - 🚫 No code comments (self-documenting code required)
 - 🎯 Prefer Edit over Write tool
@@ -183,30 +193,33 @@ Executing with precision...
 <Task agent="surgical-builder">
   Execute the implementation plan for: $ARGUMENTS
 
-  Session directory: .claude/sessions/workflow/$CLAUDE_SESSION_ID
+Session directory: .claude/sessions/workflow/$CLAUDE_SESSION_ID
 
-  Inputs:
-  - Context: .claude/sessions/workflow/$CLAUDE_SESSION_ID/context.md
-  - Plan: .claude/sessions/workflow/$CLAUDE_SESSION_ID/plan.md
-  - Selected Option: {USER_SELECTION}
+Inputs:
 
-  Your goals:
-  1. Follow the plan step-by-step with SURGICAL PRECISION
-  2. Make MINIMAL edits - change only what's necessary
-  3. Write ZERO inline comments - use self-documenting code
-  4. Prefer Edit tool over Write tool (targeted changes)
-  5. Make atomic commits with clear messages
-  6. Track progress in real-time
-  7. Handle errors gracefully
+- Context: .claude/sessions/workflow/$CLAUDE_SESSION_ID/context.md
+- Plan: .claude/sessions/workflow/$CLAUDE_SESSION_ID/plan.md
+- Selected Option: {USER_SELECTION}
 
-  CRITICAL CONSTRAINTS:
-  - ❌ NO code comments allowed
-  - ✂️ SURGICAL edits only (no refactoring scope creep)
-  - 🎯 Prefer modifying existing files over creating new ones
+Your goals:
 
-  Output progress to: .claude/sessions/workflow/$CLAUDE_SESSION_ID/progress.md
+1. Follow the plan step-by-step with SURGICAL PRECISION
+2. Make MINIMAL edits - change only what's necessary
+3. Write ZERO inline comments - use self-documenting code
+4. Prefer Edit tool over Write tool (targeted changes)
+5. Make atomic commits with clear messages
+6. Track progress in real-time
+7. Handle errors gracefully
 
-  Return when: All steps completed successfully
+CRITICAL CONSTRAINTS:
+
+- ❌ NO code comments allowed
+- ✂️ SURGICAL edits only (no refactoring scope creep)
+- 🎯 Prefer modifying existing files over creating new ones
+
+Output progress to: .claude/sessions/workflow/$CLAUDE_SESSION_ID/progress.md
+
+Return when: All steps completed successfully
 </Task>
 
 ---
@@ -218,23 +231,25 @@ Running comprehensive tests...
 <Task agent="validator">
   Validate the implementation for: $ARGUMENTS
 
-  Session directory: .claude/sessions/workflow/$CLAUDE_SESSION_ID
+Session directory: .claude/sessions/workflow/$CLAUDE_SESSION_ID
 
-  Inputs:
-  - Context: .claude/sessions/workflow/$CLAUDE_SESSION_ID/context.md
-  - Plan: .claude/sessions/workflow/$CLAUDE_SESSION_ID/plan.md
-  - Progress: .claude/sessions/workflow/$CLAUDE_SESSION_ID/progress.md
+Inputs:
 
-  Your goals:
-  1. Run all automated tests (unit, integration, e2e)
-  2. Verify test coverage (>80% for new/modified code)
-  3. Perform manual testing checklist
-  4. Test edge cases and error scenarios
-  5. Check performance if applicable
+- Context: .claude/sessions/workflow/$CLAUDE_SESSION_ID/context.md
+- Plan: .claude/sessions/workflow/$CLAUDE_SESSION_ID/plan.md
+- Progress: .claude/sessions/workflow/$CLAUDE_SESSION_ID/progress.md
 
-  Output test results to: .claude/sessions/workflow/$CLAUDE_SESSION_ID/test_report.md
+Your goals:
 
-  Return when: All tests pass and coverage is adequate
+1. Run all automated tests (unit, integration, e2e)
+2. Verify test coverage (>80% for new/modified code)
+3. Perform manual testing checklist
+4. Test edge cases and error scenarios
+5. Check performance if applicable
+
+Output test results to: .claude/sessions/workflow/$CLAUDE_SESSION_ID/test_report.md
+
+Return when: All tests pass and coverage is adequate
 </Task>
 
 ---
@@ -246,30 +261,33 @@ Final quality assurance...
 <Task agent="auditor">
   Perform final code review for: $ARGUMENTS
 
-  Session directory: .claude/sessions/workflow/$CLAUDE_SESSION_ID
+Session directory: .claude/sessions/workflow/$CLAUDE_SESSION_ID
 
-  Inputs:
-  - Context: .claude/sessions/workflow/$CLAUDE_SESSION_ID/context.md
-  - Plan: .claude/sessions/workflow/$CLAUDE_SESSION_ID/plan.md
-  - Progress: .claude/sessions/workflow/$CLAUDE_SESSION_ID/progress.md
-  - Test Report: .claude/sessions/workflow/$CLAUDE_SESSION_ID/test_report.md
+Inputs:
 
-  Your goals:
-  1. Review code quality and maintainability
-  2. Verify self-documenting code (no comments present)
-  3. Check that changes were surgical (minimal scope)
-  4. Validate architecture and design patterns
-  5. Assess security best practices
-  6. Verify test coverage and quality
+- Context: .claude/sessions/workflow/$CLAUDE_SESSION_ID/context.md
+- Plan: .claude/sessions/workflow/$CLAUDE_SESSION_ID/plan.md
+- Progress: .claude/sessions/workflow/$CLAUDE_SESSION_ID/progress.md
+- Test Report: .claude/sessions/workflow/$CLAUDE_SESSION_ID/test_report.md
 
-  WORKFLOW-SPECIFIC CHECKS:
-  - ✅ Confirm zero inline comments in code
-  - ✅ Verify minimal file modifications
-  - ✅ Check Edit tool usage over Write tool
+Your goals:
 
-  Output review to: .claude/sessions/workflow/$CLAUDE_SESSION_ID/review.md
+1. Review code quality and maintainability
+2. Verify self-documenting code (no comments present)
+3. Check that changes were surgical (minimal scope)
+4. Validate architecture and design patterns
+5. Assess security best practices
+6. Verify test coverage and quality
 
-  Return verdict: APPROVE / APPROVE WITH NOTES / REQUEST CHANGES
+WORKFLOW-SPECIFIC CHECKS:
+
+- ✅ Confirm zero inline comments in code
+- ✅ Verify minimal file modifications
+- ✅ Check Edit tool usage over Write tool
+
+Output review to: .claude/sessions/workflow/$CLAUDE_SESSION_ID/review.md
+
+Return verdict: APPROVE / APPROVE WITH NOTES / REQUEST CHANGES
 </Task>
 
 ---
@@ -281,17 +299,18 @@ Creating permanent knowledge base documentation...
 <Task agent="documentation-writer">
   Create comprehensive documentation for: $ARGUMENTS
 
-  Session directory: .claude/sessions/workflow/$CLAUDE_SESSION_ID
+Session directory: .claude/sessions/workflow/$CLAUDE_SESSION_ID
 
-  Your goals:
-  1. Read all session artifacts (context, alternatives, plan, progress, tests, review)
-  2. Synthesize into comprehensive documentation
-  3. Save to `./documentacion/{YYYYMMDD}-{brief-name}.md`
-  4. Include executive summary, alternatives considered, implementation details, lessons learned
+Your goals:
 
-  Output documentation to: `./documentacion/`
+1. Read all session artifacts (context, alternatives, plan, progress, tests, review)
+2. Synthesize into comprehensive documentation
+3. Save to `./documentacion/{YYYYMMDD}-{brief-name}.md`
+4. Include executive summary, alternatives considered, implementation details, lessons learned
 
-  Return location of created documentation file.
+Output documentation to: `./documentacion/`
+
+Return location of created documentation file.
 </Task>
 
 ---
@@ -301,6 +320,7 @@ Creating permanent knowledge base documentation...
 **Problem Solved**: $ARGUMENTS
 
 **Workflow Summary**:
+
 - ✅ Context gathered and validated
 - ✅ Multiple alternatives explored
 - ✅ Solution selected by you
@@ -311,6 +331,7 @@ Creating permanent knowledge base documentation...
 - ✅ Documentation created
 
 **Session Artifacts**: `.claude/sessions/workflow/$CLAUDE_SESSION_ID/`
+
 - `context.md` - Problem analysis
 - `validation-report.md` - Requirements validation
 - `alternatives.md` - Solution options explored
@@ -324,6 +345,7 @@ Creating permanent knowledge base documentation...
 **Commits**: Check `git log` for atomic, descriptive commits
 
 **Next Steps**:
+
 1. Review all artifacts
 2. Test in your environment
 3. Merge when ready

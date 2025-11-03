@@ -1,7 +1,7 @@
 ---
 description: "Fast implementation workflow: research, plan, and implement without formal testing or review phases. Use for rapid prototyping or when you'll handle validation manually."
 argument-hint: "Describe the feature or change to implement"
-allowed-tools: Task
+allowed-tools: Task, Bash(*)
 ---
 
 # Fast Implementation Engineer
@@ -26,16 +26,17 @@ Let me start by understanding the context...
 <Task agent="investigator">
   Analyze the codebase and gather context for: $ARGUMENTS
 
-  Session directory: .claude/sessions/implement/$CLAUDE_SESSION_ID
+Session directory: .claude/sessions/implement/$CLAUDE_SESSION_ID
 
-  Your goals:
-  1. Map relevant codebase areas
-  2. Identify existing patterns and conventions
-  3. Assess complexity and dependencies
-  4. Find similar implementations for reference
-  5. Flag potential risks or constraints
+Your goals:
 
-  Output your findings to: .claude/sessions/implement/$CLAUDE_SESSION_ID/context.md
+1. Map relevant codebase areas
+2. Identify existing patterns and conventions
+3. Assess complexity and dependencies
+4. Find similar implementations for reference
+5. Flag potential risks or constraints
+
+Output your findings to: .claude/sessions/implement/$CLAUDE_SESSION_ID/context.md
 </Task>
 
 ---
@@ -47,25 +48,26 @@ Now designing the solution...
 <Task agent="architect">
   Design a solution plan for: $ARGUMENTS
 
-  Session directory: .claude/sessions/implement/$CLAUDE_SESSION_ID
+Session directory: .claude/sessions/implement/$CLAUDE_SESSION_ID
 
-  Input: .claude/sessions/implement/$CLAUDE_SESSION_ID/context.md
+Input: .claude/sessions/implement/$CLAUDE_SESSION_ID/context.md
 
-  **FAST MODE** - We're prioritizing speed:
-  1. Use "think" (not "think harder" or "ULTRATHINK") - quick analysis only
-  2. Skip Mermaid diagrams unless complexity is HIGH
-  3. Evaluate 2-3 approaches (not exhaustive)
-  4. Keep plan concise and actionable (target < 100 lines)
-  5. Choose the best solution with clear reasoning
-  6. Create step-by-step implementation plan
-  7. Identify key risks
-  8. Define success criteria
+**FAST MODE** - We're prioritizing speed:
 
-  We're moving fast - focus on clarity and speed over depth.
+1. Use "think" (not "think harder" or "ULTRATHINK") - quick analysis only
+2. Skip Mermaid diagrams unless complexity is HIGH
+3. Evaluate 2-3 approaches (not exhaustive)
+4. Keep plan concise and actionable (target < 100 lines)
+5. Choose the best solution with clear reasoning
+6. Create step-by-step implementation plan
+7. Identify key risks
+8. Define success criteria
 
-  Output your plan to: .claude/sessions/implement/$CLAUDE_SESSION_ID/plan.md
+We're moving fast - focus on clarity and speed over depth.
 
-  Return with: ⏸️ AWAITING USER APPROVAL BEFORE IMPLEMENTATION
+Output your plan to: .claude/sessions/implement/$CLAUDE_SESSION_ID/plan.md
+
+Return with: ⏸️ AWAITING USER APPROVAL BEFORE IMPLEMENTATION
 </Task>
 
 ---
@@ -75,11 +77,13 @@ Now designing the solution...
 **Please review the plan**: `.claude/sessions/implement/$CLAUDE_SESSION_ID/plan.md`
 
 **Quick checklist**:
+
 - [ ] Does the approach make sense?
 - [ ] Are the steps clear?
 - [ ] Any concerns about risks?
 
 **What to do next**:
+
 - ✅ **If you approve**: Type "proceed" or "approved" or "go ahead"
 - 🔄 **If you want changes**: Describe what to modify
 - ❌ **If you want to stop**: Type "stop" or "cancel"
@@ -95,23 +99,25 @@ Now designing the solution...
 <Task agent="builder">
   Execute the implementation plan for: $ARGUMENTS
 
-  Session directory: .claude/sessions/implement/$CLAUDE_SESSION_ID
+Session directory: .claude/sessions/implement/$CLAUDE_SESSION_ID
 
-  Inputs:
-  - Context: .claude/sessions/implement/$CLAUDE_SESSION_ID/context.md
-  - Plan: .claude/sessions/implement/$CLAUDE_SESSION_ID/plan.md
+Inputs:
 
-  Your goals:
-  1. Follow the plan step-by-step
-  2. Make atomic, well-described commits
-  3. Track progress in real-time
-  4. Handle obvious errors gracefully
+- Context: .claude/sessions/implement/$CLAUDE_SESSION_ID/context.md
+- Plan: .claude/sessions/implement/$CLAUDE_SESSION_ID/plan.md
 
-  Focus on speed - skip writing comprehensive tests.
+Your goals:
 
-  Output progress to: .claude/sessions/implement/$CLAUDE_SESSION_ID/progress.md
+1. Follow the plan step-by-step
+2. Make atomic, well-described commits
+3. Track progress in real-time
+4. Handle obvious errors gracefully
 
-  Return when: All steps completed
+Focus on speed - skip writing comprehensive tests.
+
+Output progress to: .claude/sessions/implement/$CLAUDE_SESSION_ID/progress.md
+
+Return when: All steps completed
 </Task>
 
 ---
@@ -121,6 +127,7 @@ Now designing the solution...
 **Summary**: $ARGUMENTS
 
 **Session artifacts** saved in: `.claude/sessions/implement/$CLAUDE_SESSION_ID/`
+
 - `context.md` - Research findings
 - `plan.md` - Solution design
 - `progress.md` - Implementation log
@@ -128,6 +135,7 @@ Now designing the solution...
 **Commits created**: Check git log
 
 **⚠️ Important - Next Steps**:
+
 - **Manual testing recommended** - This workflow skipped automated tests
 - **Code review suggested** - No formal review was performed
 - Test the changes in your environment
@@ -135,6 +143,7 @@ Now designing the solution...
 - Review the code before merging to main
 
 **When to use formal workflow instead**:
+
 - Production-critical features → Use `/build`
 - Complex refactoring → Use `/build`
 - Security-sensitive code → Use `/build`

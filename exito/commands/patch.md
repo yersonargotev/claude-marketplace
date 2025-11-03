@@ -1,7 +1,7 @@
 ---
 description: "Fast fixes for simple bugs or small changes. Skips deep planning - just research, quick analysis, implement, and test."
 argument-hint: "Describe the bug or small change needed"
-allowed-tools: Task
+allowed-tools: Task, Bash(*)
 ---
 
 # Quick Fix Engineer
@@ -9,6 +9,7 @@ allowed-tools: Task
 **Fast, focused fixes!** ⚡
 
 Use this for:
+
 - Simple bug fixes
 - Small style adjustments
 - Minor refactoring
@@ -17,6 +18,7 @@ Use this for:
 - Configuration tweaks
 
 **Not suitable for**:
+
 - New features
 - Architecture changes
 - Complex refactoring
@@ -59,22 +61,23 @@ Quick solution analysis...
 <Task agent="quick-planner">
   Quick fix plan for: $ARGUMENTS
 
-  Session directory: .claude/sessions/patch/$CLAUDE_SESSION_ID
+Session directory: .claude/sessions/patch/$CLAUDE_SESSION_ID
 
-  Input: .claude/sessions/patch/$CLAUDE_SESSION_ID/context.md
+Input: .claude/sessions/patch/$CLAUDE_SESSION_ID/context.md
 
-  **Fast planning**:
-  1. Identify the root cause
-  2. Propose a straightforward fix
-  3. List the files to change
-  4. Note any risks (even for simple fixes)
-  5. Define quick test to verify
+**Fast planning**:
 
-  Keep it simple and direct - no extended thinking needed.
+1. Identify the root cause
+2. Propose a straightforward fix
+3. List the files to change
+4. Note any risks (even for simple fixes)
+5. Define quick test to verify
 
-  Output to: .claude/sessions/patch/$CLAUDE_SESSION_ID/plan.md
+Keep it simple and direct - no extended thinking needed.
 
-  ⚠️ **Auto-approve**: This is a quick fix, proceeding to implementation.
+Output to: .claude/sessions/patch/$CLAUDE_SESSION_ID/plan.md
+
+⚠️ **Auto-approve**: This is a quick fix, proceeding to implementation.
 </Task>
 
 ---
@@ -138,14 +141,16 @@ Quick solution analysis...
 
 **Commit**: Check git log
 
-**What changed**: 
+**What changed**:
+
 - Targeted fix applied
 - Tests updated/added
 - Verified working
 
 **Next steps**:
+
 1. Quick review of the change
-2. Test in your environment  
+2. Test in your environment
 3. Merge when satisfied
 
 ---
@@ -154,7 +159,7 @@ Quick solution analysis...
 
 ---
 
-Fast and focused! ⚡ 
+Fast and focused! ⚡
 
 Need something more complex? Use `/build` or `/think` instead.
 
