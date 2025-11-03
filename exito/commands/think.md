@@ -22,8 +22,6 @@ I'll take extra time to think deeply at every stage.
 
 ## Task: $ARGUMENTS
 
-!`export COMMAND_TYPE="think"`
-
 Starting with comprehensive research...
 
 <Task agent="investigator">

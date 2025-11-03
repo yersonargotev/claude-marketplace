@@ -25,8 +25,6 @@ This workflow emphasizes **exploration before commitment** and **precision over 
 
 ## Problem: $ARGUMENTS
 
-!`export COMMAND_TYPE="workflow"`
-
 ---
 
 ## Phase 1: Discovery & Analysis 🔍

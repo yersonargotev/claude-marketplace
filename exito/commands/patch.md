@@ -31,8 +31,6 @@ For those, use `/build` or `/think` instead.
 
 ## Quick Fix: $ARGUMENTS
 
-!`export COMMAND_TYPE="patch"`
-
 Gathering necessary context...
 
 <Task agent="investigator">

@@ -19,8 +19,6 @@ allowed-tools: Task, Bash(*)
 
 ## Task: $ARGUMENTS
 
-!`export COMMAND_TYPE="implement"`
-
 Let me start by understanding the context...
 
 <Task agent="investigator">

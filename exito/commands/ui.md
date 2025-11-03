@@ -18,8 +18,6 @@ allowed-tools: Task, Bash(*)
 
 ## Frontend Task: $ARGUMENTS
 
-!`export COMMAND_TYPE="ui"`
-
 Let me research the frontend landscape...
 
 <Task agent="investigator">

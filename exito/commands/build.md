@@ -19,8 +19,6 @@ allowed-tools: Task, Bash(*)
 
 ## Task: $ARGUMENTS
 
-!`export COMMAND_TYPE="build"`
-
 Let me start by understanding what we're working with...
 
 <Task agent="investigator">
