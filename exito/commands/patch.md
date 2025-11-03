@@ -1,7 +1,7 @@
 ---
 description: "Fast fixes for simple bugs or small changes. Skips deep planning - just research, quick analysis, implement, and test."
 argument-hint: "Describe the bug or small change needed"
-allowed-tools: Task, Bash(*)
+allowed-tools: Task
 ---
 
 # Quick Fix Engineer

@@ -1,7 +1,7 @@
 ---
 description: "Fast implementation workflow: research, plan, and implement without formal testing or review phases. Use for rapid prototyping or when you'll handle validation manually."
 argument-hint: "Describe the feature or change to implement"
-allowed-tools: Task, Bash(*)
+allowed-tools: Task
 ---
 
 # Fast Implementation Engineer

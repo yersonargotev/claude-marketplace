@@ -1,7 +1,7 @@
 ---
 description: "Universal senior engineer that investigates, plans deeply, implements, and validates. Use for complex features or significant changes."
 argument-hint: "Describe the feature or problem to solve"
-allowed-tools: Task, Bash(*)
+allowed-tools: Task
 ---
 
 # Universal Senior Engineer

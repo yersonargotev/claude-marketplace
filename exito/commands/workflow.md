@@ -1,7 +1,7 @@
 ---
 description: "Systematic problem-solving workflow with multiple solution exploration and surgical implementation"
 argument-hint: "Describe the problem to solve"
-allowed-tools: Task, Bash(*)
+allowed-tools: Task
 ---
 
 # Systematic Workflow Engineer

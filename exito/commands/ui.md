@@ -1,7 +1,7 @@
 ---
 description: "Frontend specialist for React/UI/UX work. Investigates, plans, and implements with focus on user experience, accessibility, and performance."
 argument-hint: "Describe the frontend feature, component, or UI change"
-allowed-tools: Task, Bash(*)
+allowed-tools: Task
 ---
 
 # Frontend Senior Engineer
