@@ -29,12 +29,14 @@ For those, use `/build` or `/think` instead.
 
 ## Quick Fix: $ARGUMENTS
 
+!`export COMMAND_TYPE="patch"`
+
 Gathering necessary context...
 
 <Task agent="investigator">
   Quick context gathering for: $ARGUMENTS
   
-  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
+  Session directory: .claude/sessions/patch/$CLAUDE_SESSION_ID
   
   **Fast research focus**:
   1. Locate the problem area (file + line)
@@ -45,7 +47,7 @@ Gathering necessary context...
   
   Keep it focused - this is a quick fix.
   
-  Output to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+  Output to: .claude/sessions/patch/$CLAUDE_SESSION_ID/context.md
 </Task>
 
 ---
@@ -57,9 +59,9 @@ Quick solution analysis...
 <Task agent="architect">
   Quick fix plan for: $ARGUMENTS
   
-  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
+  Session directory: .claude/sessions/patch/$CLAUDE_SESSION_ID
   
-  Input: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+  Input: .claude/sessions/patch/$CLAUDE_SESSION_ID/context.md
   
   **Fast planning**:
   1. Identify the root cause
@@ -70,7 +72,7 @@ Quick solution analysis...
   
   No need for extended thinking - keep it simple and direct.
   
-  Output to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
+  Output to: .claude/sessions/patch/$CLAUDE_SESSION_ID/plan.md
   
   ⚠️ **Auto-approve**: This is a quick fix, proceeding to implementation.
 </Task>
@@ -82,11 +84,11 @@ Quick solution analysis...
 <Task agent="builder">
   Execute quick fix for: $ARGUMENTS
   
-  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
+  Session directory: .claude/sessions/patch/$CLAUDE_SESSION_ID
   
   Inputs:
-  - Context: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
-  - Plan: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
+  - Context: .claude/sessions/patch/$CLAUDE_SESSION_ID/context.md
+  - Plan: .claude/sessions/patch/$CLAUDE_SESSION_ID/plan.md
   
   **Quick implementation**:
   1. Make the targeted change
@@ -96,7 +98,7 @@ Quick solution analysis...
   
   Keep it focused and simple.
   
-  Output to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md
+  Output to: .claude/sessions/patch/$CLAUDE_SESSION_ID/progress.md
 </Task>
 
 ---
@@ -106,12 +108,12 @@ Quick solution analysis...
 <Task agent="validator">
   Validate quick fix for: $ARGUMENTS
   
-  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
+  Session directory: .claude/sessions/patch/$CLAUDE_SESSION_ID
   
   Inputs:
-  - Context: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
-  - Plan: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
-  - Progress: .claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md
+  - Context: .claude/sessions/patch/$CLAUDE_SESSION_ID/context.md
+  - Plan: .claude/sessions/patch/$CLAUDE_SESSION_ID/plan.md
+  - Progress: .claude/sessions/patch/$CLAUDE_SESSION_ID/progress.md
   
   **Quick validation**:
   1. Run relevant tests (not entire suite)
@@ -121,7 +123,7 @@ Quick solution analysis...
   
   Fast validation for a simple fix.
   
-  Output to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/test_report.md
+  Output to: .claude/sessions/patch/$CLAUDE_SESSION_ID/test_report.md
 </Task>
 
 ---
@@ -130,9 +132,9 @@ Quick solution analysis...
 
 **Fixed**: $ARGUMENTS
 
-**Change summary**: Check `.claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md`
+**Change summary**: Check `.claude/sessions/patch/$CLAUDE_SESSION_ID/progress.md`
 
-**Tests**: Check `.claude/sessions/tasks/$CLAUDE_SESSION_ID/test_report.md`
+**Tests**: Check `.claude/sessions/patch/$CLAUDE_SESSION_ID/test_report.md`
 
 **Commit**: Check git log
 
@@ -148,7 +150,7 @@ Quick solution analysis...
 
 ---
 
-**Session files** (if you need them): `.claude/sessions/tasks/$CLAUDE_SESSION_ID/`
+**Session files** (if you need them): `.claude/sessions/patch/$CLAUDE_SESSION_ID/`
 
 ---
 

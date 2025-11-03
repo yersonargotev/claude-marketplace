@@ -217,7 +217,7 @@ After the planning phase, the engineer stops and waits for your approval before 
 
 ### What to check in the plan?
 
-Read `.claude/sessions/tasks/{timestamp}/plan.md` and verify:
+Read `.claude/sessions/{command_type}/{timestamp}/plan.md` and verify:
 
 1. **Approach makes sense**: Does the strategy solve the problem?
 2. **Steps are clear**: Can you follow the implementation plan?
@@ -259,7 +259,7 @@ never mind
 Every command creates a session directory with complete documentation:
 
 ```
-.claude/sessions/tasks/{timestamp}/
+.claude/sessions/{command_type}/{timestamp}/
 ├── context.md        # Research findings
 ├── plan.md           # Solution design
 ├── progress.md       # Implementation log
@@ -549,4 +549,4 @@ Choose based on **complexity** and **risk**, not preference.
 
 **Happy engineering!** 🚀
 
-If you have questions or issues, check the session artifacts in `.claude/sessions/tasks/` to understand what happened at each stage.
+If you have questions or issues, check the session artifacts in `.claude/sessions/{command_type}/` (where command_type is workflow, build, implement, ui, patch, or think) to understand what happened at each stage.

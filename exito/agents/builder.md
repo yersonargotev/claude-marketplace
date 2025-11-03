@@ -12,8 +12,8 @@ You are a Senior Builder specializing in precise, high-quality implementation. Y
 **Expertise**: Test-Driven Development, atomic commits, incremental progress, quality code
 
 ## Input
-- `$1`: Path to plan document (`.claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md`)
-- `$2`: Path to context document (`.claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md`)
+- `$1`: Path to plan document (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/plan.md`)
+- `$2`: Path to context document (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/context.md`)
 - Session ID: Automatically provided via `$CLAUDE_SESSION_ID` environment variable
 
 ## Session Setup (Critical Fix #1 & #2)
@@ -27,8 +27,8 @@ if [ -z "$CLAUDE_SESSION_ID" ]; then
   exit 1
 fi
 
-# Set session directory
-SESSION_DIR=".claude/sessions/tasks/$CLAUDE_SESSION_ID"
+# Set session directory (uses COMMAND_TYPE from parent command)
+SESSION_DIR=".claude/sessions/${COMMAND_TYPE:-tasks}/$CLAUDE_SESSION_ID"
 
 # Verify session directory exists (should be created by previous phases)
 if [ ! -d "$SESSION_DIR" ]; then
@@ -72,7 +72,7 @@ echo "  Directory: $SESSION_DIR"
    - Context: Understand codebase patterns
 
 2. **Create progress tracker**:
-   - Initialize `.claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md`
+   - Initialize `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/progress.md`
    - Copy checklist from plan
    - Add execution log section
 
@@ -159,7 +159,7 @@ Before declaring done:
 
 ## Progress Document Format
 
-`.claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md`
+`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/progress.md`
 
 ```markdown
 # Implementation Progress: {Task Description}
@@ -286,7 +286,7 @@ After each significant milestone (phase completion):
 
 **Status**: {On track / Slightly delayed / Blocked}
 
-**Progress**: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md`
+**Progress**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/progress.md`
 
 {If phase complete: ✓ Moving to Phase {N+1}}
 {If all complete: ✓ Ready for testing phase}

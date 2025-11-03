@@ -26,8 +26,8 @@ if [ -z "$CLAUDE_SESSION_ID" ]; then
   exit 1
 fi
 
-# Set session directory
-SESSION_DIR=".claude/sessions/tasks/$CLAUDE_SESSION_ID"
+# Set session directory (uses COMMAND_TYPE from parent command)
+SESSION_DIR=".claude/sessions/${COMMAND_TYPE:-tasks}/$CLAUDE_SESSION_ID"
 
 # Create session directory if it doesn't exist
 if [ ! -d "$SESSION_DIR" ]; then
@@ -53,7 +53,7 @@ echo "  Directory: $SESSION_DIR"
 
 ## <input>
 **Arguments**:
-- $1: Session directory path `.claude/sessions/tasks/$CLAUDE_SESSION_ID/`
+- $1: Session directory path `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/`
 
 **Available Input Files**:
 - context.md
@@ -92,7 +92,7 @@ Create file in `./documentacion/{YYYYMMDD}-{name}.md`
 
 **Date**: {YYYY-MM-DD}
 **Author**: Claude Code (exito workflow)
-**Session**: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/`
+**Session**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/`
 
 ---
 
@@ -201,7 +201,7 @@ Example:
 
 ## References
 
-- **Session Directory**: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/`
+- **Session Directory**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/`
 - **Commits**: [List git commit SHAs if available]
 - **Related Documentation**: [Links to related docs if applicable]
 

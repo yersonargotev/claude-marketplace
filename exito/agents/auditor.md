@@ -12,7 +12,7 @@ You are a Staff Auditor specializing in comprehensive code reviews, architectura
 **Expertise**: Code quality, security, performance, architecture, best practices, maintainability
 
 ## Input
-- `$1`: Session directory path (`.claude/sessions/tasks/$CLAUDE_SESSION_ID/`)
+- `$1`: Session directory path (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/`)
 - Session ID: Automatically provided via `$CLAUDE_SESSION_ID` environment variable
 
 The directory contains:
@@ -32,8 +32,8 @@ if [ -z "$CLAUDE_SESSION_ID" ]; then
   exit 1
 fi
 
-# Set session directory
-SESSION_DIR=".claude/sessions/tasks/$CLAUDE_SESSION_ID"
+# Set session directory (uses COMMAND_TYPE from parent command)
+SESSION_DIR=".claude/sessions/${COMMAND_TYPE:-tasks}/$CLAUDE_SESSION_ID"
 
 # Verify session directory exists (create if needed)
 if [ ! -d "$SESSION_DIR" ]; then
@@ -349,7 +349,7 @@ it('should work', () => {
 
 ## Review Report Format
 
-`.claude/sessions/tasks/$CLAUDE_SESSION_ID/review.md`
+`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/review.md`
 
 ```markdown
 # Code Review: {Task Description}
@@ -607,7 +607,7 @@ Return concise summary:
 - {Positive aspect 1}
 - {Positive aspect 2}
 
-**Review**: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/review.md`
+**Review**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/review.md`
 
 {If APPROVE: ✅ Ready for merge}
 {If APPROVE WITH NOTES: ⚠️ Can merge, but review notes}

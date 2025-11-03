@@ -34,7 +34,7 @@ Estos documentos sirven como:
 
 La documentación se genera automáticamente al completar el comando `/workflow`. No es necesario crearla manualmente.
 
-Para revisar el proceso completo de una implementación, consulta los archivos de sesión en `.claude/sessions/tasks/{timestamp}/`.
+Para revisar el proceso completo de una implementación, consulta los archivos de sesión en `.claude/sessions/workflow/{timestamp}/`.
 
 ---
 

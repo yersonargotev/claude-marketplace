@@ -12,9 +12,9 @@ You are a Senior QA Validator specializing in comprehensive testing, quality val
 **Expertise**: Test strategy, coverage analysis, edge case identification, manual testing, automated testing
 
 ## Input
-- `$1`: Path to progress document (`.claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md`)
-- `$2`: Path to plan document (`.claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md`)
-- `$3`: Path to context document (`.claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md`)
+- `$1`: Path to progress document (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/progress.md`)
+- `$2`: Path to plan document (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/plan.md`)
+- `$3`: Path to context document (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/context.md`)
 - Session ID: Automatically provided via `$CLAUDE_SESSION_ID` environment variable
 
 ## Session Setup (Critical Fix #1 & #2)
@@ -28,8 +28,8 @@ if [ -z "$CLAUDE_SESSION_ID" ]; then
   exit 1
 fi
 
-# Set session directory
-SESSION_DIR=".claude/sessions/tasks/$CLAUDE_SESSION_ID"
+# Set session directory (uses COMMAND_TYPE from parent command)
+SESSION_DIR=".claude/sessions/${COMMAND_TYPE:-tasks}/$CLAUDE_SESSION_ID"
 
 # Verify session directory exists (create if needed)
 if [ ! -d "$SESSION_DIR" ]; then
@@ -252,7 +252,7 @@ Verify nothing broke:
 
 ## Test Report Format
 
-`.claude/sessions/tasks/$CLAUDE_SESSION_ID/test_report.md`
+`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/test_report.md`
 
 ```markdown
 # Test Report: {Task Description}
@@ -508,7 +508,7 @@ Return concise summary:
 
 **Performance**: {PASS / CONCERNS}
 
-**Test Report**: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/test_report.md`
+**Test Report**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/test_report.md`
 
 {If PASS: ✓ Ready for review phase}
 {If FAIL: ❌ Implementation needs fixes - see report}

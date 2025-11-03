@@ -19,12 +19,14 @@ allowed-tools: Task
 
 ## Task: $ARGUMENTS
 
+!`export COMMAND_TYPE="implement"`
+
 Let me start by understanding the context...
 
 <Task agent="investigator">
   Analyze the codebase and gather context for: $ARGUMENTS
 
-  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
+  Session directory: .claude/sessions/implement/$CLAUDE_SESSION_ID
 
   Your goals:
   1. Map relevant codebase areas
@@ -33,7 +35,7 @@ Let me start by understanding the context...
   4. Find similar implementations for reference
   5. Flag potential risks or constraints
 
-  Output your findings to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+  Output your findings to: .claude/sessions/implement/$CLAUDE_SESSION_ID/context.md
 </Task>
 
 ---
@@ -45,9 +47,9 @@ Now designing the solution...
 <Task agent="architect">
   Design a solution plan for: $ARGUMENTS
 
-  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
+  Session directory: .claude/sessions/implement/$CLAUDE_SESSION_ID
 
-  Input: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+  Input: .claude/sessions/implement/$CLAUDE_SESSION_ID/context.md
 
   Your goals:
   1. Evaluate multiple approaches (at least 2-3)
@@ -58,7 +60,7 @@ Now designing the solution...
 
   Keep the plan concise and actionable - we're moving fast.
 
-  Output your plan to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
+  Output your plan to: .claude/sessions/implement/$CLAUDE_SESSION_ID/plan.md
 
   Return with: ⏸️ AWAITING USER APPROVAL BEFORE IMPLEMENTATION
 </Task>
@@ -67,7 +69,7 @@ Now designing the solution...
 
 ## Plan Ready - Awaiting Your Approval ⏸️
 
-**Please review the plan**: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md`
+**Please review the plan**: `.claude/sessions/implement/$CLAUDE_SESSION_ID/plan.md`
 
 **Quick checklist**:
 - [ ] Does the approach make sense?
@@ -90,11 +92,11 @@ Now designing the solution...
 <Task agent="builder">
   Execute the implementation plan for: $ARGUMENTS
 
-  Session directory: .claude/sessions/tasks/$CLAUDE_SESSION_ID
+  Session directory: .claude/sessions/implement/$CLAUDE_SESSION_ID
 
   Inputs:
-  - Context: .claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
-  - Plan: .claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md
+  - Context: .claude/sessions/implement/$CLAUDE_SESSION_ID/context.md
+  - Plan: .claude/sessions/implement/$CLAUDE_SESSION_ID/plan.md
 
   Your goals:
   1. Follow the plan step-by-step
@@ -104,7 +106,7 @@ Now designing the solution...
 
   Focus on speed - skip writing comprehensive tests.
 
-  Output progress to: .claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md
+  Output progress to: .claude/sessions/implement/$CLAUDE_SESSION_ID/progress.md
 
   Return when: All steps completed
 </Task>
@@ -115,7 +117,7 @@ Now designing the solution...
 
 **Summary**: $ARGUMENTS
 
-**Session artifacts** saved in: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/`
+**Session artifacts** saved in: `.claude/sessions/implement/$CLAUDE_SESSION_ID/`
 - `context.md` - Research findings
 - `plan.md` - Solution design
 - `progress.md` - Implementation log

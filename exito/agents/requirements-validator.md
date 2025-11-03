@@ -26,8 +26,8 @@ if [ -z "$CLAUDE_SESSION_ID" ]; then
   exit 1
 fi
 
-# Set session directory
-SESSION_DIR=".claude/sessions/tasks/$CLAUDE_SESSION_ID"
+# Set session directory (uses COMMAND_TYPE from parent command)
+SESSION_DIR=".claude/sessions/${COMMAND_TYPE:-tasks}/$CLAUDE_SESSION_ID"
 
 # Create session directory if it doesn't exist
 if [ ! -d "$SESSION_DIR" ]; then
@@ -57,7 +57,7 @@ echo "  Directory: $SESSION_DIR"
 
 **Expected Input File Structure**:
 ```
-.claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md
+.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/context.md
 ```
 </input>
 
@@ -86,7 +86,7 @@ Based on validation:
 - **NEEDS_INFO**: Missing critical information → request specific clarification from user
 
 ### Step 4: Generate Report
-Create validation report at `.claude/sessions/tasks/$CLAUDE_SESSION_ID/validation-report.md`
+Create validation report at `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/validation-report.md`
 
 **Format**:
 ```markdown

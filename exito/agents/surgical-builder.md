@@ -26,8 +26,8 @@ if [ -z "$CLAUDE_SESSION_ID" ]; then
   exit 1
 fi
 
-# Set session directory
-SESSION_DIR=".claude/sessions/tasks/$CLAUDE_SESSION_ID"
+# Set session directory (uses COMMAND_TYPE from parent command)
+SESSION_DIR=".claude/sessions/${COMMAND_TYPE:-tasks}/$CLAUDE_SESSION_ID"
 
 # Create session directory if it doesn't exist
 if [ ! -d "$SESSION_DIR" ]; then
@@ -57,7 +57,7 @@ echo "  Directory: $SESSION_DIR"
 - $2: Path to plan.md
 - $3: Selected alternative (if applicable)
 
-**Working Directory**: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/`
+**Working Directory**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/`
 </input>
 
 ## <workflow>
@@ -69,7 +69,7 @@ Read the implementation plan from `$2` and understand:
 - Success criteria
 
 ### Step 2: Create Progress Tracker
-Initialize `.claude/sessions/tasks/$CLAUDE_SESSION_ID/progress.md`:
+Initialize `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/progress.md`:
 ```markdown
 # Implementation Progress
 

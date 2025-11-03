@@ -2,12 +2,17 @@
 # Session Cleanup Hook for Claude Code
 # Updates session state when Claude Code session ends
 # Critical Fix #3: Cleanup handler for interruptions
+# Enhancement: Command-specific session directories
 
 set -euo pipefail
 
+# Determine session directory type based on COMMAND_TYPE env var
+# Falls back to "tasks" for backward compatibility
+SESSION_TYPE="${COMMAND_TYPE:-tasks}"
+
 # Get current session ID if exists
 if [ -n "${CLAUDE_SESSION_ID:-}" ]; then
-    SESSION_DIR=".claude/sessions/tasks/$CLAUDE_SESSION_ID"
+    SESSION_DIR=".claude/sessions/$SESSION_TYPE/$CLAUDE_SESSION_ID"
     
     if [ -d "$SESSION_DIR" ]; then
         METADATA="$SESSION_DIR/session_metadata.json"
@@ -135,7 +140,7 @@ esac)
 
 ---
 
-**Session Directory**: \`.claude/sessions/tasks/$CLAUDE_SESSION_ID/\`
+**Session Directory**: \`.claude/sessions/$SESSION_TYPE/$CLAUDE_SESSION_ID/\`
 EOF
             
             # Log to stderr

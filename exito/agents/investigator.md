@@ -26,8 +26,8 @@ if [ -z "$CLAUDE_SESSION_ID" ]; then
   exit 1
 fi
 
-# Set session directory
-SESSION_DIR=".claude/sessions/tasks/$CLAUDE_SESSION_ID"
+# Set session directory (uses COMMAND_TYPE from parent command)
+SESSION_DIR=".claude/sessions/${COMMAND_TYPE:-tasks}/$CLAUDE_SESSION_ID"
 
 # Create session directory if it doesn't exist (Critical Fix #2: Directory Validation)
 if [ ! -d "$SESSION_DIR" ]; then
@@ -137,7 +137,7 @@ find . -name "*test*" | xargs grep -l "{identifier}"
 ## Output Format
 
 Create comprehensive context document at:
-`.claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md`
+`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/context.md`
 
 ### Document Structure
 
@@ -247,7 +247,7 @@ Return ONLY this concise summary (not the full context):
 ## Research Complete ✓
 
 **Task**: {problem description}
-**Session**: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/`
+**Session**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/`
 **Complexity**: {classification}
 
 **Key Findings**:
@@ -259,7 +259,7 @@ Return ONLY this concise summary (not the full context):
 **Risks**:
 - {Critical risks if any}
 
-**Context Document**: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md` (ready for planner)
+**Context Document**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/context.md` (ready for planner)
 
 ✓ Ready for planning phase
 ```

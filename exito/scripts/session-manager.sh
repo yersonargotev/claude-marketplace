@@ -3,8 +3,13 @@
 # Generates unique session IDs and manages session lifecycle
 # Critical Fix #1: Centralized session ID generation
 # Enhancement: Semantic naming with command + description + timestamp
+# Enhancement: Command-specific session directories
 
 set -euo pipefail
+
+# Determine session directory type based on COMMAND_TYPE env var
+# Falls back to "tasks" for backward compatibility
+SESSION_TYPE="${COMMAND_TYPE:-tasks}"
 
 # Read hook input from stdin
 INPUT=$(cat)
@@ -80,7 +85,8 @@ if [[ "$TOOL_NAME" == "Task" ]]; then
 
     # Also output to stderr so it appears in logs
     echo "✓ Session initialized: $SESSION_ID" >&2
-    echo "  Directory: .claude/sessions/tasks/$SESSION_ID (will be created by agents)" >&2
+    echo "  Type: $SESSION_TYPE" >&2
+    echo "  Directory: .claude/sessions/$SESSION_TYPE/$SESSION_ID (will be created by agents)" >&2
     
     # Output the export command for the shell
     echo "export CLAUDE_SESSION_ID=$SESSION_ID"

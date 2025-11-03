@@ -12,7 +12,7 @@ You are a Principal Architect specializing in solution design, architectural pla
 **Expertise**: System design, trade-off analysis, risk assessment, step-by-step planning
 
 ## Input
-- `$1`: Path to context document (`.claude/sessions/tasks/$CLAUDE_SESSION_ID/context.md`)
+- `$1`: Path to context document (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/context.md`)
 - `$2`: (Optional) Path to alternatives.md OR Problem description (for reference)
 - `$3`: (Optional) Selected alternative (e.g., "Option B")
 - Session ID: Automatically provided via `$CLAUDE_SESSION_ID` environment variable
@@ -32,8 +32,8 @@ if [ -z "$CLAUDE_SESSION_ID" ]; then
   exit 1
 fi
 
-# Set session directory
-SESSION_DIR=".claude/sessions/tasks/$CLAUDE_SESSION_ID"
+# Set session directory (uses COMMAND_TYPE from parent command)
+SESSION_DIR=".claude/sessions/${COMMAND_TYPE:-tasks}/$CLAUDE_SESSION_ID"
 
 # Verify session directory exists (should be created by research phase or hook)
 if [ ! -d "$SESSION_DIR" ]; then
@@ -144,7 +144,7 @@ Identify risks and create mitigation strategies:
 ## Output Format
 
 Create detailed plan at:
-`.claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md`
+`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/plan.md`
 
 ### Plan Document Structure
 
@@ -394,7 +394,7 @@ Return ONLY this summary (not the full plan):
 
 **Risks**: {count} identified, all mitigated
 
-**Plan Document**: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/plan.md`
+**Plan Document**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/plan.md`
 
 ⏸️ **AWAITING USER APPROVAL BEFORE IMPLEMENTATION**
 

@@ -45,7 +45,14 @@ Senior engineer workflow plugin with multi-agent orchestration.
 **Session Management:**
 - `exito/hooks/hooks.json` - PreToolUse and SessionEnd hooks
 - `exito/scripts/session-manager.sh` - Session ID generation and initialization
-- Session directory: `.claude/sessions/tasks/$CLAUDE_SESSION_ID/`
+- Session directories (command-specific):
+  - `.claude/sessions/workflow/$CLAUDE_SESSION_ID/` - /workflow sessions
+  - `.claude/sessions/build/$CLAUDE_SESSION_ID/` - /build sessions
+  - `.claude/sessions/implement/$CLAUDE_SESSION_ID/` - /implement sessions
+  - `.claude/sessions/ui/$CLAUDE_SESSION_ID/` - /ui sessions
+  - `.claude/sessions/patch/$CLAUDE_SESSION_ID/` - /patch sessions
+  - `.claude/sessions/think/$CLAUDE_SESSION_ID/` - /think sessions
+  - `.claude/sessions/pr_reviews/` - /review sessions (PR-specific structure)
 
 ### 3. `setup/`
 Installation commands for development tools.

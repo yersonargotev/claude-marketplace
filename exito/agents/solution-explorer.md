@@ -26,8 +26,8 @@ if [ -z "$CLAUDE_SESSION_ID" ]; then
   exit 1
 fi
 
-# Set session directory
-SESSION_DIR=".claude/sessions/tasks/$CLAUDE_SESSION_ID"
+# Set session directory (uses COMMAND_TYPE from parent command)
+SESSION_DIR=".claude/sessions/${COMMAND_TYPE:-tasks}/$CLAUDE_SESSION_ID"
 
 # Create session directory if it doesn't exist
 if [ ! -d "$SESSION_DIR" ]; then
@@ -83,7 +83,7 @@ For EACH approach:
 Based on trade-off analysis, suggest which option you'd recommend and why (but user makes final call).
 
 ### Step 4: Write Alternatives File
-Save to `.claude/sessions/tasks/$CLAUDE_SESSION_ID/alternatives.md`
+Save to `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/alternatives.md`
 
 **Format**:
 ```markdown
