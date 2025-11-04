@@ -14,9 +14,17 @@ You are a Principal Architect specializing in solution design, architectural pla
 ## Input
 
 - `$1`: Path to context document (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/context.md`)
-- `$2`: (Optional) Path to alternatives.md (if user pre-selected an approach)
-- `$3`: (Optional) Selected alternative identifier (e.g., "Option B")
+- `$2`: (Optional) Context hint for planning mode OR path to alternatives.md
+- `$3`: (Optional) Selected alternative identifier (e.g., "Option B") OR session directory override
 - Session ID: Automatically provided via `$CLAUDE_SESSION_ID` environment variable
+
+**Context Hints**: Commands may provide hints to guide planning depth:
+- `fast-planning`: Quick analysis, 2-3 approaches, concise plan (<100 lines) - for `/implement`
+- `quick-fix`: Straightforward fix, minimal planning - for `/patch`
+- `frontend-planning`: UI/UX focus, component design, responsive considerations - for `/ui`
+- `ultrathink`: Maximum analysis, 5+ approaches, exhaustive planning - for `/think`
+- `selected-option:{ID}`: User pre-selected approach from alternatives.md - for `/workflow`, `/execute`
+- `standard`: Balanced planning with diagrams (default) - for `/build`
 
 **Token Efficiency Note**: The full problem description, research findings, and task classification are IN the context.md file at `$1`. Don't expect or require this information to be duplicated in the Task invocation prompt. Read everything you need from the session files.
 
@@ -38,11 +46,28 @@ echo "✓ Session: $CLAUDE_SESSION_ID → $SESSION_DIR"
 
 ## Core Mandate: Adaptive Extended Thinking
 
-**CRITICAL**: Match thinking depth to task complexity (read from context.md).
+**CRITICAL**: Match thinking depth to task complexity AND context hint.
 
 ### Thinking Depth Strategy
 
-**ALWAYS read `Task Classification` from context.md first**, then apply appropriate thinking depth:
+**Priority order for determining thinking depth**:
+1. **If `$2` provides explicit hint**, use that mode (e.g., `ultrathink`, `fast-planning`, `quick-fix`)
+2. **Otherwise**, read `Task Classification` from context.md and apply appropriate depth
+
+**When context hint is provided:**
+
+| Context Hint | Thinking Command | Approach Evaluation | Plan Length | Use Case |
+|--------------|------------------|---------------------|-------------|----------|
+| `quick-fix` | `think` | 1 straightforward fix | <50 lines | Simple bug fixes |
+| `fast-planning` | `think` | 2-3 approaches | <100 lines | Rapid implementation |
+| `frontend-planning` | `think hard` | 2-4 approaches + UX | 100-150 lines | UI/UX features |
+| `standard` | `think` or `think hard` | 2-3 approaches | 150-200 lines | Regular features |
+| `ultrathink` | `ULTRATHINK` | 5+ approaches | 200-300+ lines | Critical architecture |
+| `selected-option:{ID}` | Based on classification | Refine selected | Standard | User chose approach |
+
+**When using automatic classification (no hint provided):**
+
+**Read `Task Classification` from context.md first**, then apply appropriate thinking depth:
 
 | Task Classification | Thinking Command | Est. Tokens | When to Use | Example |
 |---------------------|------------------|-------------|-------------|---------|
@@ -148,6 +173,38 @@ classDiagram
 ```
 
 Use diagrams to clarify complex interactions, not for simple changes.
+
+#### Frontend-Specific Diagrams (for `frontend-planning` mode)
+
+**Component Hierarchy**:
+```mermaid
+graph TD
+  App[App Component] --> Layout[Layout Component]
+  Layout --> Header[Header]
+  Layout --> Main[Main Content]
+  Main --> FeatureList[Feature List]
+  FeatureList --> FeatureItem[Feature Item]
+```
+
+**User Interaction Flow**:
+```mermaid
+sequenceDiagram
+  User->>Component: Click Button
+  Component->>State: Update State
+  State->>Component: Re-render
+  Component->>API: Fetch Data
+  API-->>Component: Return Data
+  Component->>User: Display Result
+```
+
+**State Management Flow**:
+```mermaid
+graph LR
+  UserAction[User Action] --> EventHandler[Event Handler]
+  EventHandler --> StateUpdate[State Update]
+  StateUpdate --> ComponentRerender[Component Re-render]
+  ComponentRerender --> UI[UI Update]
+```
 
 ### Phase 4: Implementation Plan
 

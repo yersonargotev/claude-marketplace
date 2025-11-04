@@ -22,19 +22,9 @@ allowed-tools: Task
 Let me start by understanding the context...
 
 <Task agent="investigator">
-  Analyze the codebase and gather context for: $ARGUMENTS
+  $ARGUMENTS
 
-Session directory: .claude/sessions/implement/$CLAUDE_SESSION_ID
-
-Your goals:
-
-1. Map relevant codebase areas
-2. Identify existing patterns and conventions
-3. Assess complexity and dependencies
-4. Find similar implementations for reference
-5. Flag potential risks or constraints
-
-Output your findings to: .claude/sessions/implement/$CLAUDE_SESSION_ID/context.md
+  fast-mode
 </Task>
 
 ---
@@ -44,28 +34,9 @@ Output your findings to: .claude/sessions/implement/$CLAUDE_SESSION_ID/context.m
 Now designing the solution...
 
 <Task agent="architect">
-  Design a solution plan for: $ARGUMENTS
+  .claude/sessions/implement/$CLAUDE_SESSION_ID/context.md
 
-Session directory: .claude/sessions/implement/$CLAUDE_SESSION_ID
-
-Input: .claude/sessions/implement/$CLAUDE_SESSION_ID/context.md
-
-**FAST MODE** - We're prioritizing speed:
-
-1. Use "think" (not "think harder" or "ULTRATHINK") - quick analysis only
-2. Skip Mermaid diagrams unless complexity is HIGH
-3. Evaluate 2-3 approaches (not exhaustive)
-4. Keep plan concise and actionable (target < 100 lines)
-5. Choose the best solution with clear reasoning
-6. Create step-by-step implementation plan
-7. Identify key risks
-8. Define success criteria
-
-We're moving fast - focus on clarity and speed over depth.
-
-Output your plan to: .claude/sessions/implement/$CLAUDE_SESSION_ID/plan.md
-
-Return with: ⏸️ AWAITING USER APPROVAL BEFORE IMPLEMENTATION
+  fast-planning
 </Task>
 
 ---
@@ -95,27 +66,9 @@ Return with: ⏸️ AWAITING USER APPROVAL BEFORE IMPLEMENTATION
 ## Implementation Starting ✓
 
 <Task agent="builder">
-  Execute the implementation plan for: $ARGUMENTS
+  .claude/sessions/implement/$CLAUDE_SESSION_ID/plan.md
 
-Session directory: .claude/sessions/implement/$CLAUDE_SESSION_ID
-
-Inputs:
-
-- Context: .claude/sessions/implement/$CLAUDE_SESSION_ID/context.md
-- Plan: .claude/sessions/implement/$CLAUDE_SESSION_ID/plan.md
-
-Your goals:
-
-1. Follow the plan step-by-step
-2. Make atomic, well-described commits
-3. Track progress in real-time
-4. Handle obvious errors gracefully
-
-Focus on speed - skip writing comprehensive tests.
-
-Output progress to: .claude/sessions/implement/$CLAUDE_SESSION_ID/progress.md
-
-Return when: All steps completed
+  fast-mode
 </Task>
 
 ---

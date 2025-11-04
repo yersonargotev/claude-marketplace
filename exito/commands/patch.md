@@ -33,21 +33,11 @@ For those, use `/build` or `/think` instead.
 
 Gathering necessary context...
 
-<Task agent="investigator">
-  Quick context gathering for: $ARGUMENTS
-  
-  Session directory: .claude/sessions/patch/$CLAUDE_SESSION_ID
-  
-  **Fast research focus**:
-  1. Locate the problem area (file + line)
-  2. Understand immediate context (not entire codebase)
-  3. Check for related code nearby
-  4. Identify any obvious risks
-  5. Find relevant tests
-  
-  Keep it focused - this is a quick fix.
-  
-  Output to: .claude/sessions/patch/$CLAUDE_SESSION_ID/context.md
+<Task agent="investigator" model="haiku">
+  $ARGUMENTS
+
+  fast-mode
+  .claude/sessions/patch/$CLAUDE_SESSION_ID
 </Task>
 
 ---
@@ -56,75 +46,30 @@ Gathering necessary context...
 
 Quick solution analysis...
 
-<Task agent="quick-planner">
-  Quick fix plan for: $ARGUMENTS
+<Task agent="architect" model="haiku">
+  .claude/sessions/patch/$CLAUDE_SESSION_ID/context.md
 
-Session directory: .claude/sessions/patch/$CLAUDE_SESSION_ID
-
-Input: .claude/sessions/patch/$CLAUDE_SESSION_ID/context.md
-
-**Fast planning**:
-
-1. Identify the root cause
-2. Propose a straightforward fix
-3. List the files to change
-4. Note any risks (even for simple fixes)
-5. Define quick test to verify
-
-Keep it simple and direct - no extended thinking needed.
-
-Output to: .claude/sessions/patch/$CLAUDE_SESSION_ID/plan.md
-
-⚠️ **Auto-approve**: This is a quick fix, proceeding to implementation.
+  quick-fix
 </Task>
 
 ---
 
 ## Implementing the fix ✓
 
-<Task agent="builder">
-  Execute quick fix for: $ARGUMENTS
-  
-  Session directory: .claude/sessions/patch/$CLAUDE_SESSION_ID
-  
-  Inputs:
-  - Context: .claude/sessions/patch/$CLAUDE_SESSION_ID/context.md
-  - Plan: .claude/sessions/patch/$CLAUDE_SESSION_ID/plan.md
-  
-  **Quick implementation**:
-  1. Make the targeted change
-  2. Update/add test if applicable
-  3. Run relevant tests
-  4. Make a descriptive commit
-  
-  Keep it focused and simple.
-  
-  Output to: .claude/sessions/patch/$CLAUDE_SESSION_ID/progress.md
+<Task agent="builder" model="haiku">
+  .claude/sessions/patch/$CLAUDE_SESSION_ID/plan.md
+
+  quick-fix
 </Task>
 
 ---
 
 ## Testing the fix ✓
 
-<Task agent="validator">
-  Validate quick fix for: $ARGUMENTS
-  
-  Session directory: .claude/sessions/patch/$CLAUDE_SESSION_ID
-  
-  Inputs:
-  - Context: .claude/sessions/patch/$CLAUDE_SESSION_ID/context.md
-  - Plan: .claude/sessions/patch/$CLAUDE_SESSION_ID/plan.md
-  - Progress: .claude/sessions/patch/$CLAUDE_SESSION_ID/progress.md
-  
-  **Quick validation**:
-  1. Run relevant tests (not entire suite)
-  2. Verify the specific bug is fixed
-  3. Quick smoke test of related functionality
-  4. Check for obvious regressions
-  
-  Fast validation for a simple fix.
-  
-  Output to: .claude/sessions/patch/$CLAUDE_SESSION_ID/test_report.md
+<Task agent="validator" model="haiku">
+  .claude/sessions/patch/$CLAUDE_SESSION_ID/progress.md
+
+  quick-validation
 </Task>
 
 ---

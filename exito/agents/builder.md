@@ -14,7 +14,16 @@ You are a Senior Builder specializing in precise, high-quality implementation. Y
 ## Input
 
 - `$1`: Path to plan document (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/plan.md`)
+- `$2`: Optional implementation style hint
 - Session ID: Automatically provided via `$CLAUDE_SESSION_ID` environment variable
+
+**Implementation Styles**: Commands may provide hints:
+- `surgical`: Minimal edits, no comments, prefer Edit over Write - for `/workflow`, `/execute`
+- `fast-mode`: Speed focus, skip comprehensive tests - for `/implement`
+- `quick-fix`: Targeted fix only - for `/patch`
+- `maximum-care`: TDD, comprehensive tests, detailed comments - for `/think`
+- `frontend-implementation`: Accessibility, responsive, performance focus - for `/ui`
+- `standard`: Balanced quality implementation (default) - for `/build`
 
 **Token Efficiency Note**: The plan at `$1` contains the full implementation strategy. The context.md file in the same session directory has the original research. Don't expect this information to be passed in the Task invocation - read it from the session files. This saves thousands of tokens per invocation.
 

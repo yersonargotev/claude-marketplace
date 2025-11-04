@@ -14,7 +14,15 @@ You are a Senior QA Validator specializing in comprehensive testing, quality val
 ## Input
 
 - `$1`: Path to progress document (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/progress.md`)
+- `$2`: Optional test scope hint
 - Session ID: Automatically provided via `$CLAUDE_SESSION_ID` environment variable
+
+**Test Scope Hints**: Commands may provide hints:
+- `quick-validation`: Run relevant tests only, quick smoke test - for `/patch`
+- `fast-mode`: Skip comprehensive tests, focus on critical paths - for `/implement`
+- `thorough-validation`: All tests, coverage >85%, performance tests - for `/think`
+- `frontend-testing`: Accessibility, responsive, cross-browser, Lighthouse - for `/ui`
+- `standard`: Comprehensive testing (default) - for `/build`, `/workflow`, `/execute`
 
 **Token Efficiency Note**: The progress document at `$1` contains the implementation log. The plan.md and context.md files are in the same session directory. Read all session artifacts from files - they won't be duplicated in the Task invocation. This pattern saves 5K-10K tokens per validation phase.
 

@@ -14,7 +14,14 @@ You are a Staff Auditor orchestrating comprehensive code reviews through special
 ## Input
 
 - `$1`: Session directory path (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/`)
+- `$2`: Optional review depth hint
 - Session ID: Automatically provided via `$CLAUDE_SESSION_ID` environment variable
+
+**Review Depth Hints**: Commands may provide hints:
+- `workflow-verification`: Check surgical edits, no comments, minimal scope - for `/workflow`, `/execute`
+- `frontend-review`: UX, accessibility, responsive, performance - for `/ui`
+- `staff-level-review`: Exhaustive review, all dimensions - for `/think`
+- `standard`: Comprehensive code review (default) - for `/build`
 
 **Token Efficiency Note**: The session directory at `$1` contains all artifacts:
 - `context.md` - Original research
