@@ -22,19 +22,7 @@ allowed-tools: Task
 Let me start by understanding what we're working with...
 
 <Task agent="investigator">
-  Analyze the codebase and gather context for: $ARGUMENTS
-
-Session directory: .claude/sessions/build/$CLAUDE_SESSION_ID
-
-Your goals:
-
-1. Map the relevant codebase areas
-2. Identify existing patterns and conventions
-3. Assess complexity and dependencies
-4. Find similar implementations for reference
-5. Flag potential risks or constraints
-
-Output your findings to: .claude/sessions/build/$CLAUDE_SESSION_ID/context.md
+  $ARGUMENTS
 </Task>
 
 ---
@@ -44,37 +32,7 @@ Output your findings to: .claude/sessions/build/$CLAUDE_SESSION_ID/context.md
 Now let me think deeply about the best approach...
 
 <Task agent="architect">
-  Design a solution plan for: $ARGUMENTS
-
-Session directory: .claude/sessions/build/$CLAUDE_SESSION_ID
-
-Input: .claude/sessions/build/$CLAUDE_SESSION_ID/context.md
-
-Your goals:
-
-1. Evaluate multiple approaches (2-3 distinct options)
-2. Choose the best solution with clear reasoning
-3. Create visual architecture using Mermaid diagrams when helpful
-4. Create a step-by-step implementation plan
-5. Identify risks and mitigation strategies
-6. Define success criteria
-
-IMPORTANT: Use extended thinking for complex solutions:
-
-- Simple tasks: Think through it
-- Medium complexity: Think hard about it
-- Complex tasks: Think harder - explore deeply
-- Critical/high-impact: ULTRATHINK - maximum analysis
-
-Include Mermaid diagrams for:
-
-- System architecture (if 3+ components involved)
-- Data flow (if complex interactions)
-- Component structure (if new patterns introduced)
-
-Output your plan to: .claude/sessions/build/$CLAUDE_SESSION_ID/plan.md
-
-Return with: ⏸️ AWAITING USER APPROVAL BEFORE IMPLEMENTATION
+  .claude/sessions/build/$CLAUDE_SESSION_ID/context.md
 </Task>
 
 ---
@@ -105,26 +63,7 @@ Return with: ⏸️ AWAITING USER APPROVAL BEFORE IMPLEMENTATION
 ## Implementation Starting ✓
 
 <Task agent="builder">
-  Execute the implementation plan for: $ARGUMENTS
-
-Session directory: .claude/sessions/build/$CLAUDE_SESSION_ID
-
-Inputs:
-
-- Context: .claude/sessions/build/$CLAUDE_SESSION_ID/context.md
-- Plan: .claude/sessions/build/$CLAUDE_SESSION_ID/plan.md
-
-Your goals:
-
-1. Follow the plan step-by-step
-2. Write tests first (TDD approach)
-3. Make atomic, well-described commits
-4. Track progress in real-time
-5. Handle errors gracefully
-
-Output progress to: .claude/sessions/build/$CLAUDE_SESSION_ID/progress.md
-
-Return when: All steps completed successfully
+  .claude/sessions/build/$CLAUDE_SESSION_ID/plan.md
 </Task>
 
 ---
@@ -134,27 +73,7 @@ Return when: All steps completed successfully
 Now validating the work...
 
 <Task agent="validator">
-  Validate the implementation for: $ARGUMENTS
-
-Session directory: .claude/sessions/build/$CLAUDE_SESSION_ID
-
-Inputs:
-
-- Context: .claude/sessions/build/$CLAUDE_SESSION_ID/context.md
-- Plan: .claude/sessions/build/$CLAUDE_SESSION_ID/plan.md
-- Progress: .claude/sessions/build/$CLAUDE_SESSION_ID/progress.md
-
-Your goals:
-
-1. Run all automated tests (unit, integration, e2e)
-2. Verify test coverage (>80% for new code)
-3. Perform manual testing checklist
-4. Test edge cases and error scenarios
-5. Check performance if applicable
-
-Output test results to: .claude/sessions/build/$CLAUDE_SESSION_ID/test_report.md
-
-Return when: All tests pass and coverage is adequate
+  .claude/sessions/build/$CLAUDE_SESSION_ID/progress.md
 </Task>
 
 ---
@@ -164,28 +83,7 @@ Return when: All tests pass and coverage is adequate
 Final code review...
 
 <Task agent="auditor">
-  Perform final code review for: $ARGUMENTS
-
-Session directory: .claude/sessions/build/$CLAUDE_SESSION_ID
-
-Inputs:
-
-- Context: .claude/sessions/build/$CLAUDE_SESSION_ID/context.md
-- Plan: .claude/sessions/build/$CLAUDE_SESSION_ID/plan.md
-- Progress: .claude/sessions/build/$CLAUDE_SESSION_ID/progress.md
-- Test Report: .claude/sessions/build/$CLAUDE_SESSION_ID/test_report.md
-
-Your goals:
-
-1. Review code quality and maintainability
-2. Check architecture and design patterns
-3. Validate security best practices
-4. Assess performance implications
-5. Verify test coverage and quality
-
-Output review to: .claude/sessions/build/$CLAUDE_SESSION_ID/review.md
-
-Return verdict: APPROVE / APPROVE WITH NOTES / REQUEST CHANGES
+  .claude/sessions/build/$CLAUDE_SESSION_ID
 </Task>
 
 ---

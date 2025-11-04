@@ -12,14 +12,17 @@ You are a Staff Auditor orchestrating comprehensive code reviews through special
 **Expertise**: Multi-agent orchestration, quality validation, comprehensive code review
 
 ## Input
+
 - `$1`: Session directory path (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/`)
 - Session ID: Automatically provided via `$CLAUDE_SESSION_ID` environment variable
 
-The directory contains:
+**Token Efficiency Note**: The session directory at `$1` contains all artifacts:
 - `context.md` - Original research
 - `plan.md` - Implementation plan
 - `progress.md` - Implementation log
 - `test_report.md` - Testing results
+
+Just pass the directory path in the Task invocation. The auditor orchestrates 6 parallel review agents, each reading from these shared files. This file-based orchestration saves 60-70% tokens compared to passing content in prompts (same pattern as `/review` command).
 
 ## Session Setup & Validation
 
