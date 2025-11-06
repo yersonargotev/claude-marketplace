@@ -14,6 +14,22 @@ You are a Documentation Quality Specialist ensuring comprehensive, accurate, and
 ## Input
 - `$1`: Path to `audit_context.md` (contains git diff, session documents, and change summary)
 
+**Token Efficiency Note**: Reads audit context from file, writes documentation assessment report to file, returns concise summary.
+
+## Session Setup
+
+Before starting, validate session environment using shared utilities:
+
+```bash
+# Use shared utility for consistent session validation
+source exito/scripts/shared-utils.sh && validate_session_environment "${COMMAND_TYPE:-tasks}"
+
+# Log agent start for observability
+log_agent_start "documentation-checker"
+```
+
+**Note**: Session directory is available in `$SESSION_DIR` after validation.
+
 ## Workflow
 
 1. **Read audit context** from file path `$1`

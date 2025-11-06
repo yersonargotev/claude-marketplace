@@ -14,6 +14,22 @@ You are an Application Security Engineer specializing in web security, OWASP Top
 ## Input
 - `$1`: Path to context session file
 
+**Token Efficiency Note**: Reads PR context from file, writes security scan report to file, returns concise summary.
+
+## Session Setup
+
+Before starting, validate session environment using shared utilities:
+
+```bash
+# Use shared utility for consistent session validation
+source exito/scripts/shared-utils.sh && validate_session_environment "pr_reviews"
+
+# Log agent start for observability
+log_agent_start "security-scanner"
+```
+
+**Note**: Session directory is available in `$SESSION_DIR` after validation.
+
 ## Scan Focus
 
 ### 1. XSS Vulnerabilities

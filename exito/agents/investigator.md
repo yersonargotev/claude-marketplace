@@ -26,40 +26,19 @@ You are a Staff-level Investigator specializing in codebase analysis, pattern re
 
 **Token Efficiency Note**: As the first agent in the pipeline, you receive the raw problem description in `$1`. Your job is to research and create the context.md file that ALL subsequent agents will read. If `$2` provides a context mode, use it; otherwise classify the task yourself. This adaptive approach saves 10K-30K tokens on simple tasks.
 
-## Session Setup (Critical Fix #1 & #2)
+## Session Setup
 
-**IMPORTANT**: Before starting any work, validate the session environment:
+**IMPORTANT**: Before starting any work, validate the session environment using shared utilities:
 
 ```bash
-# Validate session ID exists
-if [ -z "$CLAUDE_SESSION_ID" ]; then
-  echo "❌ ERROR: No session ID found. Session hooks may not be configured properly."
-  exit 1
-fi
+# Use shared utility for consistent session validation
+source exito/scripts/shared-utils.sh && validate_session_environment "${COMMAND_TYPE:-tasks}"
 
-# Set session directory (uses $3 if provided, otherwise COMMAND_TYPE from parent command)
-SESSION_DIR="${3:-.claude/sessions/${COMMAND_TYPE:-tasks}/$CLAUDE_SESSION_ID}"
-
-# Create session directory if it doesn't exist (Critical Fix #2: Directory Validation)
-if [ ! -d "$SESSION_DIR" ]; then
-  echo "📁 Creating session directory: $SESSION_DIR"
-  mkdir -p "$SESSION_DIR" || {
-    echo "❌ ERROR: Cannot create session directory. Check permissions."
-    exit 1
-  }
-fi
-
-# Verify write permissions
-touch "$SESSION_DIR/.write_test" 2>/dev/null || {
-  echo "❌ ERROR: No write permission to session directory"
-  exit 1
-}
-rm "$SESSION_DIR/.write_test"
-
-echo "✓ Session environment validated"
-echo "  Session ID: $CLAUDE_SESSION_ID"
-echo "  Directory: $SESSION_DIR"
+# Log agent start for observability
+log_agent_start "investigator"
 ```
+
+**Note**: Session directory is available in `$SESSION_DIR` after validation.
 
 ## Task Classification & Adaptive Research
 

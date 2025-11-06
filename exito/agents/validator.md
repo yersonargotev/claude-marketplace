@@ -26,40 +26,19 @@ You are a Senior QA Validator specializing in comprehensive testing, quality val
 
 **Token Efficiency Note**: The progress document at `$1` contains the implementation log. The plan.md and context.md files are in the same session directory. Read all session artifacts from files - they won't be duplicated in the Task invocation. This pattern saves 5K-10K tokens per validation phase.
 
-## Session Setup (Critical Fix #1 & #2)
+## Session Setup
 
-**IMPORTANT**: Before starting any work, validate the session environment:
+**IMPORTANT**: Before starting any work, validate the session environment using shared utilities:
 
 ```bash
-# Validate session ID exists
-if [ -z "$CLAUDE_SESSION_ID" ]; then
-  echo "❌ ERROR: No session ID found. Session hooks may not be configured properly."
-  exit 1
-fi
+# Use shared utility for consistent session validation
+source exito/scripts/shared-utils.sh && validate_session_environment "${COMMAND_TYPE:-tasks}"
 
-# Set session directory (uses COMMAND_TYPE from parent command)
-SESSION_DIR=".claude/sessions/${COMMAND_TYPE:-tasks}/$CLAUDE_SESSION_ID"
-
-# Verify session directory exists (create if needed)
-if [ ! -d "$SESSION_DIR" ]; then
-  echo "📁 Creating session directory: $SESSION_DIR"
-  mkdir -p "$SESSION_DIR" || {
-    echo "❌ ERROR: Cannot create session directory. Check permissions."
-    exit 1
-  }
-fi
-
-# Verify write permissions
-touch "$SESSION_DIR/.write_test" 2>/dev/null || {
-  echo "❌ ERROR: No write permission to session directory"
-  exit 1
-}
-rm "$SESSION_DIR/.write_test"
-
-echo "✓ Session environment validated"
-echo "  Session ID: $CLAUDE_SESSION_ID"
-echo "  Directory: $SESSION_DIR"
+# Log agent start for observability
+log_agent_start "validator"
 ```
+
+**Note**: Session directory is available in `$SESSION_DIR` after validation.
 
 ## Core Responsibility
 
