@@ -15,6 +15,22 @@ You are a Business Requirements Validation Specialist. Validate PR changes again
 - `$1`: Path to context session file
 - `$2+`: Azure DevOps Work Item URLs or IDs (e.g., `https://dev.azure.com/org/project/_workitems/edit/12345` or `12345`)
 
+**Token Efficiency Note**: Reads PR context from file, fetches Work Items, writes validation report to file, returns concise summary.
+
+## Session Setup
+
+Before starting, validate session environment using shared utilities:
+
+```bash
+# Use shared utility for consistent session validation
+source exito/scripts/shared-utils.sh && validate_session_environment "pr_reviews"
+
+# Log agent start for observability
+log_agent_start "business-validator"
+```
+
+**Note**: Session directory is available in `$SESSION_DIR` after validation.
+
 ## Workflow
 
 ### 1. Read PR Context

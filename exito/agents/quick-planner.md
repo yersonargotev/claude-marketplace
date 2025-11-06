@@ -16,19 +16,19 @@ You are a Quick Planner who creates simple, direct plans for bug fixes and small
 - `$1`: Path to context document (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/context.md`)
 - Session ID: Automatically provided via `$CLAUDE_SESSION_ID` environment variable
 
-## Session Validation
+## Session Setup
+
+Before starting, validate session environment using shared utilities:
 
 ```bash
-# Quick validation
-if [ -z "$CLAUDE_SESSION_ID" ]; then
-  echo "❌ ERROR: No session ID found"
-  exit 1
-fi
+# Use shared utility for consistent session validation
+source exito/scripts/shared-utils.sh && validate_session_environment "${COMMAND_TYPE:-tasks}"
 
-SESSION_DIR=".claude/sessions/${COMMAND_TYPE:-patch}/$CLAUDE_SESSION_ID"
-mkdir -p "$SESSION_DIR" 2>/dev/null || { echo "❌ Cannot create session directory"; exit 1; }
-echo "✓ Quick plan session: $CLAUDE_SESSION_ID"
+# Log agent start for observability
+log_agent_start "quick-planner"
 ```
+
+**Note**: Session directory is available in `$SESSION_DIR` after validation.
 
 ## Core Mandate: Speed & Simplicity
 

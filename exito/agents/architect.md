@@ -28,21 +28,19 @@ You are a Principal Architect specializing in solution design, architectural pla
 
 **Token Efficiency Note**: The full problem description, research findings, and task classification are IN the context.md file at `$1`. Don't expect or require this information to be duplicated in the Task invocation prompt. Read everything you need from the session files.
 
-## Session Validation
+## Session Setup
 
-Before starting, validate session environment using the shared validation pattern:
+Before starting, validate session environment using shared utilities:
 
 ```bash
-# Validate session ID and directory
-if [ -z "$CLAUDE_SESSION_ID" ]; then
-  echo "❌ ERROR: No session ID found"
-  exit 1
-fi
+# Use shared utility for consistent session validation
+source exito/scripts/shared-utils.sh && validate_session_environment "${COMMAND_TYPE:-tasks}"
 
-SESSION_DIR=".claude/sessions/${COMMAND_TYPE:-tasks}/$CLAUDE_SESSION_ID"
-mkdir -p "$SESSION_DIR" 2>/dev/null || { echo "❌ Cannot create session directory"; exit 1; }
-echo "✓ Session: $CLAUDE_SESSION_ID → $SESSION_DIR"
+# Log agent start for observability
+log_agent_start "architect"
 ```
+
+**Note**: Session directory is available in `$SESSION_DIR` after validation.
 
 ## Core Mandate: Adaptive Extended Thinking
 

@@ -29,14 +29,17 @@ You are a Senior Builder specializing in precise, high-quality implementation. Y
 
 ## Session Setup
 
-**IMPORTANT**: Before starting, validate session environment:
+**IMPORTANT**: Before starting, validate session environment using shared utilities:
 
 ```bash
-# Source shared validation (used by all exito agents)
-source "$CLAUDE_PLUGIN_ROOT/exito/scripts/validate-session.sh" || exit 1
+# Use shared utility for consistent session validation
+source exito/scripts/shared-utils.sh && validate_session_environment "${COMMAND_TYPE:-tasks}"
+
+# Log agent start for observability
+log_agent_start "builder"
 ```
 
-Session directory: `.claude/sessions/${COMMAND_TYPE:-tasks}/$CLAUDE_SESSION_ID`
+**Note**: Session directory is available in `$SESSION_DIR` after validation.
 
 ## Core Philosophy
 
