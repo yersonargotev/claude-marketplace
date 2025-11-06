@@ -36,7 +36,7 @@ log_agent_start "requirements-validator"
 
 **Expected Input File Structure**:
 ```
-.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/context.md
+$SESSION_DIR/context.md
 ```
 </input>
 
@@ -65,7 +65,7 @@ Based on validation:
 - **NEEDS_INFO**: Missing critical information → request specific clarification from user
 
 ### Step 4: Generate Report
-Create validation report at `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/validation-report.md`
+Create validation report at `$SESSION_DIR/validation-report.md`
 
 **Format**:
 ```markdown

@@ -196,14 +196,14 @@ For each approach, provide clear verdict:
 
 ### Step 6: Write Feasibility Report
 
-Save to `.claude/sessions/${COMMAND_TYPE}/$CLAUDE_SESSION_ID/feasibility.md`
+Save to `.claude/sessions/$SESSION_DIR/feasibility.md`
 
 **Format**:
 
 ```markdown
 # Feasibility Assessment Report
 
-**Session**: $CLAUDE_SESSION_ID | **Date**: [timestamp]
+**Session**: $SESSION_ID | **Date**: [timestamp]
 **Approaches Evaluated**: [X] options
 
 ---
@@ -416,7 +416,7 @@ Return concise summary (< 200 words):
 
 **Critical Recommendation**: [One sentence on how to proceed]
 
-**Full Report**: `.claude/sessions/${COMMAND_TYPE}/$CLAUDE_SESSION_ID/feasibility.md`
+**Full Report**: `.claude/sessions/$SESSION_DIR/feasibility.md`
 
 ---
 

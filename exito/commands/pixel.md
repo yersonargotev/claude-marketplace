@@ -42,7 +42,20 @@ This workflow delivers: **Designs that look exactly as envisioned, work flawless
 
 **Understanding design intent, requirements, and constraints...**
 
+**Session Setup**
+
+Generating unique session ID and creating session directory...
+
+!SESSION_ID="pixel_$(date +%Y%m%d_%H%M%S)"
+!mkdir -p ".claude/sessions/pixel/$SESSION_ID"
+!echo "✓ Session: $SESSION_ID"
+
+---
+
+
 <Task agent="investigator">
+Session: $SESSION_ID
+Directory: .claude/sessions/pixel/$SESSION_ID
   $ARGUMENTS
   
   pixel-analysis
@@ -55,8 +68,10 @@ This workflow delivers: **Designs that look exactly as envisioned, work flawless
 **Analyzing design in depth - extracting tokens, components, interactions...**
 
 <Task agent="pixel-perfectionist">
+Session: $SESSION_ID
+Directory: .claude/sessions/pixel/$SESSION_ID
   analyze
-  .claude/sessions/pixel/$CLAUDE_SESSION_ID/context.md
+  .claude/sessions/pixel/$SESSION_ID/context.md
 </Task>
 
 ---
@@ -66,8 +81,10 @@ This workflow delivers: **Designs that look exactly as envisioned, work flawless
 **Generating strategies for pixel-perfect implementation...**
 
 <Task agent="visionary">
-  .claude/sessions/pixel/$CLAUDE_SESSION_ID/context.md
-  .claude/sessions/pixel/$CLAUDE_SESSION_ID/visual-analysis.md
+Session: $SESSION_ID
+Directory: .claude/sessions/pixel/$SESSION_ID
+  .claude/sessions/pixel/$SESSION_ID/context.md
+  .claude/sessions/pixel/$SESSION_ID/visual-analysis.md
 </Task>
 
 ---
@@ -77,8 +94,10 @@ This workflow delivers: **Designs that look exactly as envisioned, work flawless
 **Validating implementation approach and identifying risks...**
 
 <Task agent="feasibility-validator">
-  .claude/sessions/pixel/$CLAUDE_SESSION_ID/context.md
-  .claude/sessions/pixel/$CLAUDE_SESSION_ID/alternatives.md
+Session: $SESSION_ID
+Directory: .claude/sessions/pixel/$SESSION_ID
+  .claude/sessions/pixel/$SESSION_ID/context.md
+  .claude/sessions/pixel/$SESSION_ID/alternatives.md
 </Task>
 
 ---
@@ -87,11 +106,11 @@ This workflow delivers: **Designs that look exactly as envisioned, work flawless
 
 **Review strategies and choose your implementation path...**
 
-**Visual Analysis**: `.claude/sessions/pixel/$CLAUDE_SESSION_ID/visual-analysis.md`
+**Visual Analysis**: `.claude/sessions/pixel/$SESSION_ID/visual-analysis.md`
 
-**Implementation Strategies**: `.claude/sessions/pixel/$CLAUDE_SESSION_ID/alternatives.md`
+**Implementation Strategies**: `.claude/sessions/pixel/$SESSION_ID/alternatives.md`
 
-**Feasibility Assessment**: `.claude/sessions/pixel/$CLAUDE_SESSION_ID/feasibility.md`
+**Feasibility Assessment**: `.claude/sessions/pixel/$SESSION_ID/feasibility.md`
 
 **Please select your preferred strategy**:
 
@@ -118,8 +137,10 @@ This workflow delivers: **Designs that look exactly as envisioned, work flawless
 **Creating detailed component structure and implementation plan for: {USER_SELECTION}**
 
 <Task agent="architect">
-  .claude/sessions/pixel/$CLAUDE_SESSION_ID/context.md
-  .claude/sessions/pixel/$CLAUDE_SESSION_ID/alternatives.md
+Session: $SESSION_ID
+Directory: .claude/sessions/pixel/$SESSION_ID
+  .claude/sessions/pixel/$SESSION_ID/context.md
+  .claude/sessions/pixel/$SESSION_ID/alternatives.md
   selected-option:{USER_SELECTION}
 </Task>
 
@@ -127,7 +148,7 @@ This workflow delivers: **Designs that look exactly as envisioned, work flawless
 
 ## Phase 7: Plan Approval ⏸️
 
-**Implementation plan ready for review**: `.claude/sessions/pixel/$CLAUDE_SESSION_ID/plan.md`
+**Implementation plan ready for review**: `.claude/sessions/pixel/$SESSION_ID/plan.md`
 
 **Review Checklist**:
 
@@ -169,8 +190,10 @@ This workflow delivers: **Designs that look exactly as envisioned, work flawless
 Implementing with obsessive attention to visual detail...
 
 <Task agent="pixel-perfectionist">
+Session: $SESSION_ID
+Directory: .claude/sessions/pixel/$SESSION_ID
   implement
-  .claude/sessions/pixel/$CLAUDE_SESSION_ID/plan.md
+  .claude/sessions/pixel/$SESSION_ID/plan.md
 </Task>
 
 ---
@@ -180,8 +203,10 @@ Implementing with obsessive attention to visual detail...
 **Taking screenshots, comparing with design, refining until perfect...**
 
 <Task agent="pixel-perfectionist">
+Session: $SESSION_ID
+Directory: .claude/sessions/pixel/$SESSION_ID
   iterate
-  .claude/sessions/pixel/$CLAUDE_SESSION_ID/context.md
+  .claude/sessions/pixel/$SESSION_ID/context.md
 </Task>
 
 ---
@@ -195,7 +220,9 @@ Implementing with obsessive attention to visual detail...
 **Validating visual quality, accessibility, and performance...**
 
 <Task agent="auditor">
-  .claude/sessions/pixel/$CLAUDE_SESSION_ID
+Session: $SESSION_ID
+Directory: .claude/sessions/pixel/$SESSION_ID
+  .claude/sessions/pixel/$SESSION_ID
   
   pixel-verification
 </Task>
@@ -207,7 +234,9 @@ Implementing with obsessive attention to visual detail...
 **Creating comprehensive component documentation...**
 
 <Task agent="documentation-writer">
-  .claude/sessions/pixel/$CLAUDE_SESSION_ID
+Session: $SESSION_ID
+Directory: .claude/sessions/pixel/$SESSION_ID
+  .claude/sessions/pixel/$SESSION_ID
 </Task>
 
 ---
@@ -244,7 +273,7 @@ Implementing with obsessive attention to visual detail...
 - **Performance**: [Z] Lighthouse score
 - **Responsive**: ✓ Mobile, Tablet, Desktop
 
-**Session Artifacts**: `.claude/sessions/pixel/$CLAUDE_SESSION_ID/`
+**Session Artifacts**: `.claude/sessions/pixel/$SESSION_ID/`
 
 - `context.md` - Design requirements and intent
 - `visual-analysis.md` - Design tokens and component breakdown
@@ -285,7 +314,7 @@ Check `progress.md` for complete list of:
 
 **Visual Comparison**:
 
-Original design → `.claude/sessions/pixel/$CLAUDE_SESSION_ID/context.md` (reference)
+Original design → `.claude/sessions/pixel/$SESSION_ID/context.md` (reference)
 
 Implementation:
 - Desktop: `screenshot-desktop.png`

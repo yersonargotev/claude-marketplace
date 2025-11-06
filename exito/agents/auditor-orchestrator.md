@@ -12,8 +12,29 @@ You are a Staff Auditor orchestrating comprehensive code reviews through special
 **Expertise**: Multi-agent orchestration, quality validation, synthesis
 
 ## Input
-- `$1`: Session directory path (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/`)
-- Session ID: Automatically provided via `$CLAUDE_SESSION_ID` environment variable
+
+## Session Extraction
+
+**Extract session metadata from input** (if provided by command):
+
+```bash
+# Extract session info from $1
+SESSION_ID=$(echo "$1" | grep -oP "(?<=Session: ).*" | head -1 || echo "")
+SESSION_DIR=$(echo "$1" | grep -oP "(?<=Directory: ).*" | head -1)
+
+# If no directory, create temporary
+if [ -z "$SESSION_DIR" ]; then
+    SESSION_DIR=".claude/sessions/auditor-orchestrator_$(date +%Y%m%d_%H%M%S)"
+    mkdir -p "$SESSION_DIR"
+fi
+
+echo "✓ Session directory: $SESSION_DIR"
+```
+
+**Note**: Session metadata is explicit, not from environment variables.
+
+- `$1`: Session directory path (`$SESSION_DIR/`)
+- Session ID: Automatically provided via `$SESSION_ID` environment variable
 
 The directory contains:
 - `context.md` - Original research
@@ -21,19 +42,6 @@ The directory contains:
 - `progress.md` - Implementation log
 - `test_report.md` - Testing results
 
-## Session Setup
-
-**IMPORTANT**: Before starting any work, validate the session environment using shared utilities:
-
-```bash
-# Use shared utility for consistent session validation
-source exito/scripts/shared-utils.sh && validate_session_environment "${COMMAND_TYPE:-tasks}"
-
-# Log agent start for observability
-log_agent_start "auditor-orchestrator"
-```
-
-**Note**: Session directory is available in `$SESSION_DIR` after validation.
 
 ## Workflow
 
@@ -48,7 +56,7 @@ log_agent_start "auditor-orchestrator"
 2. **Get the changes**:
 ```bash
 # See all commits from this session
-git log --oneline --grep="$CLAUDE_SESSION_ID"
+git log --oneline --grep="$SESSION_ID"
 
 # See the diff
 git diff main...HEAD
@@ -67,10 +75,10 @@ git show {commit_hash}
 
 This file should include:
 ```markdown
-# Audit Context - Session $CLAUDE_SESSION_ID
+# Audit Context - Session $SESSION_ID
 
 ## Session Overview
-- **Session ID**: $CLAUDE_SESSION_ID
+- **Session ID**: $SESSION_ID
 - **Command Type**: ${COMMAND_TYPE}
 - **Date**: {timestamp}
 
@@ -152,12 +160,12 @@ Use the Task tool to invoke all 6 agents in parallel with the following pattern:
 
 ## Final Report Format
 
-`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/review.md`
+`$SESSION_DIR/review.md`
 
 ```markdown
 # Code Review: {Task Description}
 
-**Session ID**: $CLAUDE_SESSION_ID
+**Session ID**: $SESSION_ID
 **Date**: {timestamp}
 **Reviewer**: Staff Auditor (auditor-orchestrator)
 **Verdict**: ✅ APPROVE / ⚠️ APPROVE WITH NOTES / ❌ REQUEST CHANGES
@@ -378,7 +386,7 @@ Return concise summary:
 - {Positive aspect 1}
 - {Positive aspect 2}
 
-**Review**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/review.md`
+**Review**: `$SESSION_DIR/review.md`
 
 {If APPROVE: ✅ Ready for merge}
 {If APPROVE WITH NOTES: ⚠️ Can merge, but review notes}

@@ -240,7 +240,7 @@ Note accessibility requirements:
 
 #### Step 7: Write Analysis Document
 
-Save to `.claude/sessions/${COMMAND_TYPE}/$CLAUDE_SESSION_ID/visual-analysis.md`
+Save to `.claude/sessions/$SESSION_DIR/visual-analysis.md`
 
 </workflow_analyze>
 
@@ -483,7 +483,7 @@ Use Playwright or similar to capture current state:
 
 # Take screenshot
 !npx playwright screenshot http://localhost:3000 \
-  .claude/sessions/${COMMAND_TYPE}/$CLAUDE_SESSION_ID/screenshot-current.png
+  .claude/sessions/$SESSION_DIR/screenshot-current.png
 ```
 
 #### Step 3: Visual Comparison
@@ -583,7 +583,7 @@ Create final report:
 ```markdown
 # Visual Validation Report
 
-**Session**: $CLAUDE_SESSION_ID | **Date**: [timestamp]
+**Session**: $SESSION_ID | **Date**: [timestamp]
 
 ## Iteration Summary
 
@@ -627,7 +627,7 @@ Create final report:
 ```markdown
 ## Visual Analysis Complete 🎨
 
-**Session**: $CLAUDE_SESSION_ID
+**Session**: $SESSION_ID
 
 ### Design Summary
 
@@ -649,7 +649,7 @@ Create final report:
 
 [Key accessibility considerations found]
 
-**Full Analysis**: `.claude/sessions/${COMMAND_TYPE}/$CLAUDE_SESSION_ID/visual-analysis.md`
+**Full Analysis**: `.claude/sessions/$SESSION_DIR/visual-analysis.md`
 ```
 
 ### For Implement Mode
@@ -657,7 +657,7 @@ Create final report:
 ```markdown
 ## Pixel-Perfect Implementation Complete 🎨
 
-**Session**: $CLAUDE_SESSION_ID
+**Session**: $SESSION_ID
 
 ### Components Implemented
 
@@ -692,7 +692,7 @@ Create final report:
 ```markdown
 ## Visual Iteration Complete 🎯
 
-**Session**: $CLAUDE_SESSION_ID
+**Session**: $SESSION_ID
 
 ### Iteration Summary
 

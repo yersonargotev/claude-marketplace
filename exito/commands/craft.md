@@ -33,7 +33,20 @@ This workflow embodies the "Think Different" philosophy: **push boundaries, stay
 
 **Understanding the real problem, not just the stated one...**
 
+**Session Setup**
+
+Generating unique session ID and creating session directory...
+
+!SESSION_ID="craft_$(date +%Y%m%d_%H%M%S)"
+!mkdir -p ".claude/sessions/craft/$SESSION_ID"
+!echo "✓ Session: $SESSION_ID"
+
+---
+
+
 <Task agent="investigator">
+Session: $SESSION_ID
+Directory: .claude/sessions/craft/$SESSION_ID
   $ARGUMENTS
   
   craft-analysis
@@ -46,7 +59,9 @@ This workflow embodies the "Think Different" philosophy: **push boundaries, stay
 **Ensuring we have sufficient information to proceed...**
 
 <Task agent="requirements-validator">
-  .claude/sessions/craft/$CLAUDE_SESSION_ID/context.md
+Session: $SESSION_ID
+Directory: .claude/sessions/craft/$SESSION_ID
+  .claude/sessions/craft/$SESSION_ID/context.md
 </Task>
 
 ---
@@ -60,8 +75,10 @@ This workflow embodies the "Think Different" philosophy: **push boundaries, stay
 **Generating ambitious but feasible approaches - thinking from first principles...**
 
 <Task agent="visionary">
-  .claude/sessions/craft/$CLAUDE_SESSION_ID/context.md
-  .claude/sessions/craft/$CLAUDE_SESSION_ID/validation-report.md
+Session: $SESSION_ID
+Directory: .claude/sessions/craft/$SESSION_ID
+  .claude/sessions/craft/$SESSION_ID/context.md
+  .claude/sessions/craft/$SESSION_ID/validation-report.md
 </Task>
 
 ---
@@ -71,8 +88,10 @@ This workflow embodies the "Think Different" philosophy: **push boundaries, stay
 **Validating that ambitious ideas are actually achievable...**
 
 <Task agent="feasibility-validator">
-  .claude/sessions/craft/$CLAUDE_SESSION_ID/context.md
-  .claude/sessions/craft/$CLAUDE_SESSION_ID/alternatives.md
+Session: $SESSION_ID
+Directory: .claude/sessions/craft/$SESSION_ID
+  .claude/sessions/craft/$SESSION_ID/context.md
+  .claude/sessions/craft/$SESSION_ID/alternatives.md
 </Task>
 
 ---
@@ -81,9 +100,9 @@ This workflow embodies the "Think Different" philosophy: **push boundaries, stay
 
 **Review the vision and make your choice...**
 
-**Visionary Approaches**: `.claude/sessions/craft/$CLAUDE_SESSION_ID/alternatives.md`
+**Visionary Approaches**: `.claude/sessions/craft/$SESSION_ID/alternatives.md`
 
-**Feasibility Assessment**: `.claude/sessions/craft/$CLAUDE_SESSION_ID/feasibility.md`
+**Feasibility Assessment**: `.claude/sessions/craft/$SESSION_ID/feasibility.md`
 
 **Please select your preferred approach**:
 
@@ -102,8 +121,10 @@ This workflow embodies the "Think Different" philosophy: **push boundaries, stay
 **Creating detailed implementation plan with extended thinking for: {USER_SELECTION}**
 
 <Task agent="architect">
-  .claude/sessions/craft/$CLAUDE_SESSION_ID/context.md
-  .claude/sessions/craft/$CLAUDE_SESSION_ID/alternatives.md
+Session: $SESSION_ID
+Directory: .claude/sessions/craft/$SESSION_ID
+  .claude/sessions/craft/$SESSION_ID/context.md
+  .claude/sessions/craft/$SESSION_ID/alternatives.md
   selected-option:{USER_SELECTION}
 </Task>
 
@@ -111,7 +132,7 @@ This workflow embodies the "Think Different" philosophy: **push boundaries, stay
 
 ## Phase 7: Plan Approval ⏸️
 
-**Architecture ready for review**: `.claude/sessions/craft/$CLAUDE_SESSION_ID/plan.md`
+**Architecture ready for review**: `.claude/sessions/craft/$SESSION_ID/plan.md`
 
 **Review Checklist**:
 
@@ -149,7 +170,9 @@ This workflow embodies the "Think Different" philosophy: **push boundaries, stay
 Crafting with obsessive attention to detail...
 
 <Task agent="craftsman">
-  .claude/sessions/craft/$CLAUDE_SESSION_ID/plan.md
+Session: $SESSION_ID
+Directory: .claude/sessions/craft/$SESSION_ID
+  .claude/sessions/craft/$SESSION_ID/plan.md
   
   surgical
 </Task>
@@ -161,7 +184,9 @@ Crafting with obsessive attention to detail...
 **Final quality assurance and validation...**
 
 <Task agent="auditor">
-  .claude/sessions/craft/$CLAUDE_SESSION_ID
+Session: $SESSION_ID
+Directory: .claude/sessions/craft/$SESSION_ID
+  .claude/sessions/craft/$SESSION_ID
   
   craft-verification
 </Task>
@@ -173,7 +198,9 @@ Crafting with obsessive attention to detail...
 **Creating permanent knowledge base...**
 
 <Task agent="documentation-writer">
-  .claude/sessions/craft/$CLAUDE_SESSION_ID
+Session: $SESSION_ID
+Directory: .claude/sessions/craft/$SESSION_ID
+  .claude/sessions/craft/$SESSION_ID
 </Task>
 
 ---
@@ -193,7 +220,7 @@ Crafting with obsessive attention to detail...
 - ✅ Comprehensive tests, graceful edge case handling
 - ✅ Quality validated, documentation created
 
-**Session Artifacts**: `.claude/sessions/craft/$CLAUDE_SESSION_ID/`
+**Session Artifacts**: `.claude/sessions/craft/$SESSION_ID/`
 
 - `context.md` - Problem analysis and discovery
 - `validation-report.md` - Requirements validation

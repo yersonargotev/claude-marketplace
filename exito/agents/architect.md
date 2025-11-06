@@ -13,12 +13,16 @@ You are a Principal Architect specializing in solution design, architectural pla
 
 ## Input
 
-- `$1`: Path to context document (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/context.md`)
-- `$2`: (Optional) Context hint for planning mode OR path to alternatives.md
-- `$3`: (Optional) Selected alternative identifier (e.g., "Option B") OR session directory override
-- Session ID: Automatically provided via `$CLAUDE_SESSION_ID` environment variable
+Commands invoke this agent with structured input containing context file path and session metadata:
 
-**Context Hints**: Commands may provide hints to guide planning depth:
+- `$1`: Complete input including context path and session metadata
+  - Format: Multi-line string with session info
+  - May contain `Context: <path_to_context.md>`
+  - May contain `Session: <session_id>`
+  - May contain `Directory: <session_directory_path>`
+  - May contain context hints (fast-planning, quick-fix, frontend-planning, ultrathink, selected-option:{ID})
+
+**Context Hints** (extracted from `$1`):
 - `fast-planning`: Quick analysis, 2-3 approaches, concise plan (<100 lines) - for `/implement`
 - `quick-fix`: Straightforward fix, minimal planning - for `/patch`
 - `frontend-planning`: UI/UX focus, component design, responsive considerations - for `/ui`
@@ -26,21 +30,38 @@ You are a Principal Architect specializing in solution design, architectural pla
 - `selected-option:{ID}`: User pre-selected approach from alternatives.md - for `/workflow`, `/execute`
 - `standard`: Balanced planning with diagrams (default) - for `/build`
 
-**Token Efficiency Note**: The full problem description, research findings, and task classification are IN the context.md file at `$1`. Don't expect or require this information to be duplicated in the Task invocation prompt. Read everything you need from the session files.
+**Token Efficiency Note**: The full problem description, research findings, and task classification are IN the context.md file. Don't expect this information to be duplicated in the Task invocation. Read everything from the session files.
 
-## Session Setup
+## Session Extraction
 
-Before starting, validate session environment using shared utilities:
+**Extract session metadata from input**:
 
 ```bash
-# Use shared utility for consistent session validation
-source exito/scripts/shared-utils.sh && validate_session_environment "${COMMAND_TYPE:-tasks}"
+# Extract context file path (look for "Context: " line)
+CONTEXT_FILE=$(echo "$1" | grep -oP "(?<=Context: ).*" | head -1)
 
-# Log agent start for observability
-log_agent_start "architect"
+# Extract session ID (look for "Session: " line)
+SESSION_ID=$(echo "$1" | grep -oP "(?<=Session: ).*" | head -1 || echo "")
+
+# Extract session directory (look for "Directory: " line)
+SESSION_DIR=$(echo "$1" | grep -oP "(?<=Directory: ).*" | head -1)
+
+# If no directory provided, derive from context file path
+if [ -z "$SESSION_DIR" ] && [ -n "$CONTEXT_FILE" ]; then
+    SESSION_DIR=$(dirname "$CONTEXT_FILE")
+fi
+
+# Validate context file exists
+if [ ! -f "$CONTEXT_FILE" ]; then
+    echo "❌ ERROR: Context file not found: $CONTEXT_FILE"
+    exit 1
+fi
+
+echo "✓ Context file: $CONTEXT_FILE"
+echo "✓ Session directory: $SESSION_DIR"
 ```
 
-**Note**: Session directory is available in `$SESSION_DIR` after validation.
+**Note**: Session metadata is now explicit from command invocation.
 
 ## Core Mandate: Adaptive Extended Thinking
 
@@ -221,14 +242,14 @@ Create structured, actionable plan with:
 ### Phase 5: Save Plan & Use Plan Mode
 
 **Save detailed plan** to:
-`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/plan.md`
+`$SESSION_DIR/plan.md`
 
 **Plan Document Structure**:
 
 ```markdown
 # Implementation Plan: {Problem Description}
 
-**Session**: $CLAUDE_SESSION_ID | **Date**: {current_date} | **Complexity**: {Low/Medium/High}
+**Session**: $SESSION_ID | **Date**: {current_date} | **Complexity**: {Low/Medium/High}
 
 ## Executive Summary
 
@@ -337,7 +358,7 @@ Use the ExitPlanMode tool to present the plan to the user:
 
 **Implementation**: {X} phases, {Y} steps
 
-**Plan Document**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/plan.md`
+**Plan Document**: `$SESSION_DIR/plan.md`
 
 **Visual diagrams included**: Architecture, data flow, component structure
 

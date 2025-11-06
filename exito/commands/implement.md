@@ -21,7 +21,20 @@ allowed-tools: Task
 
 Let me start by understanding the context...
 
+**Session Setup**
+
+Generating unique session ID and creating session directory...
+
+!SESSION_ID="implement_$(date +%Y%m%d_%H%M%S)"
+!mkdir -p ".claude/sessions/implement/$SESSION_ID"
+!echo "✓ Session: $SESSION_ID"
+
+---
+
+
 <Task agent="investigator">
+Session: $SESSION_ID
+Directory: .claude/sessions/implement/$SESSION_ID
   $ARGUMENTS
 
   fast-mode
@@ -34,7 +47,9 @@ Let me start by understanding the context...
 Now designing the solution...
 
 <Task agent="architect">
-  .claude/sessions/implement/$CLAUDE_SESSION_ID/context.md
+Session: $SESSION_ID
+Directory: .claude/sessions/implement/$SESSION_ID
+  .claude/sessions/implement/$SESSION_ID/context.md
 
   fast-planning
 </Task>
@@ -43,7 +58,7 @@ Now designing the solution...
 
 ## Plan Ready - Awaiting Your Approval ⏸️
 
-**Please review the plan**: `.claude/sessions/implement/$CLAUDE_SESSION_ID/plan.md`
+**Please review the plan**: `.claude/sessions/implement/$SESSION_ID/plan.md`
 
 **Quick checklist**:
 
@@ -66,7 +81,9 @@ Now designing the solution...
 ## Implementation Starting ✓
 
 <Task agent="builder">
-  .claude/sessions/implement/$CLAUDE_SESSION_ID/plan.md
+Session: $SESSION_ID
+Directory: .claude/sessions/implement/$SESSION_ID
+  .claude/sessions/implement/$SESSION_ID/plan.md
 
   fast-mode
 </Task>
@@ -77,7 +94,7 @@ Now designing the solution...
 
 **Summary**: $ARGUMENTS
 
-**Session artifacts** saved in: `.claude/sessions/implement/$CLAUDE_SESSION_ID/`
+**Session artifacts** saved in: `.claude/sessions/implement/$SESSION_ID/`
 
 - `context.md` - Research findings
 - `plan.md` - Solution design

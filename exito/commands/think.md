@@ -24,7 +24,20 @@ I'll take extra time to think deeply at every stage.
 
 Starting with comprehensive research...
 
+**Session Setup**
+
+Generating unique session ID and creating session directory...
+
+!SESSION_ID="think_$(date +%Y%m%d_%H%M%S)"
+!mkdir -p ".claude/sessions/think/$SESSION_ID"
+!echo "✓ Session: $SESSION_ID"
+
+---
+
+
 <Task agent="investigator">
+Session: $SESSION_ID
+Directory: .claude/sessions/think/$SESSION_ID
   $ARGUMENTS
 
   deep-research
@@ -37,7 +50,9 @@ Starting with comprehensive research...
 Now entering ULTRATHINK mode for solution design...
 
 <Task agent="architect">
-  .claude/sessions/think/$CLAUDE_SESSION_ID/context.md
+Session: $SESSION_ID
+Directory: .claude/sessions/think/$SESSION_ID
+  .claude/sessions/think/$SESSION_ID/context.md
 
   ultrathink
 </Task>
@@ -46,7 +61,7 @@ Now entering ULTRATHINK mode for solution design...
 
 ## Comprehensive Plan Ready - Your Review Required ⏸️
 
-**Deep plan available**: `.claude/sessions/think/$CLAUDE_SESSION_ID/plan.md`
+**Deep plan available**: `.claude/sessions/think/$SESSION_ID/plan.md`
 
 This plan has been created with maximum analysis. Please review carefully:
 
@@ -79,7 +94,9 @@ Take your time to review - this is important work.
 ## Implementation Starting with Precision ✓
 
 <Task agent="builder">
-  .claude/sessions/think/$CLAUDE_SESSION_ID/plan.md
+Session: $SESSION_ID
+Directory: .claude/sessions/think/$SESSION_ID
+  .claude/sessions/think/$SESSION_ID/plan.md
 
   maximum-care
 </Task>
@@ -91,7 +108,9 @@ Take your time to review - this is important work.
 Running comprehensive validation...
 
 <Task agent="validator">
-  .claude/sessions/think/$CLAUDE_SESSION_ID/progress.md
+Session: $SESSION_ID
+Directory: .claude/sessions/think/$SESSION_ID
+  .claude/sessions/think/$SESSION_ID/progress.md
 
   thorough-validation
 </Task>
@@ -103,7 +122,9 @@ Running comprehensive validation...
 Final comprehensive code review...
 
 <Task agent="auditor">
-  .claude/sessions/think/$CLAUDE_SESSION_ID
+Session: $SESSION_ID
+Directory: .claude/sessions/think/$SESSION_ID
+  .claude/sessions/think/$SESSION_ID
 
   staff-level-review
 </Task>
@@ -116,7 +137,7 @@ Final comprehensive code review...
 
 **Quality assurance**: Maximum thinking and validation applied
 
-**Complete session artifacts** in: `.claude/sessions/think/$CLAUDE_SESSION_ID/`
+**Complete session artifacts** in: `.claude/sessions/think/$SESSION_ID/`
 
 - `context.md` - Comprehensive research
 - `plan.md` - Deep solution design (ULTRATHINK)

@@ -13,32 +13,51 @@ You are a Staff-level Investigator specializing in codebase analysis, pattern re
 
 ## Input
 
-- `$1`: Problem description or feature request (full task description from user)
-- `$2`: Optional context mode hint (if not provided, infer from `$1`)
-- `$3`: Optional session directory override (defaults to `.claude/sessions/${COMMAND_TYPE:-tasks}/$CLAUDE_SESSION_ID`)
+Commands invoke this agent with structured input containing the task and session metadata:
 
-**Context Modes**: Commands may provide hints to guide research depth:
+- `$1`: Complete input including task description and session metadata
+  - Format: Multi-line string with task and optional session info
+  - May contain `Task: <description>`
+  - May contain `Session: <session_id>`
+  - May contain `Directory: <path>`
+  - May contain context mode hints (fast-mode, workflow-analysis, deep-research, frontend-focus)
+
+**Context Modes** (extracted from `$1`):
 - `fast-mode`: Quick pattern lookup (5-10 min) - for `/patch`, `/implement`
 - `workflow-analysis`: Comprehensive analysis with edge cases (15-25 min) - for `/workflow`, `/execute`
 - `deep-research`: Exhaustive investigation (30-40 min) - for `/think`
 - `frontend-focus`: Component hierarchy, design system, state management - for `/ui`
 - `standard`: Balanced progressive disclosure (10-20 min) - for `/build` (default)
 
-**Token Efficiency Note**: As the first agent in the pipeline, you receive the raw problem description in `$1`. Your job is to research and create the context.md file that ALL subsequent agents will read. If `$2` provides a context mode, use it; otherwise classify the task yourself. This adaptive approach saves 10K-30K tokens on simple tasks.
+**Token Efficiency Note**: As the first agent in the pipeline, you receive the raw problem description in `$1`. Your job is to research and create the context.md file that ALL subsequent agents will read. Extract context mode if provided; otherwise classify the task yourself. This adaptive approach saves 10K-30K tokens on simple tasks.
 
-## Session Setup
+## Session Extraction
 
-**IMPORTANT**: Before starting any work, validate the session environment using shared utilities:
+**Extract session metadata from input** (if provided by command):
 
 ```bash
-# Use shared utility for consistent session validation
-source exito/scripts/shared-utils.sh && validate_session_environment "${COMMAND_TYPE:-tasks}"
+# Extract task description (look for "Task: " line)
+TASK_DESC=$(echo "$1" | grep -oP "(?<=Task: ).*" || echo "$1")
 
-# Log agent start for observability
-log_agent_start "investigator"
+# Extract session ID (look for "Session: " line)
+SESSION_ID=$(echo "$1" | grep -oP "(?<=Session: ).*" | head -1 || echo "")
+
+# Extract session directory (look for "Directory: " line)
+SESSION_DIR=$(echo "$1" | grep -oP "(?<=Directory: ).*" | head -1 || echo "")
+
+# If no session directory provided, use current directory or create temporary
+if [ -z "$SESSION_DIR" ]; then
+    SESSION_DIR=".claude/sessions/investigation_$(date +%Y%m%d_%H%M%S)"
+    mkdir -p "$SESSION_DIR"
+    echo "ℹ️  No session directory provided. Using: $SESSION_DIR"
+fi
+
+# Ensure session directory exists
+mkdir -p "$SESSION_DIR"
+echo "✓ Session directory: $SESSION_DIR"
 ```
 
-**Note**: Session directory is available in `$SESSION_DIR` after validation.
+**Note**: Session metadata is now explicit, not from environment variables.
 
 ## Task Classification & Adaptive Research
 
@@ -242,14 +261,15 @@ find . -name "*test*" | xargs grep -l "{identifier}"
 ## Output Format
 
 Create comprehensive context document at:
-`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/context.md`
+`$SESSION_DIR/context.md`
 
 ### Document Structure
 
 ```markdown
 # Research Context: {Problem Description}
 
-**Session ID**: $CLAUDE_SESSION_ID
+**Session**: $SESSION_ID (if provided)
+**Directory**: $SESSION_DIR
 **Date**: {current_date}
 **Task Classification**: {TRIVIAL|SMALL|MEDIUM|LARGE|VERY_LARGE}
 **Estimated Lines**: {estimate based on classification}
@@ -378,7 +398,7 @@ Return ONLY this concise summary (not the full context):
 ## Research Complete ✓
 
 **Task**: {problem description}
-**Session**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/`
+**Session Directory**: `$SESSION_DIR/`
 **Complexity**: {classification}
 
 **Key Findings**:
@@ -393,7 +413,7 @@ Return ONLY this concise summary (not the full context):
 
 - {Critical risks if any}
 
-**Context Document**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/context.md` (ready for planner)
+**Context Document**: `$SESSION_DIR/context.md` (ready for planner)
 
 ✓ Ready for planning phase
 ```

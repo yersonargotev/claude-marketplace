@@ -12,23 +12,31 @@ You are a Documentation Quality Specialist ensuring comprehensive, accurate, and
 **Expertise**: Code comments, API documentation, README files, changelogs, inline documentation
 
 ## Input
+
+## Session Extraction
+
+**Extract session metadata from input** (if provided by command):
+
+```bash
+# Extract session info from $1
+SESSION_ID=$(echo "$1" | grep -oP "(?<=Session: ).*" | head -1 || echo "")
+SESSION_DIR=$(echo "$1" | grep -oP "(?<=Directory: ).*" | head -1)
+
+# If no directory, create temporary
+if [ -z "$SESSION_DIR" ]; then
+    SESSION_DIR=".claude/sessions/documentation-checker_$(date +%Y%m%d_%H%M%S)"
+    mkdir -p "$SESSION_DIR"
+fi
+
+echo "✓ Session directory: $SESSION_DIR"
+```
+
+**Note**: Session metadata is explicit, not from environment variables.
+
 - `$1`: Path to `audit_context.md` (contains git diff, session documents, and change summary)
 
 **Token Efficiency Note**: Reads audit context from file, writes documentation assessment report to file, returns concise summary.
 
-## Session Setup
-
-Before starting, validate session environment using shared utilities:
-
-```bash
-# Use shared utility for consistent session validation
-source exito/scripts/shared-utils.sh && validate_session_environment "${COMMAND_TYPE:-tasks}"
-
-# Log agent start for observability
-log_agent_start "documentation-checker"
-```
-
-**Note**: Session directory is available in `$SESSION_DIR` after validation.
 
 ## Workflow
 

@@ -33,11 +33,22 @@ For those, use `/build` or `/think` instead.
 
 Gathering necessary context...
 
+**Session Setup**
+
+Generating unique session ID and creating session directory...
+
+!SESSION_ID="patch_$(date +%Y%m%d_%H%M%S)"
+!mkdir -p ".claude/sessions/patch/$SESSION_ID"
+!echo "✓ Session: $SESSION_ID"
+
+---
+
+
 <Task agent="investigator" model="haiku">
   $ARGUMENTS
 
   fast-mode
-  .claude/sessions/patch/$CLAUDE_SESSION_ID
+  .claude/sessions/patch/$SESSION_ID
 </Task>
 
 ---
@@ -47,7 +58,7 @@ Gathering necessary context...
 Quick solution analysis...
 
 <Task agent="architect" model="haiku">
-  .claude/sessions/patch/$CLAUDE_SESSION_ID/context.md
+  .claude/sessions/patch/$SESSION_ID/context.md
 
   quick-fix
 </Task>
@@ -57,7 +68,7 @@ Quick solution analysis...
 ## Implementing the fix ✓
 
 <Task agent="builder" model="haiku">
-  .claude/sessions/patch/$CLAUDE_SESSION_ID/plan.md
+  .claude/sessions/patch/$SESSION_ID/plan.md
 
   quick-fix
 </Task>
@@ -67,7 +78,7 @@ Quick solution analysis...
 ## Testing the fix ✓
 
 <Task agent="validator" model="haiku">
-  .claude/sessions/patch/$CLAUDE_SESSION_ID/progress.md
+  .claude/sessions/patch/$SESSION_ID/progress.md
 
   quick-validation
 </Task>
@@ -78,9 +89,9 @@ Quick solution analysis...
 
 **Fixed**: $ARGUMENTS
 
-**Change summary**: Check `.claude/sessions/patch/$CLAUDE_SESSION_ID/progress.md`
+**Change summary**: Check `.claude/sessions/patch/$SESSION_ID/progress.md`
 
-**Tests**: Check `.claude/sessions/patch/$CLAUDE_SESSION_ID/test_report.md`
+**Tests**: Check `.claude/sessions/patch/$SESSION_ID/test_report.md`
 
 **Commit**: Check git log
 
@@ -98,7 +109,7 @@ Quick solution analysis...
 
 ---
 
-**Session files** (if you need them): `.claude/sessions/patch/$CLAUDE_SESSION_ID/`
+**Session files** (if you need them): `.claude/sessions/patch/$SESSION_ID/`
 
 ---
 
