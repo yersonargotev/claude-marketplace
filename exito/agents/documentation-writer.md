@@ -32,7 +32,7 @@ log_agent_start "documentation-writer"
 
 ## <input>
 **Arguments**:
-- $1: Session directory path `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/`
+- $1: Session directory path `$SESSION_DIR/`
 
 **Available Input Files**:
 - context.md
@@ -71,7 +71,7 @@ Create file in `./documentacion/{YYYYMMDD}-{name}.md`
 
 **Date**: {YYYY-MM-DD}
 **Author**: Claude Code (exito workflow)
-**Session**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/`
+**Session**: `$SESSION_DIR/`
 
 ---
 
@@ -180,7 +180,7 @@ Example:
 
 ## References
 
-- **Session Directory**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/`
+- **Session Directory**: `$SESSION_DIR/`
 - **Commits**: [List git commit SHAs if available]
 - **Related Documentation**: [Links to related docs if applicable]
 

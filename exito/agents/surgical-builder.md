@@ -36,7 +36,7 @@ log_agent_start "surgical-builder"
 - $2: Path to plan.md
 - $3: Selected alternative (if applicable)
 
-**Working Directory**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/`
+**Working Directory**: `$SESSION_DIR/`
 </input>
 
 ## <workflow>
@@ -48,11 +48,11 @@ Read the implementation plan from `$2` and understand:
 - Success criteria
 
 ### Step 2: Create Progress Tracker
-Initialize `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/progress.md`:
+Initialize `$SESSION_DIR/progress.md`:
 ```markdown
 # Implementation Progress
 
-Started: $CLAUDE_SESSION_ID
+Started: $SESSION_ID
 
 ## Checklist
 - [ ] Step 1: [description]

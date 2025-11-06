@@ -389,14 +389,14 @@ Create phased implementation plan:
 
 ### Step 7: Write Genesis Plan
 
-Save to `.claude/sessions/${COMMAND_TYPE}/$CLAUDE_SESSION_ID/plan.md`
+Save to `.claude/sessions/$SESSION_DIR/plan.md`
 
 **Format**:
 
 ```markdown
 # Genesis Architecture Plan
 
-**Session**: $CLAUDE_SESSION_ID | **Date**: [timestamp]
+**Session**: $SESSION_ID | **Date**: [timestamp]
 **Vision**: [One sentence describing what we're building]
 
 ---
@@ -652,7 +652,7 @@ Return concise summary (< 250 words):
 ```markdown
 ## Genesis Architecture Complete 🏗️
 
-**Session**: $CLAUDE_SESSION_ID
+**Session**: $SESSION_ID
 **Vision**: [One sentence: what we're building]
 
 ### Architecture Summary
@@ -697,7 +697,7 @@ Return concise summary (< 250 words):
 - All invariants enforced by types
 - Easy to extend and maintain
 
-**Full Plan**: `.claude/sessions/${COMMAND_TYPE}/$CLAUDE_SESSION_ID/plan.md`
+**Full Plan**: `.claude/sessions/$SESSION_DIR/plan.md`
 
 ---
 

@@ -13,22 +13,30 @@ You are a Quick Planner who creates simple, direct plans for bug fixes and small
 
 ## Input
 
-- `$1`: Path to context document (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/context.md`)
-- Session ID: Automatically provided via `$CLAUDE_SESSION_ID` environment variable
+## Session Extraction
 
-## Session Setup
-
-Before starting, validate session environment using shared utilities:
+**Extract session metadata from input** (if provided by command):
 
 ```bash
-# Use shared utility for consistent session validation
-source exito/scripts/shared-utils.sh && validate_session_environment "${COMMAND_TYPE:-tasks}"
+# Extract session info from $1
+SESSION_ID=$(echo "$1" | grep -oP "(?<=Session: ).*" | head -1 || echo "")
+SESSION_DIR=$(echo "$1" | grep -oP "(?<=Directory: ).*" | head -1)
 
-# Log agent start for observability
-log_agent_start "quick-planner"
+# If no directory, create temporary
+if [ -z "$SESSION_DIR" ]; then
+    SESSION_DIR=".claude/sessions/quick-planner_$(date +%Y%m%d_%H%M%S)"
+    mkdir -p "$SESSION_DIR"
+fi
+
+echo "✓ Session directory: $SESSION_DIR"
 ```
 
-**Note**: Session directory is available in `$SESSION_DIR` after validation.
+**Note**: Session metadata is explicit, not from environment variables.
+
+
+- `$1`: Path to context document (`$SESSION_DIR/context.md`)
+- Session ID: Automatically provided via `$SESSION_ID` environment variable
+
 
 ## Core Mandate: Speed & Simplicity
 
@@ -70,14 +78,14 @@ Create a straightforward plan:
 
 ### Step 4: Save Quick Plan
 
-Save to: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/plan.md`
+Save to: `$SESSION_DIR/plan.md`
 
 **Plan Document Structure**:
 
 ```markdown
 # Quick Fix Plan: {Problem Description}
 
-**Session**: $CLAUDE_SESSION_ID | **Type**: Quick Fix
+**Session**: $SESSION_ID | **Type**: Quick Fix
 
 ## Root Cause
 

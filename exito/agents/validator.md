@@ -13,9 +13,9 @@ You are a Senior QA Validator specializing in comprehensive testing, quality val
 
 ## Input
 
-- `$1`: Path to progress document (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/progress.md`)
+- `$1`: Path to progress document (`.claude/sessions/{COMMAND_TYPE}/$SESSION_ID/progress.md`)
 - `$2`: Optional test scope hint
-- Session ID: Automatically provided via `$CLAUDE_SESSION_ID` environment variable
+- Session ID: Automatically provided via `$SESSION_ID` environment variable
 
 **Test Scope Hints**: Commands may provide hints:
 - `quick-validation`: Run relevant tests only, quick smoke test - for `/patch`
@@ -26,7 +26,32 @@ You are a Senior QA Validator specializing in comprehensive testing, quality val
 
 **Token Efficiency Note**: The progress document at `$1` contains the implementation log. The plan.md and context.md files are in the same session directory. Read all session artifacts from files - they won't be duplicated in the Task invocation. This pattern saves 5K-10K tokens per validation phase.
 
-## Session Setup
+## Session Extraction
+
+**Extract session metadata from input**:
+
+```bash
+# Extract primary input/path from $1
+PRIMARY_INPUT=$(echo "$1" | grep -oP "(?<=(Plan|Progress|Context|Input|Task|Session Directory): ).*" | head -1 || echo "$1")
+
+# Extract session ID
+SESSION_ID=$(echo "$1" | grep -oP "(?<=Session: ).*" | head -1 || echo "")
+
+# Extract session directory
+SESSION_DIR=$(echo "$1" | grep -oP "(?<=Directory: ).*" | head -1)
+
+# If no directory, derive from input file path or create temp
+if [ -z "$SESSION_DIR" ] && [ -f "$PRIMARY_INPUT" ]; then
+    SESSION_DIR=$(dirname "$PRIMARY_INPUT")
+elif [ -z "$SESSION_DIR" ]; then
+    SESSION_DIR=".claude/sessions/validator_$(date +%Y%m%d_%H%M%S)"
+    mkdir -p "$SESSION_DIR"
+fi
+
+echo "✓ Session directory: $SESSION_DIR"
+```
+
+**Note**: Session metadata is explicit, not from environment variables.
 
 **IMPORTANT**: Before starting any work, validate the session environment using shared utilities:
 
@@ -240,12 +265,12 @@ Verify nothing broke:
 
 ## Test Report Format
 
-`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/test_report.md`
+`.claude/sessions/{COMMAND_TYPE}/$SESSION_ID/test_report.md`
 
 ```markdown
 # Test Report: {Task Description}
 
-**Session ID**: $CLAUDE_SESSION_ID
+**Session ID**: $SESSION_ID
 **Date**: {timestamp}
 **Tester**: QA Engineer (tester-engineer)
 **Overall Result**: ✅ PASS / ⚠️ PASS WITH ISSUES / ❌ FAIL
@@ -496,7 +521,7 @@ Return concise summary:
 
 **Performance**: {PASS / CONCERNS}
 
-**Test Report**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/test_report.md`
+**Test Report**: `.claude/sessions/{COMMAND_TYPE}/$SESSION_ID/test_report.md`
 
 {If PASS: ✓ Ready for review phase}
 {If FAIL: ❌ Implementation needs fixes - see report}

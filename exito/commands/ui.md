@@ -20,7 +20,20 @@ allowed-tools: Task
 
 Let me research the frontend landscape...
 
+**Session Setup**
+
+Generating unique session ID and creating session directory...
+
+!SESSION_ID="ui_$(date +%Y%m%d_%H%M%S)"
+!mkdir -p ".claude/sessions/ui/$SESSION_ID"
+!echo "✓ Session: $SESSION_ID"
+
+---
+
+
 <Task agent="investigator">
+Session: $SESSION_ID
+Directory: .claude/sessions/ui/$SESSION_ID
   $ARGUMENTS
 
   frontend-focus
@@ -33,7 +46,9 @@ Let me research the frontend landscape...
 Designing the UI/UX solution...
 
 <Task agent="architect">
-  .claude/sessions/ui/$CLAUDE_SESSION_ID/context.md
+Session: $SESSION_ID
+Directory: .claude/sessions/ui/$SESSION_ID
+  .claude/sessions/ui/$SESSION_ID/context.md
 
   frontend-planning
 </Task>
@@ -42,7 +57,7 @@ Designing the UI/UX solution...
 
 ## Frontend Plan Ready - Your Review ⏸️
 
-**Review the plan**: `.claude/sessions/ui/$CLAUDE_SESSION_ID/plan.md`
+**Review the plan**: `.claude/sessions/ui/$SESSION_ID/plan.md`
 
 **Frontend review checklist**:
 
@@ -68,7 +83,9 @@ Designing the UI/UX solution...
 ## Implementation Starting ✓
 
 <Task agent="builder">
-  .claude/sessions/ui/$CLAUDE_SESSION_ID/plan.md
+Session: $SESSION_ID
+Directory: .claude/sessions/ui/$SESSION_ID
+  .claude/sessions/ui/$SESSION_ID/plan.md
 
   frontend-implementation
 </Task>
@@ -80,7 +97,9 @@ Designing the UI/UX solution...
 Testing the UI/UX...
 
 <Task agent="validator">
-  .claude/sessions/ui/$CLAUDE_SESSION_ID/progress.md
+Session: $SESSION_ID
+Directory: .claude/sessions/ui/$SESSION_ID
+  .claude/sessions/ui/$SESSION_ID/progress.md
 
   frontend-testing
 </Task>
@@ -92,7 +111,9 @@ Testing the UI/UX...
 Final frontend code review...
 
 <Task agent="auditor">
-  .claude/sessions/ui/$CLAUDE_SESSION_ID
+Session: $SESSION_ID
+Directory: .claude/sessions/ui/$SESSION_ID
+  .claude/sessions/ui/$SESSION_ID
 
   frontend-review
 </Task>
@@ -110,7 +131,7 @@ Final frontend code review...
 - ✅ Performant (optimized)
 - ✅ User-friendly (tested)
 
-**Session artifacts** in: `.claude/sessions/ui/$CLAUDE_SESSION_ID/`
+**Session artifacts** in: `.claude/sessions/ui/$SESSION_ID/`
 
 - `context.md` - Frontend research
 - `plan.md` - UI/UX design plan

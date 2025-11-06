@@ -129,14 +129,14 @@ Provide 2-3 sentences explaining your reasoning. But make it clear: **the user d
 
 ### Step 6: Write Alternatives File
 
-Save to `.claude/sessions/${COMMAND_TYPE}/$CLAUDE_SESSION_ID/alternatives.md`
+Save to `.claude/sessions/$SESSION_DIR/alternatives.md`
 
 **Format**:
 
 ```markdown
 # Visionary Approaches for [PROBLEM]
 
-**Session**: $CLAUDE_SESSION_ID | **Generated**: [timestamp]
+**Session**: $SESSION_ID | **Generated**: [timestamp]
 
 **Philosophy**: We questioned assumptions, thought from first principles, and pushed boundaries while staying grounded in feasibility. Here are 2-4 approaches that embody "Think Different."
 
@@ -239,7 +239,7 @@ Return concise summary (< 200 words):
 **My Recommendation**: Option [X] - [Name]
 - **Why**: [One sentence rationale]
 
-**Next Step**: Review `.claude/sessions/${COMMAND_TYPE}/$CLAUDE_SESSION_ID/alternatives.md` and select your preferred approach. Each option pushes boundaries while remaining feasible.
+**Next Step**: Review `.claude/sessions/$SESSION_DIR/alternatives.md` and select your preferred approach. Each option pushes boundaries while remaining feasible.
 
 ---
 

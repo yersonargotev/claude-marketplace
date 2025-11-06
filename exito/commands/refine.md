@@ -40,7 +40,20 @@ This workflow asks: **"What would be elegant here?"** and **"What can we remove?
 
 **Understanding current code deeply - what it does, why it exists, where it's going...**
 
+**Session Setup**
+
+Generating unique session ID and creating session directory...
+
+!SESSION_ID="refine_$(date +%Y%m%d_%H%M%S)"
+!mkdir -p ".claude/sessions/refine/$SESSION_ID"
+!echo "✓ Session: $SESSION_ID"
+
+---
+
+
 <Task agent="investigator">
+Session: $SESSION_ID
+Directory: .claude/sessions/refine/$SESSION_ID
   $ARGUMENTS
   
   refine-analysis
@@ -53,7 +66,9 @@ This workflow asks: **"What would be elegant here?"** and **"What can we remove?
 **Looking at code with fresh eyes - identifying opportunities for elegance...**
 
 <Task agent="design-philosopher">
-  .claude/sessions/refine/$CLAUDE_SESSION_ID/context.md
+Session: $SESSION_ID
+Directory: .claude/sessions/refine/$SESSION_ID
+  .claude/sessions/refine/$SESSION_ID/context.md
   all
 </Task>
 
@@ -64,8 +79,10 @@ This workflow asks: **"What would be elegant here?"** and **"What can we remove?
 **Generating elegant refactoring approaches...**
 
 <Task agent="visionary">
-  .claude/sessions/refine/$CLAUDE_SESSION_ID/context.md
-  .claude/sessions/refine/$CLAUDE_SESSION_ID/philosophy.md
+Session: $SESSION_ID
+Directory: .claude/sessions/refine/$SESSION_ID
+  .claude/sessions/refine/$SESSION_ID/context.md
+  .claude/sessions/refine/$SESSION_ID/philosophy.md
 </Task>
 
 ---
@@ -75,8 +92,10 @@ This workflow asks: **"What would be elegant here?"** and **"What can we remove?
 **Validating that refactoring is safe and achievable...**
 
 <Task agent="feasibility-validator">
-  .claude/sessions/refine/$CLAUDE_SESSION_ID/context.md
-  .claude/sessions/refine/$CLAUDE_SESSION_ID/alternatives.md
+Session: $SESSION_ID
+Directory: .claude/sessions/refine/$SESSION_ID
+  .claude/sessions/refine/$SESSION_ID/context.md
+  .claude/sessions/refine/$SESSION_ID/alternatives.md
 </Task>
 
 ---
@@ -85,11 +104,11 @@ This workflow asks: **"What would be elegant here?"** and **"What can we remove?
 
 **Review the philosophy and choose your path to elegance...**
 
-**Philosophy Analysis**: `.claude/sessions/refine/$CLAUDE_SESSION_ID/philosophy.md`
+**Philosophy Analysis**: `.claude/sessions/refine/$SESSION_ID/philosophy.md`
 
-**Refactoring Approaches**: `.claude/sessions/refine/$CLAUDE_SESSION_ID/alternatives.md`
+**Refactoring Approaches**: `.claude/sessions/refine/$SESSION_ID/alternatives.md`
 
-**Feasibility Assessment**: `.claude/sessions/refine/$CLAUDE_SESSION_ID/feasibility.md`
+**Feasibility Assessment**: `.claude/sessions/refine/$SESSION_ID/feasibility.md`
 
 **Please select your preferred refinement**:
 
@@ -115,8 +134,10 @@ This workflow asks: **"What would be elegant here?"** and **"What can we remove?
 **Creating detailed refactoring plan for: {USER_SELECTION}**
 
 <Task agent="architect">
-  .claude/sessions/refine/$CLAUDE_SESSION_ID/context.md
-  .claude/sessions/refine/$CLAUDE_SESSION_ID/alternatives.md
+Session: $SESSION_ID
+Directory: .claude/sessions/refine/$SESSION_ID
+  .claude/sessions/refine/$SESSION_ID/context.md
+  .claude/sessions/refine/$SESSION_ID/alternatives.md
   selected-option:{USER_SELECTION}
 </Task>
 
@@ -124,7 +145,7 @@ This workflow asks: **"What would be elegant here?"** and **"What can we remove?
 
 ## Phase 7: Plan Approval ⏸️
 
-**Refactoring plan ready for review**: `.claude/sessions/refine/$CLAUDE_SESSION_ID/plan.md`
+**Refactoring plan ready for review**: `.claude/sessions/refine/$SESSION_ID/plan.md`
 
 **Review Checklist**:
 
@@ -163,7 +184,9 @@ This workflow asks: **"What would be elegant here?"** and **"What can we remove?
 Polishing with attention to elegance and simplicity...
 
 <Task agent="craftsman">
-  .claude/sessions/refine/$CLAUDE_SESSION_ID/plan.md
+Session: $SESSION_ID
+Directory: .claude/sessions/refine/$SESSION_ID
+  .claude/sessions/refine/$SESSION_ID/plan.md
   
   surgical
 </Task>
@@ -175,7 +198,9 @@ Polishing with attention to elegance and simplicity...
 **Validating refinement didn't break anything and improved quality...**
 
 <Task agent="auditor">
-  .claude/sessions/refine/$CLAUDE_SESSION_ID
+Session: $SESSION_ID
+Directory: .claude/sessions/refine/$SESSION_ID
+  .claude/sessions/refine/$SESSION_ID
   
   refine-verification
 </Task>
@@ -187,7 +212,9 @@ Polishing with attention to elegance and simplicity...
 **Creating permanent knowledge base...**
 
 <Task agent="documentation-writer">
-  .claude/sessions/refine/$CLAUDE_SESSION_ID
+Session: $SESSION_ID
+Directory: .claude/sessions/refine/$SESSION_ID
+  .claude/sessions/refine/$SESSION_ID
 </Task>
 
 ---
@@ -216,7 +243,7 @@ Check the quality report for:
 - Maintainability improved
 - Code quality score increase
 
-**Session Artifacts**: `.claude/sessions/refine/$CLAUDE_SESSION_ID/`
+**Session Artifacts**: `.claude/sessions/refine/$SESSION_ID/`
 
 - `context.md` - Original code analysis
 - `philosophy.md` - Design philosophy opportunities

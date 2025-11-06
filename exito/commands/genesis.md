@@ -42,7 +42,20 @@ This workflow asks: **"If we could start fresh, what would we build?"**
 
 **Understanding the dream - unburdened by legacy, unconstrained by history...**
 
+**Session Setup**
+
+Generating unique session ID and creating session directory...
+
+!SESSION_ID="genesis_$(date +%Y%m%d_%H%M%S)"
+!mkdir -p ".claude/sessions/genesis/$SESSION_ID"
+!echo "✓ Session: $SESSION_ID"
+
+---
+
+
 <Task agent="investigator">
+Session: $SESSION_ID
+Directory: .claude/sessions/genesis/$SESSION_ID
   $ARGUMENTS
   
   genesis-vision
@@ -55,7 +68,9 @@ This workflow asks: **"If we could start fresh, what would we build?"**
 **Ensuring vision is clear and complete...**
 
 <Task agent="requirements-validator">
-  .claude/sessions/genesis/$CLAUDE_SESSION_ID/context.md
+Session: $SESSION_ID
+Directory: .claude/sessions/genesis/$SESSION_ID
+  .claude/sessions/genesis/$SESSION_ID/context.md
 </Task>
 
 ---
@@ -69,8 +84,10 @@ This workflow asks: **"If we could start fresh, what would we build?"**
 **Designing from scratch with first principles thinking...**
 
 <Task agent="genesis-architect">
-  .claude/sessions/genesis/$CLAUDE_SESSION_ID/context.md
-  .claude/sessions/genesis/$CLAUDE_SESSION_ID/validation-report.md
+Session: $SESSION_ID
+Directory: .claude/sessions/genesis/$SESSION_ID
+  .claude/sessions/genesis/$SESSION_ID/context.md
+  .claude/sessions/genesis/$SESSION_ID/validation-report.md
 </Task>
 
 ---
@@ -80,8 +97,10 @@ This workflow asks: **"If we could start fresh, what would we build?"**
 **Generating multiple architectural approaches - each optimized for the problem...**
 
 <Task agent="visionary">
-  .claude/sessions/genesis/$CLAUDE_SESSION_ID/context.md
-  .claude/sessions/genesis/$CLAUDE_SESSION_ID/genesis-design.md
+Session: $SESSION_ID
+Directory: .claude/sessions/genesis/$SESSION_ID
+  .claude/sessions/genesis/$SESSION_ID/context.md
+  .claude/sessions/genesis/$SESSION_ID/genesis-design.md
 </Task>
 
 ---
@@ -91,8 +110,10 @@ This workflow asks: **"If we could start fresh, what would we build?"**
 **Validating that architectures are buildable with available resources...**
 
 <Task agent="feasibility-validator">
-  .claude/sessions/genesis/$CLAUDE_SESSION_ID/context.md
-  .claude/sessions/genesis/$CLAUDE_SESSION_ID/alternatives.md
+Session: $SESSION_ID
+Directory: .claude/sessions/genesis/$SESSION_ID
+  .claude/sessions/genesis/$SESSION_ID/context.md
+  .claude/sessions/genesis/$SESSION_ID/alternatives.md
 </Task>
 
 ---
@@ -101,11 +122,11 @@ This workflow asks: **"If we could start fresh, what would we build?"**
 
 **Review the architectures and choose your foundation...**
 
-**Genesis Design**: `.claude/sessions/genesis/$CLAUDE_SESSION_ID/genesis-design.md`
+**Genesis Design**: `.claude/sessions/genesis/$SESSION_ID/genesis-design.md`
 
-**Architectural Approaches**: `.claude/sessions/genesis/$CLAUDE_SESSION_ID/alternatives.md`
+**Architectural Approaches**: `.claude/sessions/genesis/$SESSION_ID/alternatives.md`
 
-**Feasibility Assessment**: `.claude/sessions/genesis/$CLAUDE_SESSION_ID/feasibility.md`
+**Feasibility Assessment**: `.claude/sessions/genesis/$SESSION_ID/feasibility.md`
 
 **Please select your preferred architecture**:
 
@@ -134,8 +155,10 @@ This workflow asks: **"If we could start fresh, what would we build?"**
 This is greenfield - we'll use maximum depth thinking to design the optimal system.
 
 <Task agent="architect">
-  .claude/sessions/genesis/$CLAUDE_SESSION_ID/context.md
-  .claude/sessions/genesis/$CLAUDE_SESSION_ID/alternatives.md
+Session: $SESSION_ID
+Directory: .claude/sessions/genesis/$SESSION_ID
+  .claude/sessions/genesis/$SESSION_ID/context.md
+  .claude/sessions/genesis/$SESSION_ID/alternatives.md
   selected-option:{USER_SELECTION}
 </Task>
 
@@ -143,7 +166,7 @@ This is greenfield - we'll use maximum depth thinking to design the optimal syst
 
 ## Phase 8: Architecture Approval ⏸️
 
-**Complete architecture ready for review**: `.claude/sessions/genesis/$CLAUDE_SESSION_ID/plan.md`
+**Complete architecture ready for review**: `.claude/sessions/genesis/$SESSION_ID/plan.md`
 
 **Review Checklist**:
 
@@ -185,7 +208,9 @@ This is greenfield - we'll use maximum depth thinking to design the optimal syst
 Building from foundation up with craftsmanship...
 
 <Task agent="craftsman">
-  .claude/sessions/genesis/$CLAUDE_SESSION_ID/plan.md
+Session: $SESSION_ID
+Directory: .claude/sessions/genesis/$SESSION_ID
+  .claude/sessions/genesis/$SESSION_ID/plan.md
   
   greenfield
 </Task>
@@ -197,7 +222,9 @@ Building from foundation up with craftsmanship...
 **Validating architecture and implementation quality...**
 
 <Task agent="auditor">
-  .claude/sessions/genesis/$CLAUDE_SESSION_ID
+Session: $SESSION_ID
+Directory: .claude/sessions/genesis/$SESSION_ID
+  .claude/sessions/genesis/$SESSION_ID
   
   genesis-verification
 </Task>
@@ -209,7 +236,9 @@ Building from foundation up with craftsmanship...
 **Creating comprehensive system knowledge base...**
 
 <Task agent="documentation-writer">
-  .claude/sessions/genesis/$CLAUDE_SESSION_ID
+Session: $SESSION_ID
+Directory: .claude/sessions/genesis/$SESSION_ID
+  .claude/sessions/genesis/$SESSION_ID
 </Task>
 
 ---
@@ -236,7 +265,7 @@ Building from foundation up with craftsmanship...
 - **Infrastructure Layer**: Technical implementation
 - **Presentation Layer**: User interfaces
 
-**Session Artifacts**: `.claude/sessions/genesis/$CLAUDE_SESSION_ID/`
+**Session Artifacts**: `.claude/sessions/genesis/$SESSION_ID/`
 
 - `context.md` - Vision and requirements
 - `validation-report.md` - Requirements validation

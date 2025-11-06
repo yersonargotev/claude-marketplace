@@ -62,13 +62,13 @@ For EACH approach:
 Based on trade-off analysis, suggest which option you'd recommend and why (but user makes final call).
 
 ### Step 4: Write Alternatives File
-Save to `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/alternatives.md`
+Save to `$SESSION_DIR/alternatives.md`
 
 **Format**:
 ```markdown
 # Solution Alternatives for [PROBLEM]
 
-Generated: $CLAUDE_SESSION_ID
+Generated: $SESSION_ID
 
 ---
 

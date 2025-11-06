@@ -19,10 +19,22 @@ allowed-tools: Task
 
 ## Task: $ARGUMENTS
 
+**Session Setup**
+
+Generating unique session ID and creating session directory...
+
+!SESSION_ID="build_$(date +%Y%m%d_%H%M%S)"
+!mkdir -p ".claude/sessions/build/$SESSION_ID"
+!echo "✓ Session: $SESSION_ID"
+
+---
+
 Let me start by understanding what we're working with...
 
 <Task agent="investigator">
-  $ARGUMENTS
+Task: $ARGUMENTS
+Session: $SESSION_ID
+Directory: .claude/sessions/build/$SESSION_ID
 </Task>
 
 ---
@@ -32,14 +44,16 @@ Let me start by understanding what we're working with...
 Now let me think deeply about the best approach...
 
 <Task agent="architect">
-  .claude/sessions/build/$CLAUDE_SESSION_ID/context.md
+Context: .claude/sessions/build/$SESSION_ID/context.md
+Session: $SESSION_ID
+Directory: .claude/sessions/build/$SESSION_ID
 </Task>
 
 ---
 
 ## Plan Ready - Awaiting Your Approval ⏸️
 
-**Please review the plan**: `.claude/sessions/build/$CLAUDE_SESSION_ID/plan.md`
+**Please review the plan**: `.claude/sessions/build/$SESSION_ID/plan.md`
 
 **Review checklist**:
 
@@ -63,7 +77,9 @@ Now let me think deeply about the best approach...
 ## Implementation Starting ✓
 
 <Task agent="builder">
-  .claude/sessions/build/$CLAUDE_SESSION_ID/plan.md
+Plan: .claude/sessions/build/$SESSION_ID/plan.md
+Session: $SESSION_ID
+Directory: .claude/sessions/build/$SESSION_ID
 </Task>
 
 ---
@@ -73,7 +89,9 @@ Now let me think deeply about the best approach...
 Now validating the work...
 
 <Task agent="validator">
-  .claude/sessions/build/$CLAUDE_SESSION_ID/progress.md
+Progress: .claude/sessions/build/$SESSION_ID/progress.md
+Session: $SESSION_ID
+Directory: .claude/sessions/build/$SESSION_ID
 </Task>
 
 ---
@@ -83,7 +101,8 @@ Now validating the work...
 Final code review...
 
 <Task agent="auditor">
-  .claude/sessions/build/$CLAUDE_SESSION_ID
+Session Directory: .claude/sessions/build/$SESSION_ID
+Session: $SESSION_ID
 </Task>
 
 ---
@@ -92,7 +111,7 @@ Final code review...
 
 **Summary**: $ARGUMENTS
 
-**Session artifacts** saved in: `.claude/sessions/build/$CLAUDE_SESSION_ID/`
+**Session artifacts** saved in: `.claude/sessions/build/$SESSION_ID/`
 
 - `context.md` - Research findings
 - `plan.md` - Solution design

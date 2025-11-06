@@ -31,7 +31,20 @@ This workflow emphasizes **exploration before commitment** and **precision over 
 
 Gathering comprehensive context...
 
+**Session Setup**
+
+Generating unique session ID and creating session directory...
+
+!SESSION_ID="execute_$(date +%Y%m%d_%H%M%S)"
+!mkdir -p ".claude/sessions/execute/$SESSION_ID"
+!echo "✓ Session: $SESSION_ID"
+
+---
+
+
 <Task agent="investigator">
+Session: $SESSION_ID
+Directory: .claude/sessions/execute/$SESSION_ID
   $ARGUMENTS
 
   workflow-analysis
@@ -44,7 +57,9 @@ Gathering comprehensive context...
 Validating information completeness...
 
 <Task agent="requirements-validator">
-  .claude/sessions/execute/$CLAUDE_SESSION_ID/context.md
+Session: $SESSION_ID
+Directory: .claude/sessions/execute/$SESSION_ID
+  .claude/sessions/execute/$SESSION_ID/context.md
 </Task>
 
 ---
@@ -58,15 +73,17 @@ Validating information completeness...
 Generating multiple solution alternatives...
 
 <Task agent="solution-explorer">
-  .claude/sessions/execute/$CLAUDE_SESSION_ID/context.md
-  .claude/sessions/execute/$CLAUDE_SESSION_ID/validation-report.md
+Session: $SESSION_ID
+Directory: .claude/sessions/execute/$SESSION_ID
+  .claude/sessions/execute/$SESSION_ID/context.md
+  .claude/sessions/execute/$SESSION_ID/validation-report.md
 </Task>
 
 ---
 
 ## Phase 4: Solution Selection 🎯
 
-**Review alternatives**: `.claude/sessions/execute/$CLAUDE_SESSION_ID/alternatives.md`
+**Review alternatives**: `.claude/sessions/execute/$SESSION_ID/alternatives.md`
 
 **Please select your preferred approach**:
 
@@ -85,8 +102,10 @@ Generating multiple solution alternatives...
 Creating implementation plan for: **{USER_SELECTION}**
 
 <Task agent="architect">
-  .claude/sessions/execute/$CLAUDE_SESSION_ID/context.md
-  .claude/sessions/execute/$CLAUDE_SESSION_ID/alternatives.md
+Session: $SESSION_ID
+Directory: .claude/sessions/execute/$SESSION_ID
+  .claude/sessions/execute/$SESSION_ID/context.md
+  .claude/sessions/execute/$SESSION_ID/alternatives.md
   selected-option:{USER_SELECTION}
 </Task>
 
@@ -94,7 +113,7 @@ Creating implementation plan for: **{USER_SELECTION}**
 
 ## Phase 6: Plan Approval ⏸️
 
-**Plan ready for review**: `.claude/sessions/execute/$CLAUDE_SESSION_ID/plan.md`
+**Plan ready for review**: `.claude/sessions/execute/$SESSION_ID/plan.md`
 
 **Review Checklist**:
 
@@ -128,7 +147,9 @@ Creating implementation plan for: **{USER_SELECTION}**
 Executing with precision...
 
 <Task agent="surgical-builder">
-  .claude/sessions/execute/$CLAUDE_SESSION_ID/plan.md
+Session: $SESSION_ID
+Directory: .claude/sessions/execute/$SESSION_ID
+  .claude/sessions/execute/$SESSION_ID/plan.md
 
   surgical
 </Task>
@@ -140,7 +161,9 @@ Executing with precision...
 Creating permanent knowledge base documentation...
 
 <Task agent="documentation-writer">
-  .claude/sessions/execute/$CLAUDE_SESSION_ID
+Session: $SESSION_ID
+Directory: .claude/sessions/execute/$SESSION_ID
+  .claude/sessions/execute/$SESSION_ID
 </Task>
 
 ---
@@ -168,7 +191,7 @@ This workflow skipped automated testing and code review for speed. **You should 
 4. 📊 **Edge Cases**: Verify edge cases and error handling
 5. 🔒 **Security**: Check for vulnerabilities (XSS, SQL injection, etc.)
 
-**Session Artifacts**: `.claude/sessions/execute/$CLAUDE_SESSION_ID/`
+**Session Artifacts**: `.claude/sessions/execute/$SESSION_ID/`
 
 - `context.md` - Problem analysis
 - `validation-report.md` - Requirements validation

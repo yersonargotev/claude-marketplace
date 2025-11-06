@@ -79,12 +79,12 @@ Read relevant files to understand:
 
 #### B. Create Progress Tracking File
 
-Initialize `.claude/sessions/${COMMAND_TYPE}/$CLAUDE_SESSION_ID/progress.md`:
+Initialize `.claude/sessions/$SESSION_DIR/progress.md`:
 
 ```markdown
 # Implementation Progress
 
-**Session**: $CLAUDE_SESSION_ID
+**Session**: $SESSION_ID
 **Started**: [timestamp]
 **Plan**: [Link to plan.md]
 
@@ -495,7 +495,7 @@ Return implementation summary (< 300 words):
 ```markdown
 ## Implementation Complete 🎨
 
-**Session**: $CLAUDE_SESSION_ID
+**Session**: $SESSION_ID
 **Mode**: [surgical/greenfield/iterative]
 
 ### Summary
@@ -548,7 +548,7 @@ Return implementation summary (< 300 words):
 
 ---
 
-**Progress Log**: `.claude/sessions/${COMMAND_TYPE}/$CLAUDE_SESSION_ID/progress.md`
+**Progress Log**: `.claude/sessions/$SESSION_DIR/progress.md`
 
 **Next Phase**: Ready for validation and quality assurance
 

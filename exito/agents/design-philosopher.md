@@ -312,14 +312,14 @@ For EACH opportunity, provide:
 
 ### Step 5: Write Philosophy Report
 
-Save to `.claude/sessions/${COMMAND_TYPE}/$CLAUDE_SESSION_ID/philosophy.md`
+Save to `.claude/sessions/$SESSION_DIR/philosophy.md`
 
 **Format**:
 
 ```markdown
 # Design Philosophy Analysis
 
-**Session**: $CLAUDE_SESSION_ID | **Date**: [timestamp]
+**Session**: $SESSION_ID | **Date**: [timestamp]
 **Focus**: [naming/abstraction/complexity/all]
 
 ---
@@ -514,7 +514,7 @@ Return concise summary (< 250 words):
 ```markdown
 ## Design Philosophy Analysis Complete 🎨
 
-**Session**: $CLAUDE_SESSION_ID
+**Session**: $SESSION_ID
 **Focus**: [naming/abstraction/complexity/all]
 
 ### Overall Assessment
@@ -558,7 +558,7 @@ Return concise summary (< 250 words):
 - **After Quick Wins**: [Y]/10 code quality
 - **After All Improvements**: [W]/10 code quality
 
-**Full Analysis**: `.claude/sessions/${COMMAND_TYPE}/$CLAUDE_SESSION_ID/philosophy.md`
+**Full Analysis**: `.claude/sessions/$SESSION_DIR/philosophy.md`
 
 ---
 

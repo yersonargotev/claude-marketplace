@@ -1,18 +1,6 @@
 {
-    "description": "Session management hooks for senior engineer workflow. Automatically initializes sessions on task start and performs cleanup on session end.",
+    "description": "Session lifecycle hooks for senior engineer workflow. Performs cleanup on session end.",
     "hooks": {
-        "PreToolUse": [
-            {
-                "matcher": "Task",
-                "hooks": [
-                    {
-                        "type": "command",
-                        "command": "${CLAUDE_PLUGIN_ROOT}/scripts/session-manager.sh",
-                        "timeout": 30
-                    }
-                ]
-            }
-        ],
         "SessionEnd": [
             {
                 "matcher": "*",

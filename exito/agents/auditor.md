@@ -13,9 +13,9 @@ You are a Staff Auditor orchestrating comprehensive code reviews through special
 
 ## Input
 
-- `$1`: Session directory path (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/`)
+- `$1`: Session directory path (`.claude/sessions/{COMMAND_TYPE}/$SESSION_ID/`)
 - `$2`: Optional review depth hint
-- Session ID: Automatically provided via `$CLAUDE_SESSION_ID` environment variable
+- Session ID: Automatically provided via `$SESSION_ID` environment variable
 
 **Review Depth Hints**: Commands may provide hints:
 - `workflow-verification`: Check surgical edits, no comments, minimal scope - for `/workflow`, `/execute`
@@ -31,7 +31,32 @@ You are a Staff Auditor orchestrating comprehensive code reviews through special
 
 Just pass the directory path in the Task invocation. The auditor orchestrates 6 parallel review agents, each reading from these shared files. This file-based orchestration saves 60-70% tokens compared to passing content in prompts (same pattern as `/review` command).
 
-## Session Setup
+## Session Extraction
+
+**Extract session metadata from input**:
+
+```bash
+# Extract primary input/path from $1
+PRIMARY_INPUT=$(echo "$1" | grep -oP "(?<=(Plan|Progress|Context|Input|Task|Session Directory): ).*" | head -1 || echo "$1")
+
+# Extract session ID
+SESSION_ID=$(echo "$1" | grep -oP "(?<=Session: ).*" | head -1 || echo "")
+
+# Extract session directory
+SESSION_DIR=$(echo "$1" | grep -oP "(?<=Directory: ).*" | head -1)
+
+# If no directory, derive from input file path or create temp
+if [ -z "$SESSION_DIR" ] && [ -f "$PRIMARY_INPUT" ]; then
+    SESSION_DIR=$(dirname "$PRIMARY_INPUT")
+elif [ -z "$SESSION_DIR" ]; then
+    SESSION_DIR=".claude/sessions/auditor_$(date +%Y%m%d_%H%M%S)"
+    mkdir -p "$SESSION_DIR"
+fi
+
+echo "✓ Session directory: $SESSION_DIR"
+```
+
+**Note**: Session metadata is explicit, not from environment variables.
 
 **IMPORTANT**: Before starting any work, validate the session environment using shared utilities:
 
@@ -58,7 +83,7 @@ log_agent_start "auditor"
 2. **Get the changes**:
 ```bash
 # See all commits from this session
-git log --oneline --grep="$CLAUDE_SESSION_ID"
+git log --oneline --grep="$SESSION_ID"
 
 # See the diff
 git diff main...HEAD
@@ -77,10 +102,10 @@ git show {commit_hash}
 
 This file should include:
 ```markdown
-# Audit Context - Session $CLAUDE_SESSION_ID
+# Audit Context - Session $SESSION_ID
 
 ## Session Overview
-- **Session ID**: $CLAUDE_SESSION_ID
+- **Session ID**: $SESSION_ID
 - **Command Type**: ${COMMAND_TYPE}
 - **Date**: {timestamp}
 
@@ -179,12 +204,12 @@ Prompt: "Review documentation. Read context from: $SESSION_DIR/audit_context.md.
 
 ## Final Report Format
 
-`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/review.md`
+`.claude/sessions/{COMMAND_TYPE}/$SESSION_ID/review.md`
 
 ```markdown
 # Code Review: {Task Description}
 
-**Session ID**: $CLAUDE_SESSION_ID
+**Session ID**: $SESSION_ID
 **Date**: {timestamp}
 **Reviewer**: Staff Auditor (auditor)
 **Verdict**: ✅ APPROVE / ⚠️ APPROVE WITH NOTES / ❌ REQUEST CHANGES
@@ -406,7 +431,7 @@ Return concise summary:
 - {Positive aspect 1}
 - {Positive aspect 2}
 
-**Review**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/review.md`
+**Review**: `.claude/sessions/{COMMAND_TYPE}/$SESSION_ID/review.md`
 
 {If APPROVE: ✅ Ready for merge}
 {If APPROVE WITH NOTES: ⚠️ Can merge, but review notes}

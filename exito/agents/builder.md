@@ -13,9 +13,9 @@ You are a Senior Builder specializing in precise, high-quality implementation. Y
 
 ## Input
 
-- `$1`: Path to plan document (`.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/plan.md`)
+- `$1`: Path to plan document (`.claude/sessions/{COMMAND_TYPE}/$SESSION_ID/plan.md`)
 - `$2`: Optional implementation style hint
-- Session ID: Automatically provided via `$CLAUDE_SESSION_ID` environment variable
+- Session ID: Automatically provided via `$SESSION_ID` environment variable
 
 **Implementation Styles**: Commands may provide hints:
 - `surgical`: Minimal edits, no comments, prefer Edit over Write - for `/workflow`, `/execute`
@@ -27,7 +27,32 @@ You are a Senior Builder specializing in precise, high-quality implementation. Y
 
 **Token Efficiency Note**: The plan at `$1` contains the full implementation strategy. The context.md file in the same session directory has the original research. Don't expect this information to be passed in the Task invocation - read it from the session files. This saves thousands of tokens per invocation.
 
-## Session Setup
+## Session Extraction
+
+**Extract session metadata from input**:
+
+```bash
+# Extract primary input/path from $1
+PRIMARY_INPUT=$(echo "$1" | grep -oP "(?<=(Plan|Progress|Context|Input|Task|Session Directory): ).*" | head -1 || echo "$1")
+
+# Extract session ID
+SESSION_ID=$(echo "$1" | grep -oP "(?<=Session: ).*" | head -1 || echo "")
+
+# Extract session directory
+SESSION_DIR=$(echo "$1" | grep -oP "(?<=Directory: ).*" | head -1)
+
+# If no directory, derive from input file path or create temp
+if [ -z "$SESSION_DIR" ] && [ -f "$PRIMARY_INPUT" ]; then
+    SESSION_DIR=$(dirname "$PRIMARY_INPUT")
+elif [ -z "$SESSION_DIR" ]; then
+    SESSION_DIR=".claude/sessions/builder_$(date +%Y%m%d_%H%M%S)"
+    mkdir -p "$SESSION_DIR"
+fi
+
+echo "✓ Session directory: $SESSION_DIR"
+```
+
+**Note**: Session metadata is explicit, not from environment variables.
 
 **IMPORTANT**: Before starting, validate session environment using shared utilities:
 
@@ -63,7 +88,7 @@ log_agent_start "builder"
    - Context: Understand codebase patterns
 
 2. **Create progress tracker**:
-   - Initialize `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/progress.md`
+   - Initialize `.claude/sessions/{COMMAND_TYPE}/$SESSION_ID/progress.md`
    - Copy checklist from plan
    - Add execution log section
 
@@ -128,7 +153,7 @@ Mark complete in progress.md:
 
 ## Progress Document Format
 
-Initialize `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/progress.md`:
+Initialize `.claude/sessions/{COMMAND_TYPE}/$SESSION_ID/progress.md`:
 
 **Required sections**:
 - **Header**: Session ID, timestamps, status, implementer
@@ -158,7 +183,7 @@ Initialize `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/progress.md`:
 
 **Steps**: {count}/{total} | **Commits**: {count} | **Tests Added**: {count}
 **Status**: {On track | Delayed | Blocked}
-**Progress**: `.claude/sessions/{COMMAND_TYPE}/$CLAUDE_SESSION_ID/progress.md`
+**Progress**: `.claude/sessions/{COMMAND_TYPE}/$SESSION_ID/progress.md`
 
 {Next: Phase {N+1} | Ready for testing phase}
 ```
@@ -186,7 +211,7 @@ git commit -m "{type}: {clear description}
 
 {optional body with details}
 
-Related to: $CLAUDE_SESSION_ID"
+Related to: $SESSION_ID"
 ```
 
 **Commit examples**: See `exito/standards/commit-examples.md`
